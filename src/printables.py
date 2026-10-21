@@ -115,6 +115,69 @@ def flashcards(ids, start):
     return W, H, "".join(out)
 
 
+def lab_report():
+    """Template laporan praktikum A4."""
+    W, H = 800, 1131
+    ink, sub, acc = "#1E2A3A", "#5B6878", "#1F9AA8"
+    out = [f'<rect x="-1" y="-1" width="{W + 2}" height="{H + 2}" fill="#FFFFFF"/>',
+           f'<rect x="0" y="0" width="{W}" height="120" fill="#16213A"/>',
+           text("LAB REPORT", 50, 70, 40, "#FFFFFF", "Bold", "start"),
+           text("Chemistry practical", 50, 100, 16, "#AEB9C9", "SemiBold", "start"),
+           icon("erlenmeyer-flask", W - 90, 60, 80)]
+    y = 160
+    fields = [("Name", 50), ("Class", 430), ("Date", 50), ("Group", 430)]
+    for k, (lab, x) in enumerate(fields):
+        yy = y + (k // 2) * 40
+        out.append(text(f"{lab}:", x, yy, 15, ink, "SemiBold", "start"))
+        out.append(f'<path d="M{x + 70} {yy + 3}H{x + 320}" stroke="#C9D1DA" stroke-width="1.4"/>')
+    sections = [("Title", 1), ("Objective", 2), ("Materials and equipment", 3), ("Procedure", 4),
+                ("Observations and data", 0), ("Conclusion", 3)]
+    y = 270
+    for name, lines in sections:
+        out.append(f'<rect x="50" y="{y - 22}" width="6" height="28" rx="3" fill="{acc}"/>'
+                   + text(name, 66, y, 18, ink, "Bold", "start"))
+        y += 22
+        if lines == 0:  # tabel data
+            cols, rows, tw = 4, 5, W - 100
+            for r in range(rows + 1):
+                out.append(f'<path d="M50 {y + r * 30}H{50 + tw}" stroke="#C9D1DA" stroke-width="1.4"/>')
+            for c in range(cols + 1):
+                out.append(f'<path d="M{50 + c * tw / cols} {y}V{y + rows * 30}" stroke="#C9D1DA" stroke-width="1.4"/>')
+            out.append(f'<rect x="50" y="{y}" width="{tw}" height="30" fill="#EAF6F8"/>')
+            for c, h in enumerate(("No.", "Observation", "Result", "Notes")):
+                out.append(text(h, 50 + c * tw / cols + tw / cols / 2, y + 20, 13, sub, "SemiBold"))
+            y += rows * 30 + 34
+        else:
+            for k in range(lines):
+                out.append(f'<path d="M50 {y + 14 + k * 28}H{W - 50}" stroke="#C9D1DA" stroke-width="1.4"/>')
+            y += lines * 28 + 34
+    out.append(text("Teacher's signature: ____________________", W - 50, H - 40, 14, sub, "SemiBold", "end"))
+    return W, H, "".join(out)
+
+
+def bottle_labels():
+    """Lembar 12 label botol bahan kimia (A4)."""
+    W, H = 800, 1131
+    ink = "#1E2A3A"
+    cols_ = ["#E85D4A", "#F28C28", "#3FB6C4", "#5CBF7A", "#8E6CC9", "#3D7DDB"]
+    out = [f'<rect x="-1" y="-1" width="{W + 2}" height="{H + 2}" fill="#FFFFFF"/>']
+    m, cw, ch = 30, (800 - 60) / 2, (1131 - 60) / 6
+    for i in range(12):
+        x, y = m + (i % 2) * cw, m + (i // 2) * ch
+        col = cols_[i % 6]
+        out.append(f'<rect x="{x + 8}" y="{y + 8}" width="{cw - 16}" height="{ch - 16}" rx="14" fill="#FFFFFF" '
+                   f'stroke="{col}" stroke-width="3"/>'
+                   f'<rect x="{x + 8}" y="{y + 8}" width="{cw - 16}" height="36" rx="14" fill="{col}"/>'
+                   f'<rect x="{x + 8}" y="{y + 30}" width="{cw - 16}" height="14" fill="{col}"/>')
+        out.append(text("CHEMICAL", x + 24, y + 33, 15, "#FFFFFF", "Bold", "start"))
+        out.append(icon("toxic-chemical-bottle", x + cw - 40, y + 26, 26, outline=True, ink="FFFFFF"))
+        for k, lab in enumerate(("Name", "Formula", "Concentration", "Date")):
+            yy = y + 72 + k * 24
+            out.append(text(f"{lab}:", x + 24, yy, 12.5, ink, "SemiBold", "start"))
+            out.append(f'<path d="M{x + 132} {yy + 3}H{x + cw - 24}" stroke="#C9D1DA" stroke-width="1.2"/>')
+    return W, H, "".join(out)
+
+
 BINGO = ["H", "He", "Li", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Fe",
          "Cu", "Zn", "Ag", "Au", "Hg", "Pb", "Sn", "I", "Ni", "Ti", "U"]
 
@@ -158,6 +221,13 @@ TR.update({
     "Write the name of each laboratory tool on the line.": "Tuliskan nama setiap alat laboratorium pada garis.",
     "Name: ____________________   Class: ________": "Nama: ____________________   Kelas: ________",
     "CHEMISTRY ELEMENT BINGO": "BINGO UNSUR KIMIA",
+    "LAB REPORT": "LAPORAN PRAKTIKUM", "Chemistry practical": "Praktikum kimia", "Name:": "Nama:",
+    "Class:": "Kelas:", "Date:": "Tanggal:", "Group:": "Kelompok:", "Title": "Judul", "Objective": "Tujuan",
+    "Materials and equipment": "Alat dan bahan", "Procedure": "Langkah kerja",
+    "Observations and data": "Data pengamatan", "Conclusion": "Kesimpulan", "No.": "No.",
+    "Observation": "Pengamatan", "Result": "Hasil", "Notes": "Keterangan",
+    "Teacher's signature: ____________________": "Paraf guru: ____________________",
+    "CHEMICAL": "BAHAN KIMIA", "Formula:": "Rumus:", "Concentration:": "Konsentrasi:",
 })
 
 
@@ -198,6 +268,18 @@ def assets():
                                     "printable", "chemistry", "science", "school", "classroom", "teacher",
                                     "vocabulary", "learning", "education", "a4", "cut out", "game", "kids",
                                     "student", "glassware", "colorful", "vector", "illustration"]))
+        for key, fn, title, kw in (
+                ("lab-report-template", lab_report, "Chemistry lab report template",
+                 ["lab report", "laboratory report", "template", "practical", "experiment", "worksheet", "form"]),
+                ("chemical-bottle-labels", bottle_labels, "Chemical bottle labels sheet template",
+                 ["labels", "bottle labels", "chemical labels", "stickers", "template", "laboratory", "storage"])):
+            W, H, inner = fn()
+            out.append(dict(
+                name=f"{SET_ID}-{key}{sfx}", size=3508, png=False,
+                svg=f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 3}" height="{H * 3}" viewBox="0 0 {W} {H}">{inner}</svg>',
+                title=f"{title}{note}, printable A4 vector for chemistry class",
+                keywords=kw_lang + kw + ["chemistry", "science", "school", "student", "teacher", "printable", "a4",
+                                         "education", "classroom", "vector", "editable", "lab", "experiment"]))
     poster_kit.set_lang("en")
     for k in range(4):
         W, H, inner = bingo(k + 1)
