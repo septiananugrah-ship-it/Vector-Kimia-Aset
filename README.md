@@ -9,7 +9,7 @@ Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana,
 
 ## Set yang tersedia
 
-Total 1.263 aset dalam 61 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 1.283 aset dalam 63 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -76,6 +76,8 @@ bundle printable. Dibuat otomatis oleh `promo.py` setelah build. Bukan untuk mic
 | `kawaii-lab-stickers-patterns` | 2 pola seamless pastel (kategori 4-pola-seamless) |
 | `kawaii-lab-stickers-2` | 20 stiker kawaii jilid 2 (botol reagen, suntikan, jas lab, sarung tangan, sentrifus, APAR, dll.) + lembar set |
 | `kawaii-lab-stickers-2-patterns` | 2 pola seamless pastel oranye & ungu (kategori 4-pola-seamless) |
+| `kawaii-science-stickers` | 17 stiker kawaii konsep sains (atom, molekul, tetes air, api, petir, magnet, kristal, bohlam, dll.) + lembar set |
+| `kawaii-science-stickers-patterns` | 2 pola seamless pastel hijau & kuning (kategori 4-pola-seamless) |
 
 ### 7-lembar-kerja-mewarnai
 | Set | Isi |
