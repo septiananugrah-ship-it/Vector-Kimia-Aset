@@ -54,7 +54,7 @@ def category(set_id):
         return "2-molekul-atom"
     return "1-alat-lab"
 
-from render import GRID, STROKE, fitted, outlinify, style_attrs  # noqa: E402
+from render import GRID, STROKE, doodlify, fitted, outlinify, style_attrs  # noqa: E402
 
 PAD = 3  # ruang kosong di sekeliling ikon, dalam satuan grid
 GLYPH_INK = "#1E2A3A"
@@ -193,6 +193,24 @@ def icon_set_assets(mod):
             f"{theme.capitalize()} outline line icons set, 20 black and white vector icons",
             mod.SET_KEYWORDS, mod.COMMON_KEYWORDS, False,
             extra_kw=("outline", "line icon", "line art", "black and white", "coloring", "linear"))))
+
+    if getattr(mod, "DOODLE", False):
+        did = mod.SET_ID.replace("-flat-icons", "").replace("-icons", "") + "-doodle-icons"
+        db = [doodlify(ic["body"]) for ic in mod.ICONS]
+        theme = mod.THEME
+        out.append((did, variant(
+            did, db,
+            lambda ic: f"{ic.get('name') or ic['id'].replace('-', ' ').capitalize()} hand drawn doodle icon, "
+                       f"{theme} sketch vector",
+            f"{theme.capitalize()} hand drawn doodle icons set, 20 black and white sketch vectors",
+            mod.SET_KEYWORDS, mod.COMMON_KEYWORDS, False,
+            extra_kw=("doodle", "hand drawn", "sketch", "line art", "black and white", "drawing"))))
+        out.append((did.replace("-icons", "-patterns"), [dict(
+            name=did.replace("-icons", "-pattern") + "-01",
+            svg=pattern_doc(db, stroke, "#FFFFFF", seed=99, accent="#1E2A3A"), size=4000, png=False,
+            title=f"{theme.capitalize()} hand drawn doodle seamless pattern, black and white vector background",
+            keywords=["seamless pattern", "doodle", "hand drawn", "sketch", "black and white", "background",
+                      "pattern", "line art", "coloring", "texture", "wallpaper"] + mod.SET_KEYWORDS)]))
 
     if getattr(mod, "PATTERNS", None):
         pid = mod.SET_ID.replace("-icons", "") + "-patterns"

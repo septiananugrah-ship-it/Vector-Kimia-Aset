@@ -5,7 +5,7 @@ Aset vektor microstock bertema kimia yang dibuat sepenuhnya lewat kode
 
 ## Set yang tersedia
 
-Total 773 aset dalam 41 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 839 aset dalam 47 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -16,6 +16,7 @@ Total 773 aset dalam 41 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file 
 | `lab2-flat-icons` | 20 alat & perlengkapan lab jilid 2 (botol reagen, kondensor, sentrifus, jas lab, APD, dll.) |
 | `lab2-flat-glyph-icons` | versi glyph jilid 2 |
 | `lab-outline-icons`, `lab2-outline-icons` | versi outline (garis hitam, isi putih) jilid 1 & 2 |
+| `lab-doodle-icons`, `lab2-doodle-icons` | versi doodle / coretan tangan jilid 1 & 2 (+ pola doodle) |
 
 ### 2-molekul-atom
 | Set | Isi |
@@ -27,6 +28,7 @@ Total 773 aset dalam 41 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file 
 | `bohr-atom-glyph-icons` | versi glyph model atom |
 | `bohr-atom2-icons` (+ glyph & outline) | model atom Bohr unsur 21–36 (Sc–Kr), susunan kulit logam transisi |
 | `molecule-outline-icons`, `bohr-atom-outline-icons`, `concept-outline-icons` | versi outline molekul, atom, dan konsep |
+| `concept-doodle-icons` | versi doodle ikon konsep (+ pola doodle) |
 
 ### 3-poster-edukasi
 | Set | Isi |

@@ -11,6 +11,7 @@ SET_ID = "lab-flat-icons"
 STROKE = 1.6
 SHADOW = True
 GLYPH = True
+DOODLE = True
 THEME = "chemistry laboratory equipment"
 # (latar, warna aksen, suasana) untuk pola seamless
 PATTERNS = [("#FFFFFF", "#3FB6C4", "colorful science on white"),

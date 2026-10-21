@@ -86,3 +86,13 @@ def chalkify(body, bg, chalk="#F2F1EA"):
     body = re.sub(r'(fill|stroke)="(#[0-9A-Fa-f]{6})"', sub, body)
     body = re.sub(r'stroke="#[0-9A-Fa-f]{6}"([^>]*data-ring)', f'stroke="{bg}"\\1', body)
     return body.replace("@CHALK@", chalk)
+
+
+def doodlify(body):
+    """Gaya doodle/sketsa: outline dengan garis kedua yang sedikit bergeser seperti coretan tangan."""
+    import re
+    base = outlinify(body)
+    sketch = re.sub(r'fill="#[0-9A-Fa-f]{6}"', 'fill="none"', base)
+    sketch = re.sub(r'<g fill="none" stroke="none"><path transform', '<g fill="none" stroke="none" display="none"><path transform', sketch)
+    return (base + '<g transform="translate(1.3 .9) rotate(2.2 32 32)" stroke-width="1.1">'
+            + sketch.replace('stroke-width="', 'data-sw="') + "</g>")

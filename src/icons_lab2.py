@@ -8,6 +8,7 @@ SET_ID = "lab2-flat-icons"
 STROKE = 1.6
 SHADOW = True
 GLYPH = True
+DOODLE = True
 THEME = "chemistry laboratory tools"
 PATTERNS = [("#FFF8EC", "#E85D4A", "colorful laboratory on cream"),
             ("#2B2F4A", "#3FB6C4", "colorful laboratory on dark indigo")]

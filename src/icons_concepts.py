@@ -10,6 +10,7 @@ SET_ID = "concept-flat-icons"
 STROKE = 1.6
 SHADOW = True
 GLYPH = True
+DOODLE = True
 THEME = "chemistry and science concept"
 PATTERNS = [("#F4F1FF", "#8E6CC9", "colorful science on lavender"),
             ("#13293D", "#F28C28", "colorful science on dark blue")]
