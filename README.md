@@ -5,7 +5,7 @@ Aset vektor microstock bertema kimia yang dibuat sepenuhnya lewat kode
 
 ## Set yang tersedia
 
-Total 581 aset dalam 34 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 697 aset dalam 38 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -22,6 +22,7 @@ Total 581 aset dalam 34 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file 
 |-----|-----|
 | `molecule-icons` | 20 model molekul bola-dan-batang (H2O, CO2, CH4, benzena, NaCl, H2SO4, dll.) |
 | `molecule-glyph-icons` | versi glyph model molekul |
+| `molecule2-icons` (+ glyph & outline) | 20 model molekul jilid 2 (H2S, HCN, NO2, SO3, CCl4, asam asetat, aseton, urea, propana, butana, dll.) |
 | `bohr-atom-icons` | model atom Bohr unsur 1–20 |
 | `bohr-atom-glyph-icons` | versi glyph model atom |
 | `molecule-outline-icons`, `bohr-atom-outline-icons`, `concept-outline-icons` | versi outline molekul, atom, dan konsep |
@@ -29,8 +30,8 @@ Total 581 aset dalam 34 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file 
 ### 3-poster-edukasi
 | Set | Isi |
 |-----|-----|
-| `periodic-table-posters` | tabel periodik 118 unsur: lengkap (terang & gelap), hanya lambang, dan lembar kerja kosong; bahasa Inggris & Indonesia |
-| `chemistry-posters` | 24 poster × 2 tema (gelap & terang): bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi, gugus fungsi organik, deret alkana, struktur atom, jenis ikatan kimia, tata tertib keselamatan lab, tren periodik, konfigurasi elektron, indikator asam-basa, teknik pemisahan campuran, hukum gas, faktor laju reaksi, diagram energi eksoterm/endoterm, sel Volta, konsep mol, perubahan fisika vs kimia, asam vs basa, penggolongan materi, tata nama IUPAC |
+| `periodic-table-posters` | tabel periodik 118 unsur: lengkap, hanya lambang (terang, gelap, papan kapur), dan lembar kerja kosong; bahasa Inggris & Indonesia |
+| `chemistry-posters` | 24 poster × 3 tema (gelap, terang, papan tulis kapur): bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi, gugus fungsi organik, deret alkana, struktur atom, jenis ikatan kimia, tata tertib keselamatan lab, tren periodik, konfigurasi elektron, indikator asam-basa, teknik pemisahan campuran, hukum gas, faktor laju reaksi, diagram energi eksoterm/endoterm, sel Volta, konsep mol, perubahan fisika vs kimia, asam vs basa, penggolongan materi, tata nama IUPAC |
 | `chemistry-posters-indonesian` | 24 poster yang sama dalam Bahasa Indonesia |
 
 ### 4-pola-seamless
