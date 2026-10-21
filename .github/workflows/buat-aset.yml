@@ -105,12 +105,11 @@ jobs:
           path: dist/katalog.csv
 
   # Galeri di https://<pemilik>.github.io/<repo>/ — aktifkan sekali di Settings → Pages → Source: GitHub Actions.
-  # Jika Pages belum aktif, langkah ini gagal tanpa membuat build merah.
+  # Selama Pages belum aktif, deploy dilewati (job tetap hijau).
   pages:
     needs: build
     if: ${{ !inputs.only }}
     runs-on: ubuntu-latest
-    continue-on-error: true
     permissions:
       pages: write
       id-token: write
@@ -118,5 +117,17 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
+      - id: cek
+        name: Cek apakah GitHub Pages aktif
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          code=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer $GH_TOKEN" \
+            "https://api.github.com/repos/${{ github.repository }}/pages")
+          if [ "$code" = "200" ]; then echo "aktif=ya" >> "$GITHUB_OUTPUT"; else
+            echo "aktif=tidak" >> "$GITHUB_OUTPUT"
+            echo "::notice::GitHub Pages belum aktif (Settings → Pages → Source: GitHub Actions). Deploy galeri dilewati."
+          fi
       - id: deploy
+        if: steps.cek.outputs.aktif == 'ya'
         uses: actions/deploy-pages@v4
