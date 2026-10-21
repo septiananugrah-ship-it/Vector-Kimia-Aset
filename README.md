@@ -5,7 +5,7 @@ Aset vektor microstock bertema kimia yang dibuat sepenuhnya lewat kode
 
 ## Set yang tersedia
 
-Total 761 aset dalam 41 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 773 aset dalam 41 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -32,8 +32,8 @@ Total 761 aset dalam 41 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file 
 | Set | Isi |
 |-----|-----|
 | `periodic-table-posters` | tabel periodik 118 unsur: lengkap, hanya lambang (terang, gelap, papan kapur), dan lembar kerja kosong; bahasa Inggris & Indonesia |
-| `chemistry-posters` | 26 poster × 3 tema (gelap, terang, papan tulis kapur): bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi, gugus fungsi organik, deret alkana, struktur atom, jenis ikatan kimia, tata tertib keselamatan lab, tren periodik, konfigurasi elektron, indikator asam-basa, teknik pemisahan campuran, hukum gas, faktor laju reaksi, diagram energi eksoterm/endoterm, sel Volta, konsep mol, perubahan fisika vs kimia, asam vs basa, penggolongan materi, tata nama IUPAC, jenis koloid, daya tembus radiasi |
-| `chemistry-posters-indonesian` | 26 poster yang sama dalam Bahasa Indonesia |
+| `chemistry-posters` | 28 poster × 3 tema (gelap, terang, papan tulis kapur): bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi, gugus fungsi organik, deret alkana, struktur atom, jenis ikatan kimia, tata tertib keselamatan lab, tren periodik, konfigurasi elektron, indikator asam-basa, teknik pemisahan campuran, hukum gas, faktor laju reaksi, diagram energi eksoterm/endoterm, sel Volta, konsep mol, perubahan fisika vs kimia, asam vs basa, penggolongan materi, tata nama IUPAC, jenis koloid, daya tembus radiasi, perkembangan model atom, hukum dasar kimia |
+| `chemistry-posters-indonesian` | 28 poster yang sama dalam Bahasa Indonesia |
 
 ### 4-pola-seamless
 | Set | Isi |
@@ -112,7 +112,7 @@ centang sendiri di portal. Situs lain punya aturan sendiri; cek aturan terbaru t
 - `src/icons_*.py`, `src/molecules.py`, `src/atoms.py`: set ikon. Tiap ikon punya `id`, `title`,
   `keywords`, dan `body` (elemen SVG di grid 64×64). `build.py` menskalakan ikon agar mengisi bingkai,
   menyeragamkan tebal garis, lalu membuat varian glyph (`GLYPH = True`) dan pola seamless (`PATTERNS`).
-- `src/periodic.py`, `src/posters.py`, `src/posters2.py`, `src/posters3.py`, `src/posters4.py`, `src/posters5.py`, `src/posters6.py`, `src/hex_patterns.py`, `src/backgrounds.py`: aset utuh
+- `src/periodic.py`, `src/posters.py`, `src/posters2.py`, `src/posters3.py`, `src/posters4.py`, `src/posters5.py`, `src/posters6.py`, `src/posters7.py`, `src/hex_patterns.py`, `src/backgrounds.py`: aset utuh
   lewat fungsi `assets()`. Teks poster diterjemahkan lewat kamus di `src/poster_i18n.py`.
 - `src/render.py`: pembantu render ikon bersama; `category()` di `build.py` memetakan set ke folder kategori.
 - `src/textpath.py`: teks diubah menjadi outline (wajib di microstock) memakai font Inter di `fonts/`
