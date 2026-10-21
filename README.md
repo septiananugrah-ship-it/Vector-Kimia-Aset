@@ -7,7 +7,7 @@ Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana,
 
 ## Set yang tersedia
 
-Total 865 aset dalam 47 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 879 aset dalam 54 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -45,6 +45,7 @@ Total 865 aset dalam 47 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file 
 | `lab-flat-patterns`, `lab2-flat-patterns` | pola alat lab (5) |
 | `molecule-patterns`, `bohr-atom-patterns` | pola molekul & atom (5) |
 | `hexagon-patterns` | pola sarang lebah / cincin benzena (4) |
+| `*-line-patterns` | pola garis gaya kapur (papan hijau) dan garis putih di atas navy untuk 7 set ikon (14) |
 
 ### Ikon konsep (kategori 2-molekul-atom)
 | Set | Isi |

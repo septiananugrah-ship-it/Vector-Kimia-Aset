@@ -54,7 +54,7 @@ def category(set_id):
         return "2-molekul-atom"
     return "1-alat-lab"
 
-from render import GRID, STROKE, doodlify, fitted, outlinify, style_attrs  # noqa: E402
+from render import GRID, INK, STROKE, chalkify, doodlify, fitted, outlinify, style_attrs  # noqa: E402
 
 PAD = 3  # ruang kosong di sekeliling ikon, dalam satuan grid
 GLYPH_INK = "#1E2A3A"
@@ -114,7 +114,7 @@ def sheet_doc(bodies, stroke, shadow, cols=5, cell=80):
     return svg_doc(w, h, f'<g {style_attrs(stroke)}>' + "".join(parts) + "</g>")
 
 
-def pattern_doc(bodies, stroke, bg, seed, accent, n=4, cell=90, size=0.62):
+def pattern_doc(bodies, stroke, bg, seed, accent, n=4, cell=90, size=0.62, ink=INK):
     """Pola seamless: ikon disebar dengan baris berselang (half-drop), diputar
     acak, plus titik/plus dekoratif. Elemen yang melewati tepi diulang di sisi
     seberang sehingga ubin menyambung tanpa sambungan."""
@@ -149,7 +149,7 @@ def pattern_doc(bodies, stroke, bg, seed, accent, n=4, cell=90, size=0.62):
             for oy in (-H, 0, H):
                 tiled.append(f'<g transform="translate({ox} {oy})">{it}</g>' if (ox or oy) else it)
     inner = (f'<clipPath id="tile"><rect width="{W}" height="{H}"/></clipPath>'
-             f'<g clip-path="url(#tile)"><g {style_attrs(stroke)}>' + "".join(tiled) + "</g></g>")
+             f'<g clip-path="url(#tile)"><g {style_attrs(stroke, ink)}>' + "".join(tiled) + "</g></g>")
     return svg_doc(W, H, inner, bg=bg)
 
 
@@ -211,6 +211,22 @@ def icon_set_assets(mod):
             title=f"{theme.capitalize()} hand drawn doodle seamless pattern, black and white vector background",
             keywords=["seamless pattern", "doodle", "hand drawn", "sketch", "black and white", "background",
                       "pattern", "line art", "coloring", "texture", "wallpaper"] + mod.SET_KEYWORDS)]))
+
+    if getattr(mod, "GLYPH", False):
+        # pola garis: kapur di papan hijau dan garis putih di atas navy
+        lid = mod.SET_ID.replace("-flat-icons", "").replace("-icons", "") + "-line-patterns"
+        assets = []
+        for k, (bg, chalk, mood, kw) in enumerate((
+                ("#2F4A3A", "#F2F1EA", "chalkboard style on green board", ["chalkboard", "chalk", "blackboard"]),
+                ("#16213A", "#E9F1F7", "white line icons on dark navy", ["line icons", "dark", "navy"]))):
+            cb = [chalkify(ic["body"], bg, chalk) for ic in mod.ICONS]
+            assets.append(dict(
+                name=f"{lid}-{k + 1:02d}", png=False, size=4000,
+                svg=pattern_doc(cb, stroke, bg, seed=40 + k, accent=chalk, ink=chalk[1:]),
+                title=f"{mod.THEME.capitalize()} seamless pattern, {mood}, vector background",
+                keywords=["seamless pattern", "pattern", "background", "seamless", "line art", "school",
+                          "wallpaper", "texture", "repeat"] + kw + mod.SET_KEYWORDS))
+        out.append((lid, assets))
 
     if getattr(mod, "PATTERNS", None):
         pid = mod.SET_ID.replace("-icons", "") + "-patterns"
