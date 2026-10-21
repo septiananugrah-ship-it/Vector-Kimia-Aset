@@ -7,7 +7,7 @@ import icons_lab2
 import icons_lab_flat
 import poster_kit
 from poster_i18n import TR
-from poster_kit import text
+from poster_kit import text, tr
 from render import GRID, fitted, outlinify, style_attrs
 
 SET_ID = "chemistry-printables"
@@ -178,6 +178,60 @@ def bottle_labels():
     return W, H, "".join(out)
 
 
+QUIZ = [
+    ("What is the chemical symbol for gold?", "Au"), ("What is the common name of H₂O?", "Water"),
+    ("Which gas do plants absorb for photosynthesis?", "Carbon dioxide"), ("What is the pH of pure water?", "7"),
+    ("Which gas makes up most of the air?", "Nitrogen"), ("What is the symbol for sodium?", "Na"),
+    ("What is the atomic number of carbon?", "6"), ("What is the lightest element?", "Hydrogen"),
+    ("What is the formula of table salt?", "NaCl"), ("What is the charge of an electron?", "Negative"),
+    ("Which noble gas is used in party balloons?", "Helium"), ("What is the symbol for iron?", "Fe"),
+    ("What does a catalyst do?", "Speeds up a reaction"), ("Acid + base produces salt and...?", "Water"),
+    ("Which state of matter has a fixed shape?", "Solid"), ("Which element has the symbol K?", "Potassium"),
+]
+
+
+def quiz_sheet(items, start, answers=False):
+    """Lembar 8 kartu kuis (2x4); answers=True mencetak kunci jawaban."""
+    W, H = 800, 1131
+    ink = "#1E2A3A"
+    m = 30
+    cw, ch = (W - 2 * m) / 2, (H - 2 * m) / 4
+    head = "#5CBF7A" if answers else "#8E6CC9"
+    out = [f'<rect x="-1" y="-1" width="{W + 2}" height="{H + 2}" fill="#FFFFFF"/>']
+    for i, (q, a) in enumerate(items):
+        x = m + (i % 2) * cw
+        y = m + (i // 2) * ch
+        out.append(f'<rect x="{x + 10}" y="{y + 10}" width="{cw - 20}" height="{ch - 20}" rx="18" fill="#FFFFFF" '
+                   f'stroke="{head}" stroke-width="3"/>'
+                   f'<rect x="{x + 10}" y="{y + 10}" width="{cw - 20}" height="44" rx="18" fill="{head}"/>'
+                   f'<rect x="{x + 10}" y="{y + 36}" width="{cw - 20}" height="18" fill="{head}"/>')
+        label = tr("ANSWER") if answers else tr("QUESTION")
+        out.append(text(f"{label} {start + i}", x + 30, y + 41, 17, "#FFFFFF", "Bold", "start"))
+        out.append(icon("idea-bulb" if not answers else "chemistry-book", x + cw - 46, y + 32, 34))
+        body = tr(a) if answers else tr(q)
+        size = 26 if answers else 19
+        lines = wrap_words(body, 24 if not answers else 18)
+        for k, line in enumerate(lines):
+            out.append(text(line, x + cw / 2, y + ch / 2 + 22 + (k - (len(lines) - 1) / 2) * size * 1.3, size,
+                            ink, "Bold" if answers else "SemiBold"))
+    dash = 'stroke="#9AA5B1" stroke-width="1.2" stroke-dasharray="6 6"'
+    out.append(f'<path d="M{W / 2} {m}V{H - m}" {dash}/>')
+    for k in range(1, 4):
+        out.append(f'<path d="M{m} {m + k * ch}H{W - m}" {dash}/>')
+    return W, H, "".join(out)
+
+
+def wrap_words(s, n):
+    lines, cur = [], ""
+    for w_ in s.split():
+        if len(cur) + len(w_) + 1 > n and cur:
+            lines.append(cur)
+            cur = w_
+        else:
+            cur = (cur + " " + w_).strip()
+    return lines + [cur]
+
+
 BINGO = ["H", "He", "Li", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Fe",
          "Cu", "Zn", "Ag", "Au", "Hg", "Pb", "Sn", "I", "Ni", "Ti", "U"]
 
@@ -220,7 +274,25 @@ TR.update({
     "LABEL THE LAB EQUIPMENT": "TULIS NAMA ALAT LAB",
     "Write the name of each laboratory tool on the line.": "Tuliskan nama setiap alat laboratorium pada garis.",
     "Name: ____________________   Class: ________": "Nama: ____________________   Kelas: ________",
-    "CHEMISTRY ELEMENT BINGO": "BINGO UNSUR KIMIA",
+    "CHEMISTRY ELEMENT BINGO": "BINGO UNSUR KIMIA", "QUESTION": "SOAL", "ANSWER": "JAWABAN",
+    "What is the chemical symbol for gold?": "Apa lambang kimia emas?",
+    "What is the common name of H₂O?": "Apa nama umum dari H₂O?",
+    "Which gas do plants absorb for photosynthesis?": "Gas apa yang diserap tumbuhan untuk fotosintesis?",
+    "What is the pH of pure water?": "Berapa pH air murni?",
+    "Which gas makes up most of the air?": "Gas apa yang paling banyak di udara?",
+    "What is the symbol for sodium?": "Apa lambang unsur natrium?",
+    "What is the atomic number of carbon?": "Berapa nomor atom karbon?",
+    "What is the lightest element?": "Unsur apa yang paling ringan?",
+    "What is the formula of table salt?": "Apa rumus kimia garam dapur?",
+    "What is the charge of an electron?": "Apa muatan elektron?",
+    "Which noble gas is used in party balloons?": "Gas mulia apa yang dipakai untuk balon pesta?",
+    "What is the symbol for iron?": "Apa lambang unsur besi?",
+    "What does a catalyst do?": "Apa fungsi katalis?",
+    "Acid + base produces salt and...?": "Asam + basa menghasilkan garam dan...?",
+    "Which state of matter has a fixed shape?": "Wujud zat apa yang bentuknya tetap?",
+    "Which element has the symbol K?": "Unsur apa yang lambangnya K?",
+    "Negative": "Negatif", "Speeds up a reaction": "Mempercepat reaksi", "Solid": "Padat",
+    "Potassium": "Kalium",
     "LAB REPORT": "LAPORAN PRAKTIKUM", "Chemistry practical": "Praktikum kimia", "Name:": "Nama:",
     "Class:": "Kelas:", "Date:": "Tanggal:", "Group:": "Kelompok:", "Title": "Judul", "Objective": "Tujuan",
     "Materials and equipment": "Alat dan bahan", "Procedure": "Langkah kerja",
@@ -280,6 +352,18 @@ def assets():
                 title=f"{title}{note}, printable A4 vector for chemistry class",
                 keywords=kw_lang + kw + ["chemistry", "science", "school", "student", "teacher", "printable", "a4",
                                          "education", "classroom", "vector", "editable", "lab", "experiment"]))
+        for k in range(2):
+            for ans in (False, True):
+                W, H, inner = quiz_sheet(QUIZ[k * 8:(k + 1) * 8], k * 8 + 1, ans)
+                kind = "answers" if ans else "questions"
+                out.append(dict(
+                    name=f"{SET_ID}-quiz-cards-{k + 1}-{kind}{sfx}", size=3508, png=False,
+                    svg=f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 3}" height="{H * 3}" viewBox="0 0 {W} {H}">{inner}</svg>',
+                    title=f"Chemistry quiz cards sheet {k + 1} ({kind}){note}, printable A4 classroom trivia game",
+                    keywords=kw_lang + ["quiz", "quiz cards", "trivia", "questions", "answers", "flashcards",
+                                        "chemistry", "science", "game", "classroom", "printable", "school",
+                                        "student", "teacher", "a4", "education", "learning", "review",
+                                        "test", "vector"]))
     poster_kit.set_lang("en")
     for k in range(4):
         W, H, inner = bingo(k + 1)
