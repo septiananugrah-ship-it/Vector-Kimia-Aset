@@ -30,7 +30,7 @@ from PIL import Image
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT / "src"))
 
-MODULES = ["icons_lab", "icons_lab_flat", "icons_lab2", "molecules", "atoms", "periodic", "posters",
+MODULES = ["icons_lab", "icons_lab_flat", "icons_lab2", "molecules", "atoms", "icons_concepts", "periodic", "posters",
            "hex_patterns", "backgrounds"]
 
 
@@ -42,7 +42,7 @@ def category(set_id):
         return "5-latar-presentasi"
     if set_id.startswith(("periodic", "chemistry-posters")):
         return "3-poster-edukasi"
-    if set_id.startswith(("molecule", "bohr")):
+    if set_id.startswith(("molecule", "bohr", "concept")):
         return "2-molekul-atom"
     return "1-alat-lab"
 
@@ -53,7 +53,7 @@ GLYPH_INK = "#1E2A3A"
 from icons_lab_flat import G as _G, M as _M, W as _W, dark as _dark  # noqa: E402
 
 # Warna yang menjadi putih di varian glyph (kaca, logam, putih); sisanya tinta gelap.
-GLYPH_LIGHT = {c.upper() for c in (_W, _G, _M, _dark(_G, .07), _dark(_M, .14), _dark(_W, .14),
+GLYPH_LIGHT = {c.upper() for c in (_W, _G, _M, _dark(_G, .07), _dark(_G, .14), _dark(_M, .14), _dark(_W, .14),
                                    "#FFE7A3", "#FFD978")}
 
 
@@ -76,13 +76,15 @@ def svg_doc(w, h, inner, px_w=None, bg=None):
 
 # ---------------------------------------------------------------- ikon
 
-def glyphify(body):
+def glyphify(body, extra_light=()):
     """Varian glyph: semua warna menjadi tinta gelap, warna terang menjadi putih."""
+    light = GLYPH_LIGHT | {c.upper() for x in extra_light for c in (x, _dark(x, .14))}
+
     def sub(m):
         attr, col = m.group(1), m.group(2).upper()
         if attr == "stroke" and col == "#FFFFFF":
             return m.group(0)
-        return f'{attr}="{"#FFFFFF" if col in GLYPH_LIGHT else GLYPH_INK}"'
+        return f'{attr}="{"#FFFFFF" if col in light else GLYPH_INK}"'
     return re.sub(r'(fill|stroke)="(#[0-9A-Fa-f]{6})"', sub, body)
 
 
@@ -163,7 +165,7 @@ def icon_set_assets(mod):
 
     if getattr(mod, "GLYPH", False):
         gid = mod.SET_ID.replace("-icons", "") + "-glyph-icons"
-        gb = [glyphify(b) for b in bodies]
+        gb = [glyphify(ic["body"], ic.get("glyph_light", ())) for ic in mod.ICONS]
         theme = mod.THEME
         out.append((gid, variant(
             gid, gb,
