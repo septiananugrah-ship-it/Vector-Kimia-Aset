@@ -50,8 +50,8 @@ def shells(z):
     return out
 
 
-def bohr(z, sym):
-    sh = shells(z)
+def bohr(z, sym, sh=None):
+    sh = sh or shells(z)
     rn = 7.5 + 2.6 * (len(sh) - 1)  # inti ikut membesar agar lambang tetap terbaca
     body = ""
     for k, n in enumerate(sh):
