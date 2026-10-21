@@ -204,6 +204,36 @@ KEYWORDS = ["background", "presentation", "slide", "banner", "copy space", "chem
             "illustration", "design", "layout", "16:9", "lesson", "class", "lecture"]
 
 
+PW, PH = 1080, 1920  # wallpaper HP 9:16
+
+
+def phone_wall(bg, items, seed, line_f=.18, ink="1E2A3A"):
+    """Wallpaper HP: kisi heksagon tipis + ikon tersebar di seluruh layar."""
+    global W, H
+    W0, H0 = W, H
+    W, H = PW, PH
+    try:
+        hexes = hex_field(bg, mix(bg, "#3FB6C4", line_f), (-60, -60, PW + 60, PH + 60), s=60, seed=seed,
+                          keep=lambda x, y: .5)
+        icons = scatter(items, (30, 30, PW - 30, PH - 30), 14, (170, 250), seed, ink=ink)
+    finally:
+        W, H = W0, H0
+    return hexes + icons
+
+
+PHONE = [
+    ("phone-molecules-navy", "#16213A", lambda: phone_wall("#16213A", _items(molecules), 21), "molecules on dark navy"),
+    ("phone-atoms-purple", "#251B45", lambda: phone_wall("#251B45", _items(atoms), 22, .22), "atoms on deep purple"),
+    ("phone-lab-teal", "#0F3B47", lambda: phone_wall("#0F3B47", _items(icons_lab_flat, icons_lab2), 23, .3),
+     "laboratory equipment on deep teal"),
+    ("phone-chalkboard", "#2F4A3A",
+     lambda: phone_wall("#2F4A3A", [(chalkify(b, "#2F4A3A"), s_) for b, s_ in _items(icons_lab_flat, molecules)],
+                        24, .25, ink="F2F1EA"), "chalk drawings on green chalkboard"),
+    ("phone-lab-cream", "#FFF6E8", lambda: phone_wall("#FFF6E8", _items(icons_lab_flat, icons_lab2), 25, .2),
+     "laboratory equipment on cream"),
+]
+
+
 def assets():
     out = []
     for key, bg, fn, mood in VARIANTS:
@@ -214,4 +244,13 @@ def assets():
         out.append(dict(name=f"{SET_ID}-{key}", svg=svg, size=6000, png=False,
                         title=f"Chemistry science presentation background, {mood}, copy space vector banner",
                         keywords=KEYWORDS))
+    for key, bg, fn, mood in PHONE:
+        svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{PW * 2}" height="{PH * 2}" viewBox="0 0 {PW} {PH}">\n'
+               f'<rect x="-1" y="-1" width="{PW + 2}" height="{PH + 2}" fill="{bg}"/>'
+               f'<clipPath id="bgc"><rect width="{PW}" height="{PH}"/></clipPath><g clip-path="url(#bgc)">{fn()}</g>'
+               '\n</svg>\n')
+        out.append(dict(name=f"{SET_ID}-{key}", svg=svg, size=3000, png=False,
+                        title=f"Chemistry phone wallpaper, {mood}, vertical 9:16 mobile background vector",
+                        keywords=["phone wallpaper", "mobile wallpaper", "lock screen", "vertical", "9:16", "story",
+                                  "background", "pattern"] + KEYWORDS[:30]))
     return [(SET_ID, out)]

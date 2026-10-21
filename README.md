@@ -7,7 +7,7 @@ Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana,
 
 ## Set yang tersedia
 
-Total 901 aset dalam 54 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 906 aset dalam 54 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -59,7 +59,7 @@ Total 901 aset dalam 54 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file 
 ### 5-latar-presentasi
 | Set | Isi |
 |-----|-----|
-| `chemistry-backgrounds` | 16 latar presentasi/banner 16:9 dengan ruang kosong untuk teks (heksagon + molekul, orbit atom, alat lab, rumus kimia, ubin unsur, bingkai alat lab, papan tulis kapur) |
+| `chemistry-backgrounds` | 16 latar presentasi/banner 16:9 dengan ruang kosong untuk teks (heksagon + molekul, orbit atom, alat lab, rumus kimia, ubin unsur, bingkai alat lab, papan tulis kapur) + 5 wallpaper HP 9:16 |
 
 ### 9-promosi
 Gambar kolase untuk listing toko (Etsy, Lynk.id, Shopee): bundle poster (Inggris & Indonesia), bundle ikon, dan
