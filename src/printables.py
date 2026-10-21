@@ -236,6 +236,39 @@ def bookmarks():
     return W, H, "".join(out)
 
 
+def element_cards(page):
+    """Halaman A4 berisi 20 kartu unsur (4x5) dengan garis potong."""
+    from periodic import CAT, ELEMENTS, NAMES_ID
+    from icons_lab_flat import dark
+    W, H = 800, 1131
+    ink = "#1E2A3A"
+    m = 26
+    cw, ch = (W - 2 * m) / 4, (H - 2 * m) / 5
+    out = [f'<rect x="-1" y="-1" width="{W + 2}" height="{H + 2}" fill="#FFFFFF"/>']
+    for i in range(20):
+        z = page * 20 + i + 1
+        if z > 118:
+            break
+        sym, name, mass, cat = ELEMENTS[z - 1]
+        if poster_kit._lang[0] == "id":
+            name, mass = NAMES_ID[z - 1], mass.replace(".", ",")
+        col = CAT[cat][1]
+        x, y = m + (i % 4) * cw, m + (i // 4) * ch
+        out.append(f'<rect x="{x + 8}" y="{y + 8}" width="{cw - 16}" height="{ch - 16}" rx="14" fill="{col}" '
+                   f'stroke="{dark(col, .3)}" stroke-width="2"/>')
+        out.append(text(str(z), x + 22, y + 34, 18, ink, "SemiBold", "start"))
+        out.append(text(sym, x + cw / 2, y + ch / 2 + 22, 62, ink))
+        nm_size = 17 if len(name) < 11 else 13.5
+        out.append(text(name, x + cw / 2, y + ch - 52, nm_size, ink, "SemiBold"))
+        out.append(text(mass, x + cw / 2, y + ch - 28, 13, ink, "Regular"))
+    dash = 'stroke="#9AA5B1" stroke-width="1" stroke-dasharray="5 6"'
+    for k in range(1, 4):
+        out.append(f'<path d="M{m + k * cw} {m}V{H - m}" {dash}/>')
+    for k in range(1, 5):
+        out.append(f'<path d="M{m} {m + k * ch}H{W - m}" {dash}/>')
+    return W, H, "".join(out)
+
+
 QUIZ = [
     ("What is the chemical symbol for gold?", "Au"), ("What is the common name of H₂O?", "Water"),
     ("Which gas do plants absorb for photosynthesis?", "Carbon dioxide"), ("What is the pH of pure water?", "7"),
@@ -444,6 +477,16 @@ def assets():
             keywords=kw_lang + ["bookmark", "bookmarks", "printable", "chemistry", "science", "reading", "school",
                                 "student", "gift", "teacher", "molecule", "periodic table", "lab", "atom", "a4",
                                 "cut out", "stationery", "vector", "design", "colorful"]))
+        for pg in range(6):
+            W, H, inner = element_cards(pg)
+            out.append(dict(
+                name=f"{SET_ID}-element-cards-{pg + 1}{sfx}", size=3508, png=False,
+                svg=f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 3}" height="{H * 3}" viewBox="0 0 {W} {H}">{inner}</svg>',
+                title=f"Periodic table element cards sheet {pg + 1} of 6{note}, printable A4 cut out chemistry cards",
+                keywords=kw_lang + ["element cards", "periodic table", "chemical elements", "cards", "printable",
+                                    "cut out", "flashcards", "atomic number", "symbol", "chemistry", "science",
+                                    "classroom", "game", "teacher", "student", "a4", "education", "colorful",
+                                    "vector", "learning"]))
     poster_kit.set_lang("en")
     for k in range(4):
         W, H, inner = bingo(k + 1)
