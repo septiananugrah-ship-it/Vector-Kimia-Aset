@@ -9,7 +9,7 @@ Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana,
 
 ## Set yang tersedia
 
-Total 948 aset dalam 54 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 988 aset dalam 56 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -84,6 +84,7 @@ bundle printable. Dibuat otomatis oleh `promo.py` setelah build. Bukan untuk mic
 |-----|-----|
 | `social-media-templates` | 12 desain × 2 warna: post Instagram (did you know, element of the day, kuis, tips lab, rumus hari ini), story 9:16, thumbnail YouTube, banner channel, end screen, kartu judul bab video |
 | `social-media-templates-indonesian` | template yang sama dalam Bahasa Indonesia |
+| `social-element-posts` (+ `-indonesian`) | 20 post Instagram "Element of the day" siap pakai untuk unsur 1–20 |
 
 ## Keluaran per file
 

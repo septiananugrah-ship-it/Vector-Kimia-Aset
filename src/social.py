@@ -99,26 +99,33 @@ def did_you_know(p, W, H):
     return out
 
 
-def element_of_day(p, W, H):
+def element_of_day(p, W, H, z=8):
+    from periodic import CAT, ELEMENTS, NAMES_ID, position
+    sym, name, mass, cat = ELEMENTS[z - 1]
+    key = f"{z:02d}-{name.lower()}"
+    if poster_kit._lang[0] == "id":
+        name, mass = NAMES_ID[z - 1], mass.replace(".", ",")
+    col, row = position(z)
     out = [hexes(80, H - 60, 70, 3, p["line"], 2, 4)]
     m = W * .08
     out.append(pill("ELEMENT OF THE DAY", m, H * .08, W * .026, p["accent"], "#FFFFFF"))
+    if key in ALL:
+        out.append(place(key, W - m - W * .09, H * .12, W * .17))
     ts = W * .42
     tx, ty = (W - ts) / 2, H * .2
-    out.append(f'<rect x="{tx}" y="{ty}" width="{ts}" height="{ts}" rx="{ts * .08}" fill="#8ACBEF" '
+    out.append(f'<rect x="{tx}" y="{ty}" width="{ts}" height="{ts}" rx="{ts * .08}" fill="{CAT[cat][1]}" '
                f'stroke="#1E2A3A" stroke-width="{W * .006}"/>'
-               + text("8", tx + ts * .1, ty + ts * .18, ts * .12, "#1E2A3A", "SemiBold", "start")
-               + text("O", tx + ts / 2, ty + ts * .66, ts * .46, "#1E2A3A", "Bold")
-               + text("Oxygen", tx + ts / 2, ty + ts * .82, ts * .1, "#1E2A3A", "SemiBold")
-               + text("15,999" if poster_kit._lang[0] == "id" else "15.999", tx + ts / 2, ty + ts * .93, ts * .07, "#1E2A3A", "Regular"))
-    facts = [("Atomic number", "8"), ("Atomic mass", "15,999" if poster_kit._lang[0] == "id" else "15.999"),
-             ("Group", "16"), ("Period", "2")]
+               + text(str(z), tx + ts * .1, ty + ts * .18, ts * .12, "#1E2A3A", "SemiBold", "start")
+               + text(sym, tx + ts / 2, ty + ts * .66, ts * (.46 if len(sym) == 1 else .4), "#1E2A3A", "Bold")
+               + text(name, tx + ts / 2, ty + ts * .82, ts * .1, "#1E2A3A", "SemiBold")
+               + text(mass, tx + ts / 2, ty + ts * .93, ts * .07, "#1E2A3A", "Regular"))
+    facts = [("Atomic number", str(z)), ("Atomic mass", mass), ("Group", str(col + 1)), ("Period", str(row + 1))]
     fy = ty + ts + H * .07
     cw = (W - 2 * m - 3 * 16) / 4
     for i, (k, v) in enumerate(facts):
         x = m + i * (cw + 16)
         out.append(f'<rect x="{x:.1f}" y="{fy:.1f}" width="{cw:.1f}" height="{H * .12:.1f}" rx="18" fill="{p["card"]}"/>'
-                   + text(v, x + cw / 2, fy + H * .065, W * .045, p["accent2"], "Bold")
+                   + text(v, x + cw / 2, fy + H * .065, W * (.045 if len(v) < 7 else .036), p["accent2"], "Bold")
                    + text(k, x + cw / 2, fy + H * .1, W * .02, p["sub"], "SemiBold"))
     out.append(handle(p, W / 2, H - m * .8, W * .026, "middle"))
     return out
@@ -296,6 +303,24 @@ def assets():
                                 title=f"{title}{note}, {p['mood']} background, editable vector layout",
                                 keywords=(["indonesian", "bahasa indonesia"] if lang == "id" else []) + KEYWORDS))
         sets.append((set_id, out))
+        # paket post "Element of the day" untuk unsur 1-20 (tema navy)
+        p = PALETTES["navy"]
+        eid = "social-element-posts" + ("" if lang == "en" else "-indonesian")
+        posts = []
+        from periodic import ELEMENTS
+        for z in range(1, 21):
+            inner = "".join(element_of_day(p, 1080, 1080, z))
+            name = ELEMENTS[z - 1][1]
+            svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="2160" viewBox="0 0 1080 1080">\n'
+                   f'<rect x="-1" y="-1" width="1082" height="1082" fill="{p["bg"]}"/>'
+                   f'<clipPath id="sm"><rect width="1080" height="1080"/></clipPath><g clip-path="url(#sm)">{inner}</g>'
+                   '\n</svg>\n')
+            note = " in Indonesian language" if lang == "id" else ""
+            posts.append(dict(name=f"{eid}-{z:02d}-{name.lower()}", svg=svg, size=4000, png=False,
+                              title=f"{name} element of the day social media post{note}, chemistry Instagram template",
+                              keywords=(["indonesian", "bahasa indonesia"] if lang == "id" else [])
+                              + [name.lower(), "element of the day", "chemical element"] + KEYWORDS))
+        sets.append((eid, posts))
     poster_kit.set_lang("en")
     return sets
 
