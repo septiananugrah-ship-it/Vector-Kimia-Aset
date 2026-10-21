@@ -11,7 +11,7 @@ on:
         default: ""
   push:
     branches: [main]
-    paths: ["src/**", "fonts/**", "build.py", "promo.py", "requirements.txt"]
+    paths: ["src/**", "fonts/**", "build.py", "promo.py", "gallery.py", "requirements.txt", ".github/workflows/**"]
 
 # push beruntun: batalkan run lama, cukup bangun commit terbaru
 concurrency:
@@ -37,6 +37,13 @@ jobs:
       - name: Gambar promosi bundle
         if: ${{ !inputs.only }}
         run: python promo.py
+      - name: Galeri pratinjau (GitHub Pages)
+        if: ${{ !inputs.only }}
+        run: python gallery.py
+      - uses: actions/upload-pages-artifact@v3
+        if: ${{ !inputs.only }}
+        with:
+          path: dist/galeri
       # satu artefak unduhan per kategori
       - uses: actions/upload-artifact@v4
         with:
@@ -96,3 +103,20 @@ jobs:
         with:
           name: katalog
           path: dist/katalog.csv
+
+  # Galeri di https://<pemilik>.github.io/<repo>/ — aktifkan sekali di Settings → Pages → Source: GitHub Actions.
+  # Jika Pages belum aktif, langkah ini gagal tanpa membuat build merah.
+  pages:
+    needs: build
+    if: ${{ !inputs.only }}
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

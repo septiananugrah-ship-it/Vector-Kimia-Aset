@@ -3,6 +3,8 @@
 Aset vektor microstock bertema kimia yang dibuat sepenuhnya lewat kode
 (SVG digambar dari `src/`), lalu diekspor ke format yang diminta situs microstock.
 
+**Galeri pratinjau semua aset:** https://septiananugrah-ship-it.github.io/Vector-Kimia-Aset/ (aktifkan sekali: Settings → Pages → Source: *GitHub Actions*).
+
 Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana, cara unggah, dan hal yang wajib dicek.
 
 ## Set yang tersedia
