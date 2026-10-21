@@ -10,7 +10,10 @@ import icons_lab2
 import icons_lab_flat
 import molecules
 from render import GRID, fitted, style_attrs
-from textpath import formula, text, width
+import poster_kit
+from poster_i18n import TR
+from poster_kit import text, tr
+from textpath import formula, width
 
 SET_ID = "social-media-templates"
 
@@ -50,6 +53,7 @@ def wrap(s, size, max_w, weight="Regular"):
 
 
 def para(s, x, y, size, fill, max_w, weight="Regular", anchor="start", lh=1.4):
+    s = tr(s)
     return "".join(text(line, x, y + i * size * lh, size, fill, weight, anchor)
                    for i, line in enumerate(wrap(s, size, max_w, weight)))
 
@@ -69,6 +73,7 @@ def hexes(cx, cy, s, n, col, seed, w=3):
 
 
 def pill(label, x, y, size, bg, fg):
+    label = tr(label)
     w = width(label, size, "Bold") + size * 1.6
     h = size * 1.9
     return (f'<rect x="{x}" y="{y}" width="{w:.1f}" height="{h:.1f}" rx="{h / 2:.1f}" fill="{bg}"/>'
@@ -105,8 +110,9 @@ def element_of_day(p, W, H):
                + text("8", tx + ts * .1, ty + ts * .18, ts * .12, "#1E2A3A", "SemiBold", "start")
                + text("O", tx + ts / 2, ty + ts * .66, ts * .46, "#1E2A3A", "Bold")
                + text("Oxygen", tx + ts / 2, ty + ts * .82, ts * .1, "#1E2A3A", "SemiBold")
-               + text("15.999", tx + ts / 2, ty + ts * .93, ts * .07, "#1E2A3A", "Regular"))
-    facts = [("Atomic number", "8"), ("Atomic mass", "15.999"), ("Group", "16"), ("Period", "2")]
+               + text("15,999" if poster_kit._lang[0] == "id" else "15.999", tx + ts / 2, ty + ts * .93, ts * .07, "#1E2A3A", "Regular"))
+    facts = [("Atomic number", "8"), ("Atomic mass", "15,999" if poster_kit._lang[0] == "id" else "15.999"),
+             ("Group", "16"), ("Period", "2")]
     fy = ty + ts + H * .07
     cw = (W - 2 * m - 3 * 16) / 4
     for i, (k, v) in enumerate(facts):
@@ -231,14 +237,42 @@ KEYWORDS = ["social media", "template", "instagram", "post", "story", "youtube t
 
 
 def assets():
-    out = []
-    for key, fn, (W, H), title in DESIGNS:
-        for pname, p in PALETTES.items():
-            inner = "".join(fn(p, W, H))
-            svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 2}" height="{H * 2}" viewBox="0 0 {W} {H}">\n'
-                   f'<rect x="-1" y="-1" width="{W + 2}" height="{H + 2}" fill="{p["bg"]}"/>'
-                   f'<clipPath id="sm"><rect width="{W}" height="{H}"/></clipPath><g clip-path="url(#sm)">{inner}</g>'
-                   '\n</svg>\n')
-            out.append(dict(name=f"{SET_ID}-{key}-{pname}", svg=svg, size=4000, png=False,
-                            title=f"{title}, {p['mood']} background, editable vector layout", keywords=KEYWORDS))
-    return [(SET_ID, out)]
+    sets = []
+    for lang, set_id in (("en", SET_ID), ("id", SET_ID + "-indonesian")):
+        poster_kit.set_lang(lang)
+        out = []
+        for key, fn, (W, H), title in DESIGNS:
+            for pname, p in PALETTES.items():
+                inner = "".join(fn(p, W, H))
+                svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 2}" height="{H * 2}" '
+                       f'viewBox="0 0 {W} {H}">\n<rect x="-1" y="-1" width="{W + 2}" height="{H + 2}" fill="{p["bg"]}"/>'
+                       f'<clipPath id="sm"><rect width="{W}" height="{H}"/></clipPath><g clip-path="url(#sm)">{inner}</g>'
+                       '\n</svg>\n')
+                note = " in Indonesian language" if lang == "id" else ""
+                out.append(dict(name=f"{set_id}-{key}-{pname}", svg=svg, size=4000, png=False,
+                                title=f"{title}{note}, {p['mood']} background, editable vector layout",
+                                keywords=(["indonesian", "bahasa indonesia"] if lang == "id" else []) + KEYWORDS))
+        sets.append((set_id, out))
+    poster_kit.set_lang("en")
+    return sets
+
+
+TR.update({
+    "CHEMISTRY FACT": "FAKTA KIMIA", "DID YOU": "TAHUKAH", "KNOW?": "KAMU?",
+    "Write your amazing chemistry fact here. Keep it short, clear and easy to read so your audience remembers it.":
+        "Tulis fakta kimia menarikmu di sini. Buat singkat, jelas, dan mudah dibaca agar mudah diingat.",
+    "ELEMENT OF THE DAY": "UNSUR HARI INI", "Atomic number": "Nomor atom", "Atomic mass": "Massa atom",
+    "Group": "Golongan", "Period": "Periode", "CHEMISTRY QUIZ": "KUIS KIMIA",
+    "Which gas makes up most of the Earth's atmosphere?": "Gas apa yang paling banyak di atmosfer Bumi?",
+    "Comment your answer below!": "Tulis jawabanmu di kolom komentar!", "LAB SAFETY TIP": "TIPS KESELAMATAN LAB",
+    "Always wear": "Selalu pakai", "safety goggles": "kacamata pelindung",
+    "Replace this text with a short explanation of your lab tip.": "Ganti teks ini dengan penjelasan singkat tipsmu.",
+    "FORMULA OF THE DAY": "RUMUS HARI INI",
+    "Water: two hydrogen atoms bonded to one oxygen atom": "Air: dua atom hidrogen terikat pada satu atom oksigen",
+    "Write your amazing chemistry fact here. Keep it short and easy to read.":
+        "Tulis fakta kimia menarikmu di sini. Buat singkat dan mudah dibaca.",
+    "Swipe up to learn more": "Geser ke atas untuk selengkapnya", "QUIZ TIME": "WAKTUNYA KUIS",
+    "CHEMISTRY": "KIMIA", "YOUR VIDEO": "JUDUL VIDEO", "TITLE HERE": "KAMU DI SINI",
+    "Short subtitle or episode number": "Subjudul singkat atau nomor episode", "ACID": "ASAM", "BASE": "BASA",
+    "Oxygen": "Oksigen", "Nitrogen": "Nitrogen", "Carbon dioxide": "Karbon dioksida", "Argon": "Argon",
+})

@@ -5,7 +5,7 @@ Aset vektor microstock bertema kimia yang dibuat sepenuhnya lewat kode
 
 ## Set yang tersedia
 
-Total 479 aset dalam 28 ZIP, dipetakan ke 7 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 513 aset dalam 29 ZIP, dipetakan ke 7 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -30,8 +30,8 @@ Total 479 aset dalam 28 ZIP, dipetakan ke 7 kategori. Daftar lengkap semua file 
 | Set | Isi |
 |-----|-----|
 | `periodic-table-posters` | tabel periodik 118 unsur: lengkap (terang & gelap), hanya lambang, dan lembar kerja kosong; bahasa Inggris & Indonesia |
-| `chemistry-posters` | 20 poster × 2 tema (gelap & terang): bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi, gugus fungsi organik, deret alkana, struktur atom, jenis ikatan kimia, tata tertib keselamatan lab, tren periodik, konfigurasi elektron, indikator asam-basa, teknik pemisahan campuran, hukum gas, faktor laju reaksi, diagram energi eksoterm/endoterm, sel Volta, konsep mol |
-| `chemistry-posters-indonesian` | 20 poster yang sama dalam Bahasa Indonesia |
+| `chemistry-posters` | 24 poster × 2 tema (gelap & terang): bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi, gugus fungsi organik, deret alkana, struktur atom, jenis ikatan kimia, tata tertib keselamatan lab, tren periodik, konfigurasi elektron, indikator asam-basa, teknik pemisahan campuran, hukum gas, faktor laju reaksi, diagram energi eksoterm/endoterm, sel Volta, konsep mol, perubahan fisika vs kimia, asam vs basa, penggolongan materi, tata nama IUPAC |
+| `chemistry-posters-indonesian` | 24 poster yang sama dalam Bahasa Indonesia |
 
 ### 4-pola-seamless
 | Set | Isi |
@@ -61,6 +61,7 @@ Total 479 aset dalam 28 ZIP, dipetakan ke 7 kategori. Daftar lengkap semua file 
 | Set | Isi |
 |-----|-----|
 | `social-media-templates` | 9 desain × 2 warna: post Instagram (did you know, element of the day, kuis, tips lab, rumus hari ini), story 9:16, thumbnail YouTube |
+| `social-media-templates-indonesian` | template yang sama dalam Bahasa Indonesia |
 
 ## Keluaran per file
 
@@ -100,7 +101,7 @@ centang sendiri di portal. Situs lain punya aturan sendiri; cek aturan terbaru t
 - `src/icons_*.py`, `src/molecules.py`, `src/atoms.py`: set ikon. Tiap ikon punya `id`, `title`,
   `keywords`, dan `body` (elemen SVG di grid 64×64). `build.py` menskalakan ikon agar mengisi bingkai,
   menyeragamkan tebal garis, lalu membuat varian glyph (`GLYPH = True`) dan pola seamless (`PATTERNS`).
-- `src/periodic.py`, `src/posters.py`, `src/posters2.py`, `src/posters3.py`, `src/posters4.py`, `src/hex_patterns.py`, `src/backgrounds.py`: aset utuh
+- `src/periodic.py`, `src/posters.py`, `src/posters2.py`, `src/posters3.py`, `src/posters4.py`, `src/posters5.py`, `src/hex_patterns.py`, `src/backgrounds.py`: aset utuh
   lewat fungsi `assets()`. Teks poster diterjemahkan lewat kamus di `src/poster_i18n.py`.
 - `src/render.py`: pembantu render ikon bersama; `category()` di `build.py` memetakan set ke folder kategori.
 - `src/textpath.py`: teks diubah menjadi outline (wajib di microstock) memakai font Inter di `fonts/`
