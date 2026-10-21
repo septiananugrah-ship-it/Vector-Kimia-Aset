@@ -96,9 +96,9 @@ QN = [
 
 
 def _orbital_s(cx, cy, r, col):
-    return (f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{col}" fill-opacity=".85"/>'
+    return (f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{col}"/>'
             f'<ellipse cx="{cx - r * .3:.1f}" cy="{cy - r * .35:.1f}" rx="{r * .3:.1f}" ry="{r * .18:.1f}" '
-            f'transform="rotate(-35 {cx - r * .3:.1f} {cy - r * .35:.1f})" fill="#FFFFFF" fill-opacity=".6"/>')
+            f'transform="rotate(-35 {cx - r * .3:.1f} {cy - r * .35:.1f})" fill="{mix(col, "#FFFFFF", .6)}"/>')
 
 
 def _lobe(cx, cy, length, wdt, ang, col):
@@ -108,8 +108,7 @@ def _lobe(cx, cy, length, wdt, ang, col):
     c1 = (cx + math.cos(a) * length * .7 + nx, cy + math.sin(a) * length * .7 + ny)
     c2 = (cx + math.cos(a) * length * .7 - nx, cy + math.sin(a) * length * .7 - ny)
     return (f'<path d="M{cx} {cy}C{c1[0]:.1f} {c1[1]:.1f} {tx + nx * .9:.1f} {ty + ny * .9:.1f} {tx:.1f} {ty:.1f}'
-            f'C{tx - nx * .9:.1f} {ty - ny * .9:.1f} {c2[0]:.1f} {c2[1]:.1f} {cx} {cy}z" fill="{col}" '
-            f'fill-opacity=".85"/>')
+            f'C{tx - nx * .9:.1f} {ty - ny * .9:.1f} {c2[0]:.1f} {c2[1]:.1f} {cx} {cy}z" fill="{col}"/>')
 
 
 def quantum(th):
