@@ -178,6 +178,26 @@ def bottle_labels():
     return W, H, "".join(out)
 
 
+def safety_sign(rule, desc, icon_id, color):
+    """Rambu A4 satu aturan keselamatan: pita judul, ikon besar dalam lingkaran, teks besar."""
+    W, H = 800, 1131
+    ink = "#1E2A3A"
+    out = [f'<rect x="-1" y="-1" width="{W + 2}" height="{H + 2}" fill="#FFFFFF"/>',
+           f'<rect x="24" y="24" width="{W - 48}" height="{H - 48}" rx="28" fill="none" stroke="{color}" stroke-width="10"/>',
+           f'<rect x="24" y="24" width="{W - 48}" height="150" rx="28" fill="{color}"/>',
+           f'<rect x="24" y="120" width="{W - 48}" height="54" fill="{color}"/>',
+           text("LAB SAFETY", W / 2, 120, 64, "#FFFFFF"),
+           f'<circle cx="{W / 2}" cy="500" r="240" fill="#F2F6FA" stroke="{color}" stroke-width="12"/>',
+           icon(icon_id, W / 2, 500, 330)]
+    lines = wrap_words(tr(rule), 18)
+    for k, line in enumerate(lines):
+        out.append(text(line, W / 2, 860 + k * 70, 60, ink, "Bold"))
+    dl = wrap_words(tr(desc), 34)
+    for k, line in enumerate(dl):
+        out.append(text(line, W / 2, 870 + len(lines) * 70 + k * 40, 30, "#5B6878", "SemiBold"))
+    return W, H, "".join(out)
+
+
 QUIZ = [
     ("What is the chemical symbol for gold?", "Au"), ("What is the common name of H₂O?", "Water"),
     ("Which gas do plants absorb for photosynthesis?", "Carbon dioxide"), ("What is the pH of pure water?", "7"),
@@ -274,7 +294,7 @@ TR.update({
     "LABEL THE LAB EQUIPMENT": "TULIS NAMA ALAT LAB",
     "Write the name of each laboratory tool on the line.": "Tuliskan nama setiap alat laboratorium pada garis.",
     "Name: ____________________   Class: ________": "Nama: ____________________   Kelas: ________",
-    "CHEMISTRY ELEMENT BINGO": "BINGO UNSUR KIMIA", "QUESTION": "SOAL", "ANSWER": "JAWABAN",
+    "CHEMISTRY ELEMENT BINGO": "BINGO UNSUR KIMIA", "LAB SAFETY": "KESELAMATAN LAB", "QUESTION": "SOAL", "ANSWER": "JAWABAN",
     "What is the chemical symbol for gold?": "Apa lambang kimia emas?",
     "What is the common name of H₂O?": "Apa nama umum dari H₂O?",
     "Which gas do plants absorb for photosynthesis?": "Gas apa yang diserap tumbuhan untuk fotosintesis?",
@@ -364,6 +384,19 @@ def assets():
                                         "chemistry", "science", "game", "classroom", "printable", "school",
                                         "student", "teacher", "a4", "education", "learning", "review",
                                         "test", "vector"]))
+        from posters2 import SAFETY
+        sign_cols = ["#2E6FD8", "#2E6FD8", "#2E6FD8", "#E8A317", "#D93A2B", "#E8A317", "#2E6FD8", "#D93A2B",
+                     "#1E9C6A", "#1E9C6A"]
+        for k, (rule, desc, icon_id) in enumerate(SAFETY):
+            W, H, inner = safety_sign(rule, desc, icon_id, sign_cols[k])
+            slug = rule.lower().replace(" ", "-").replace("'", "")
+            out.append(dict(
+                name=f"{SET_ID}-safety-sign-{k + 1:02d}-{slug}{sfx}", size=3508, png=False,
+                svg=f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 3}" height="{H * 3}" viewBox="0 0 {W} {H}">{inner}</svg>',
+                title=f"Laboratory safety sign: {rule.lower()}{note}, printable A4 chemistry lab poster vector",
+                keywords=kw_lang + ["lab safety", "safety sign", "laboratory sign", "warning", "rules", "school lab",
+                                    "chemistry", "science", "poster", "printable", "a4", "classroom", "safety",
+                                    "ppe", "notice", "signage", "vector", "precaution", "education", "teacher"]))
     poster_kit.set_lang("en")
     for k in range(4):
         W, H, inner = bingo(k + 1)
