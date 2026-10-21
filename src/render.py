@@ -51,3 +51,24 @@ def fitted(body, stroke, shadow=False):
     out += (f'<g transform="translate({tx:.3f} {ty:.3f}) scale({sc:.4f})" '
             f'stroke-width="{stroke / sc:.3f}">{body}</g>')
     return out
+
+
+def outlinify(body):
+    """Varian outline (siap diwarnai): semua isi jadi putih, garis jadi gelap.
+
+    - Teks (grup dari textpath) tetap gelap agar terbaca.
+    - Garis berlapis bertanda data-ring (garis tebal berwarna di atas garis
+      gelap) dijadikan putih, sehingga tampil sebagai tabung berongga.
+    """
+    import re
+    body = re.sub(r'<g fill="#[0-9A-Fa-f]{6}" stroke="none"><path transform',
+                  '<g fill="#1E2A3A" stroke="none" data-text="1"><path transform', body)
+    body = re.sub(r'stroke="#[0-9A-Fa-f]{6}"([^>]*data-ring)', r'stroke="#FFFFFF"\1', body)
+
+    def sub(m):
+        attr, col = m.group(1), m.group(2).upper()
+        if attr == "fill":
+            return 'fill="#FFFFFF"'
+        return f'stroke="{"#FFFFFF" if col == "#FFFFFF" else "#1E2A3A"}"'
+    body = re.sub(r'(fill|stroke)="(#[0-9A-Fa-f]{6})"', sub, body)
+    return body.replace('<g fill="#FFFFFF" stroke="none" data-text="1">', '<g fill="#1E2A3A" stroke="none">')

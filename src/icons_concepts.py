@@ -32,7 +32,7 @@ COMMON_KEYWORDS = [
 def ring_line(d, col, w=3.4):
     """Garis tebal berwarna dengan tepi gelap (dua lapis stroke)."""
     return (f'<path d="{d}" stroke="{N}" stroke-width="{w + 2.6}" fill="none" stroke-linecap="round"/>'
-            f'<path d="{d}" stroke="{col}" stroke-width="{w}" fill="none" stroke-linecap="round"/>')
+            f'<path d="{d}" stroke="{col}" stroke-width="{w}" fill="none" stroke-linecap="round" data-ring="1"/>')
 
 
 def circle(x, y, r):
@@ -45,7 +45,7 @@ def _atom():
         out += (f'<ellipse cx="32" cy="32" rx="28" ry="10.5" transform="rotate({a} 32 32)" fill="none" '
                 f'stroke="{N}" stroke-width="5.6"/>'
                 f'<ellipse cx="32" cy="32" rx="28" ry="10.5" transform="rotate({a} 32 32)" fill="none" '
-                f'stroke="{T}" stroke-width="3"/>')
+                f'stroke="{T}" stroke-width="3" data-ring="1"/>')
     for a in (0, 60, 120):
         ex = 32 + 28 * math.cos(math.radians(a))
         ey = 32 + 28 * math.sin(math.radians(a))
@@ -159,7 +159,7 @@ def _benzene():
     d = "M" + "L".join(f"{x:.2f} {y:.2f}" for x, y in pts) + "z"
     return (solid(d, G, 9.5, 54.5) +
             f'<circle cx="32" cy="32" r="14" fill="none" stroke="{N}" stroke-width="6"/>'
-            f'<circle cx="32" cy="32" r="14" fill="none" stroke="{T}" stroke-width="3.2"/>')
+            f'<circle cx="32" cy="32" r="14" fill="none" stroke="{T}" stroke-width="3.2" data-ring="1"/>')
 
 
 def _cloud():

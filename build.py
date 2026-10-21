@@ -31,7 +31,7 @@ ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT / "src"))
 
 MODULES = ["icons_lab", "icons_lab_flat", "icons_lab2", "molecules", "atoms", "icons_concepts", "periodic", "posters",
-           "hex_patterns", "backgrounds", "social"]
+           "hex_patterns", "backgrounds", "social", "coloring"]
 
 
 def category(set_id):
@@ -42,13 +42,15 @@ def category(set_id):
         return "5-latar-presentasi"
     if set_id.startswith("social"):
         return "6-template-sosmed"
+    if "coloring" in set_id:
+        return "7-lembar-mewarnai"
     if set_id.startswith(("periodic", "chemistry-posters")):
         return "3-poster-edukasi"
     if set_id.startswith(("molecule", "bohr", "concept")):
         return "2-molekul-atom"
     return "1-alat-lab"
 
-from render import GRID, STROKE, fitted, style_attrs  # noqa: E402
+from render import GRID, STROKE, fitted, outlinify, style_attrs  # noqa: E402
 
 PAD = 3  # ruang kosong di sekeliling ikon, dalam satuan grid
 GLYPH_INK = "#1E2A3A"
@@ -175,6 +177,18 @@ def icon_set_assets(mod):
             f"{theme.capitalize()} solid glyph icons set, 20 black vector pictograms",
             mod.SET_KEYWORDS, mod.COMMON_KEYWORDS, False,
             extra_kw=("glyph", "solid", "black", "silhouette", "pictogram", "monochrome"))))
+
+    if getattr(mod, "GLYPH", False):
+        oid = mod.SET_ID.replace("-flat-icons", "").replace("-icons", "") + "-outline-icons"
+        ob = [outlinify(ic["body"]) for ic in mod.ICONS]
+        theme = mod.THEME
+        out.append((oid, variant(
+            oid, ob,
+            lambda ic: f"{ic.get('name') or ic['id'].replace('-', ' ').capitalize()} outline line icon, "
+                       f"{theme} vector for coloring",
+            f"{theme.capitalize()} outline line icons set, 20 black and white vector icons",
+            mod.SET_KEYWORDS, mod.COMMON_KEYWORDS, False,
+            extra_kw=("outline", "line icon", "line art", "black and white", "coloring", "linear"))))
 
     if getattr(mod, "PATTERNS", None):
         pid = mod.SET_ID.replace("-icons", "") + "-patterns"

@@ -5,7 +5,7 @@ Aset vektor microstock bertema kimia yang dibuat sepenuhnya lewat kode
 
 ## Set yang tersedia
 
-Total 366 aset dalam 22 ZIP, dipetakan ke 6 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 479 aset dalam 28 ZIP, dipetakan ke 7 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -15,6 +15,7 @@ Total 366 aset dalam 22 ZIP, dipetakan ke 6 kategori. Daftar lengkap semua file 
 | `lab-flat-glyph-icons` | versi glyph (solid gelap) |
 | `lab2-flat-icons` | 20 alat & perlengkapan lab jilid 2 (botol reagen, kondensor, sentrifus, jas lab, APD, dll.) |
 | `lab2-flat-glyph-icons` | versi glyph jilid 2 |
+| `lab-outline-icons`, `lab2-outline-icons` | versi outline (garis hitam, isi putih) jilid 1 & 2 |
 
 ### 2-molekul-atom
 | Set | Isi |
@@ -23,6 +24,7 @@ Total 366 aset dalam 22 ZIP, dipetakan ke 6 kategori. Daftar lengkap semua file 
 | `molecule-glyph-icons` | versi glyph model molekul |
 | `bohr-atom-icons` | model atom Bohr unsur 1–20 |
 | `bohr-atom-glyph-icons` | versi glyph model atom |
+| `molecule-outline-icons`, `bohr-atom-outline-icons`, `concept-outline-icons` | versi outline molekul, atom, dan konsep |
 
 ### 3-poster-edukasi
 | Set | Isi |
@@ -50,6 +52,11 @@ Total 366 aset dalam 22 ZIP, dipetakan ke 6 kategori. Daftar lengkap semua file 
 |-----|-----|
 | `chemistry-backgrounds` | 11 latar presentasi/banner 16:9 dengan ruang kosong untuk teks (heksagon + molekul, orbit atom, alat lab, rumus kimia, ubin unsur) |
 
+### 7-lembar-mewarnai
+| Set | Isi |
+|-----|-----|
+| `chemistry-coloring-pages` | 4 lembar mewarnai A4 (alat lab ×2, sains, molekul), bahasa Inggris & Indonesia |
+
 ### 6-template-sosmed
 | Set | Isi |
 |-----|-----|
@@ -67,7 +74,7 @@ Total 366 aset dalam 22 ZIP, dipetakan ke 6 kategori. Daftar lengkap semua file 
 
 **Lewat GitHub:** tab *Actions* → **Buat aset** → *Run workflow*. Setelah selesai, unduh
 artefak per kategori (`1-alat-lab`, `2-molekul-atom`, `3-poster-edukasi`, `4-pola-seamless`,
-`5-latar-presentasi`, `6-template-sosmed`) dan `katalog`. Workflow juga jalan otomatis
+`5-latar-presentasi`, `6-template-sosmed`, `7-lembar-mewarnai`) dan `katalog`. Workflow juga jalan otomatis
 setiap ada perubahan di `src/` atau `build.py` pada branch `main`.
 
 **Lokal:**

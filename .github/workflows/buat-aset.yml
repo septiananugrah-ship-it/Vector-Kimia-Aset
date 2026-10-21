@@ -73,5 +73,11 @@ jobs:
           if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         with:
+          name: 7-lembar-mewarnai
+          path: dist/7-lembar-mewarnai/*.zip
+          compression-level: 0
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
           name: katalog
           path: dist/katalog.csv
