@@ -72,3 +72,17 @@ def outlinify(body):
         return f'stroke="{"#FFFFFF" if col == "#FFFFFF" else "#1E2A3A"}"'
     body = re.sub(r'(fill|stroke)="(#[0-9A-Fa-f]{6})"', sub, body)
     return body.replace('<g fill="#FFFFFF" stroke="none" data-text="1">', '<g fill="#1E2A3A" stroke="none">')
+
+
+def chalkify(body, bg, chalk="#F2F1EA"):
+    """Gaya kapur di papan tulis: isi sewarna papan, garis dan teks berwarna kapur."""
+    import re
+    body = re.sub(r'<g fill="#[0-9A-Fa-f]{6}" stroke="none"><path transform',
+                  '<g fill="@CHALK@" stroke="none"><path transform', body)
+
+    def sub(m):
+        attr = m.group(1)
+        return f'{attr}="{bg if attr == "fill" else chalk}"'
+    body = re.sub(r'(fill|stroke)="(#[0-9A-Fa-f]{6})"', sub, body)
+    body = re.sub(r'stroke="#[0-9A-Fa-f]{6}"([^>]*data-ring)', f'stroke="{bg}"\\1', body)
+    return body.replace("@CHALK@", chalk)

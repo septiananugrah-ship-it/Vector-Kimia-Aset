@@ -11,7 +11,7 @@ import atoms
 import icons_lab2
 import icons_lab_flat
 import molecules
-from render import GRID, fitted, style_attrs
+from render import GRID, chalkify, fitted, style_attrs
 from textpath import formula, text, width
 
 SET_ID = "chemistry-backgrounds"
@@ -47,12 +47,12 @@ def hex_field(bg, line, region, s=46, seed=1, keep=lambda x, y: 1.0):
             f'<g fill="none" stroke="{line}" stroke-width="2.4">{"".join(accents)}</g>')
 
 
-def place(body, stroke, x, y, size, rot=0):
+def place(body, stroke, x, y, size, rot=0, ink="1E2A3A"):
     return (f'<g transform="translate({x:.1f} {y:.1f}) rotate({rot:.1f}) scale({size / GRID:.4f}) '
-            f'translate({-GRID / 2} {-GRID / 2})"><g {style_attrs(stroke)}>{fitted(body, stroke)}</g></g>')
+            f'translate({-GRID / 2} {-GRID / 2})"><g {style_attrs(stroke, ink)}>{fitted(body, stroke)}</g></g>')
 
 
-def scatter(items, region, n, size_rng, seed, rot=25, min_gap=1.05):
+def scatter(items, region, n, size_rng, seed, rot=25, min_gap=1.05, ink="1E2A3A"):
     """Sebar ikon acak tanpa saling tumpuk di region."""
     rnd = random.Random(seed)
     x0, y0, x1, y1 = region
@@ -66,7 +66,7 @@ def scatter(items, region, n, size_rng, seed, rot=25, min_gap=1.05):
             continue
         placed.append((x, y, s))
         body, stroke = items[len(placed) % len(items)]
-        out.append(place(body, stroke, x, y, s, rnd.uniform(-rot, rot)))
+        out.append(place(body, stroke, x, y, s, rnd.uniform(-rot, rot), ink))
     return "".join(out)
 
 
@@ -145,6 +145,37 @@ def bg_element_tiles(bg, seed):
     return "".join(out)
 
 
+def bg_frame(bg, seed, size=150):
+    """Ikon alat lab mengelilingi tepi, tengah kosong (untuk slide/sertifikat)."""
+    rnd = random.Random(seed)
+    items = _items(icons_lab_flat, icons_lab2)
+    rnd.shuffle(items)
+    out, k = [], 0
+    step = size * 1.25
+    pos = [(x, 95) for x in range(110, W - 60, int(step))] + [(x, H - 95) for x in range(110, W - 60, int(step))]
+    pos += [(95, y) for y in range(int(95 + step), H - 150, int(step))]
+    pos += [(W - 95, y) for y in range(int(95 + step), H - 150, int(step))]
+    for x, y in pos:
+        body, stroke = items[k % len(items)]
+        k += 1
+        out.append(place(body, stroke, x, y, size * rnd.uniform(.8, .95), rnd.uniform(-12, 12)))
+    return "".join(out)
+
+
+def bg_chalk(bg, seed):
+    """Papan tulis: ikon & rumus bergaya kapur di tepi, tengah kosong."""
+    rnd = random.Random(seed)
+    chalk = "#F2F1EA"
+    items = [(chalkify(b, bg, chalk), s) for b, s in _items(icons_lab_flat, molecules)]
+    rnd.shuffle(items)
+    out = [scatter(items, (40, 30, W * .3, H - 30), 6, (140, 190), seed, ink=chalk[1:]),
+           scatter(items, (W * .7, 30, W - 40, H - 30), 6, (140, 190), seed + 1, ink=chalk[1:])]
+    for w_ in ("H2O", "CO2", "NaCl", "CH4", "pH", "O2"):
+        x = rnd.choice((rnd.uniform(W * .32, W * .4), rnd.uniform(W * .6, W * .68)))
+        out.append(formula(w_, x, rnd.uniform(120, H - 60), rnd.uniform(36, 56), mix(bg, chalk, .55), "SemiBold"))
+    return "".join(out)
+
+
 VARIANTS = [
     ("hex-molecules-navy", "#16213A", lambda: bg_hex_molecules("#16213A", .22, 1), "dark navy with hexagon grid and molecules"),
     ("hex-molecules-white", "#FFFFFF", lambda: bg_hex_molecules("#FFFFFF", .28, 2), "white with hexagon grid and molecules"),
@@ -159,6 +190,11 @@ VARIANTS = [
     ("formulas-green", "#123A2E", lambda: bg_formulas("#123A2E", 9), "dark green with chemical formulas"),
     ("element-tiles-navy", "#16213A", lambda: bg_element_tiles("#16213A", 10), "dark navy with periodic element tiles"),
     ("element-tiles-white", "#F5F7FA", lambda: bg_element_tiles("#F5F7FA", 11), "white with periodic element tiles"),
+    ("frame-lab-white", "#FFFFFF", lambda: bg_frame("#FFFFFF", 12), "white frame of laboratory equipment"),
+    ("frame-lab-navy", "#16213A", lambda: bg_frame("#16213A", 13), "dark navy frame of laboratory equipment"),
+    ("frame-lab-cream", "#FFF6E8", lambda: bg_frame("#FFF6E8", 14), "cream frame of laboratory equipment"),
+    ("chalkboard-green", "#2F4A3A", lambda: bg_chalk("#2F4A3A", 15), "green chalkboard with chalk drawings"),
+    ("chalkboard-black", "#262B2E", lambda: bg_chalk("#262B2E", 16), "black chalkboard with chalk drawings"),
 ]
 
 KEYWORDS = ["background", "presentation", "slide", "banner", "copy space", "chemistry", "science", "template",

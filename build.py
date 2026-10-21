@@ -31,7 +31,7 @@ ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT / "src"))
 
 MODULES = ["icons_lab", "icons_lab_flat", "icons_lab2", "molecules", "atoms", "icons_concepts", "element_tiles",
-           "kawaii", "periodic", "posters", "hex_patterns", "backgrounds", "social", "coloring"]
+           "kawaii", "periodic", "posters", "hex_patterns", "backgrounds", "social", "coloring", "printables"]
 
 
 def category(set_id):
@@ -44,8 +44,8 @@ def category(set_id):
         return "8-stiker-kawaii"
     if set_id.startswith("social"):
         return "6-template-sosmed"
-    if "coloring" in set_id:
-        return "7-lembar-mewarnai"
+    if "coloring" in set_id or "printables" in set_id:
+        return "7-lembar-kerja-mewarnai"
     if set_id.startswith(("periodic", "chemistry-posters")):
         return "3-poster-edukasi"
     if set_id.startswith(("molecule", "bohr", "concept", "element")):
