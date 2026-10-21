@@ -5,7 +5,7 @@ Aset vektor microstock bertema kimia yang dibuat sepenuhnya lewat kode
 
 ## Set yang tersedia
 
-Total 219 aset dalam 16 ZIP, dipetakan ke 4 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 262 aset dalam 18 ZIP, dipetakan ke 5 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -28,7 +28,8 @@ Total 219 aset dalam 16 ZIP, dipetakan ke 4 kategori. Daftar lengkap semua file 
 | Set | Isi |
 |-----|-----|
 | `periodic-table-posters` | tabel periodik 118 unsur, tema terang & gelap, bahasa Inggris & Indonesia |
-| `chemistry-posters` | 6 poster × 2 tema: bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi kimia |
+| `chemistry-posters` | 11 poster × 2 tema (gelap & terang): bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi, gugus fungsi organik, deret alkana, struktur atom, jenis ikatan kimia, tata tertib keselamatan lab |
+| `chemistry-posters-indonesian` | 11 poster yang sama dalam Bahasa Indonesia |
 
 ### 4-pola-seamless
 | Set | Isi |
@@ -36,6 +37,11 @@ Total 219 aset dalam 16 ZIP, dipetakan ke 4 kategori. Daftar lengkap semua file 
 | `lab-flat-patterns`, `lab2-flat-patterns` | pola alat lab (5) |
 | `molecule-patterns`, `bohr-atom-patterns` | pola molekul & atom (5) |
 | `hexagon-patterns` | pola sarang lebah / cincin benzena (4) |
+
+### 5-latar-presentasi
+| Set | Isi |
+|-----|-----|
+| `chemistry-backgrounds` | 11 latar presentasi/banner 16:9 dengan ruang kosong untuk teks (heksagon + molekul, orbit atom, alat lab, rumus kimia, ubin unsur) |
 
 ## Keluaran per file
 
@@ -48,7 +54,8 @@ Total 219 aset dalam 16 ZIP, dipetakan ke 4 kategori. Daftar lengkap semua file 
 ## Cara pakai
 
 **Lewat GitHub:** tab *Actions* → **Buat aset** → *Run workflow*. Setelah selesai, unduh
-artefak per kategori (`1-alat-lab`, `2-molekul-atom`, `3-poster-edukasi`, `4-pola-seamless`) dan `katalog`. Workflow juga jalan otomatis
+artefak per kategori (`1-alat-lab`, `2-molekul-atom`, `3-poster-edukasi`, `4-pola-seamless`,
+`5-latar-presentasi`) dan `katalog`. Workflow juga jalan otomatis
 setiap ada perubahan di `src/` atau `build.py` pada branch `main`.
 
 **Lokal:**
@@ -74,7 +81,8 @@ centang sendiri di portal. Situs lain punya aturan sendiri; cek aturan terbaru t
 - `src/icons_*.py`, `src/molecules.py`, `src/atoms.py`: set ikon. Tiap ikon punya `id`, `title`,
   `keywords`, dan `body` (elemen SVG di grid 64×64). `build.py` menskalakan ikon agar mengisi bingkai,
   menyeragamkan tebal garis, lalu membuat varian glyph (`GLYPH = True`) dan pola seamless (`PATTERNS`).
-- `src/periodic.py`, `src/posters.py`, `src/hex_patterns.py`: aset utuh lewat fungsi `assets()`.
+- `src/periodic.py`, `src/posters.py`, `src/posters2.py`, `src/hex_patterns.py`, `src/backgrounds.py`: aset utuh
+  lewat fungsi `assets()`. Teks poster diterjemahkan lewat kamus di `src/poster_i18n.py`.
 - `src/render.py`: pembantu render ikon bersama; `category()` di `build.py` memetakan set ke folder kategori.
 - `src/textpath.py`: teks diubah menjadi outline (wajib di microstock) memakai font Inter di `fonts/`
   (lisensi SIL OFL, lihat `fonts/LICENSE-Inter.txt`).

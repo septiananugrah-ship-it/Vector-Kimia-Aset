@@ -15,47 +15,14 @@ import atoms
 import icons_lab2
 import icons_lab_flat
 import molecules
+import posters2
 from icons_lab_flat import L, O, P, R, T, Y, dark, light, solid
-from render import GRID, fitted, style_attrs
-from textpath import formula, text, width
+from poster_kit import (COMMON_KW, MX, THEMES, arrow, doc, fit_text, header, icon_at, particle, set_lang, text,
+                        tr)
+from render import style_attrs
+from textpath import formula
 
 SET_ID = "chemistry-posters"
-
-THEMES = {
-    "dark": dict(bg="#16213A", card="#1F2C48", card_stroke="#2C3D5E", plate="#E9F1F7", ink="#FFFFFF",
-                 sub="#AEB9C9", accent="#3FB6C4", mood="on dark navy"),
-    "light": dict(bg="#FFFFFF", card="#F2F6FA", card_stroke="#DCE4EE", plate="#FFFFFF", ink="#1E2A3A",
-                  sub="#5B6878", accent="#1F9AA8", mood="on white"),
-}
-MX = 44  # margin kiri-kanan
-COMMON_KW = ["chemistry", "science", "education", "school", "poster", "infographic", "chart", "classroom",
-              "teaching", "learning", "student", "scientific", "vector", "illustration", "diagram",
-              "educational", "laboratory", "chemical", "study", "reference"]
-
-
-def fit_text(s, x, y, size, fill, max_w, weight="Bold", anchor="middle"):
-    w = width(s, size, weight)
-    if w > max_w:
-        size *= max_w / w
-    return text(s, x, y, size, fill, weight, anchor)
-
-
-def header(W, th, title, subtitle):
-    return (text(title, W / 2, 66, 34, th["ink"]) +
-            text(subtitle, W / 2, 92, 12.5, th["sub"], "Regular"))
-
-
-def doc(W, H, th, inner):
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 5:.0f}" height="{H * 5:.0f}" '
-            f'viewBox="0 0 {W} {H}">\n<rect x="-1" y="-1" width="{W + 2}" height="{H + 2}" fill="{th["bg"]}"/>'
-            f'{inner}\n</svg>\n')
-
-
-def icon_at(body, stroke, x, y, size):
-    """Ikon (grid 64) dipasang di kotak size x size pada (x, y)."""
-    return (f'<g transform="translate({x:.2f} {y:.2f}) scale({size / GRID:.4f})">'
-            f'<g {style_attrs(stroke)}>{fitted(body, stroke)}</g></g>')
-
 
 # ------------------------------------------------------------ bagan ikon
 
@@ -132,7 +99,7 @@ def atom_chart(th):
     items = []
     for z, (ic, (sym, name)) in enumerate(zip(atoms.ICONS, atoms.ELEMENTS), start=1):
         conf = ", ".join(str(n) for n in atoms.shells(z))
-        items.append((ic["body"], atoms.STROKE, f"{name} ({sym})", f"Z = {z}  ·  electrons {conf}"))
+        items.append((ic["body"], atoms.STROKE, f"{tr(name)} ({sym})", f"Z = {z}  ·  {tr('electrons')} {conf}"))
     return icon_chart(th, "BOHR ATOMIC MODELS", "Electron shell arrangement of the first 20 elements",
                       items, cols=5, cw=150, ch=160)
 
@@ -178,7 +145,7 @@ def ph_scale(th):
                    f'<rect x="{x:.2f}" y="{y0 + 176}" width="{sw:.2f}" height="40" rx="10" fill="{dark(col, .12)}"/>'
                    f'<rect x="{x:.2f}" y="{y0 + 176}" width="{sw:.2f}" height="10" fill="{dark(col, .12)}"/>')
         out.append(text(str(i), x + sw / 2, y0 + 150, 38, "#FFFFFF"))
-        words = ex.split(" ", 1)
+        words = tr(ex).split(" ", 1)
         out.append(fit_text(words[0], x + sw / 2, y0 + 239, 10.5, th["ink"], sw, "SemiBold"))
         if len(words) > 1:
             out.append(fit_text(words[1], x + sw / 2, y0 + 253, 10.5, th["ink"], sw, "SemiBold"))
@@ -193,28 +160,6 @@ def ph_scale(th):
 
 
 # ------------------------------------------------------------ wujud zat
-
-def particle(cx, cy, r, col, key, shine=True):
-    ball = solid(f"M{cx - r:.2f} {cy:.2f}a{r} {r} 0 1 0 {2 * r} 0a{r} {r} 0 1 0 {-2 * r} 0z", col, cx - r, cx + r)
-    ball = ball.replace("{p}", key)
-    if not shine:
-        return ball
-    return (ball +
-            f'<ellipse cx="{cx - r * .35:.2f}" cy="{cy - r * .38:.2f}" rx="{r * .3:.2f}" ry="{r * .2:.2f}" '
-            f'transform="rotate(-35 {cx - r * .35:.2f} {cy - r * .38:.2f})" fill="#FFFFFF" stroke="none"/>')
-
-
-def arrow(x1, y1, x2, y2, col, bend=0):
-    """Panah lengkung dari (x1,y1) ke (x2,y2); bend = lengkungan (negatif ke atas)."""
-    mx, my = (x1 + x2) / 2, (y1 + y2) / 2 + bend
-    ang = math.atan2(y2 - my, x2 - mx)
-    hx, hy = x2 - 12 * math.cos(ang), y2 - 12 * math.sin(ang)
-    px, py = 6 * math.sin(ang), -6 * math.cos(ang)
-    return (f'<path d="M{x1} {y1}Q{mx:.2f} {my + bend:.2f} {hx:.2f} {hy:.2f}" fill="none" stroke="{col}" '
-            f'stroke-width="3.2" stroke-linecap="round"/>'
-            f'<path d="M{x2} {y2}L{hx + px:.2f} {hy + py:.2f}L{hx - px:.2f} {hy - py:.2f}z" fill="{col}" '
-            f'stroke="{col}" stroke-width="1.5" stroke-linejoin="round"/>')
-
 
 def states_of_matter(th):
     W, box = 1226, 260
@@ -371,12 +316,23 @@ POSTERS = [
 ]
 
 
+POSTERS += posters2.POSTERS
+
 def assets():
-    out = []
-    for key, fn, title, kw in POSTERS:
-        for tname, th in THEMES.items():
-            W, H, inner = fn(th)
-            out.append(dict(name=f"{SET_ID}-{key}-{tname}", svg=doc(W, H, th, inner), size=7000, png=False,
-                            title=f"{title}, {th['mood']}, chemistry education vector infographic",
-                            keywords=kw + COMMON_KW + ["dark background" if tname == "dark" else "white background"]))
-    return [(SET_ID, out)]
+    """Setiap poster x 2 tema x 2 bahasa. Set Indonesia dipisah agar mudah dipilih."""
+    sets = []
+    for lang, set_id in (("en", SET_ID), ("id", SET_ID + "-indonesian")):
+        set_lang(lang)
+        out = []
+        for key, fn, title, kw in POSTERS:
+            for tname, th in THEMES.items():
+                W, H, inner = fn(th)
+                note = "" if lang == "en" else " in Indonesian language"
+                out.append(dict(
+                    name=f"{set_id}-{key}-{tname}", svg=doc(W, H, th, inner), size=7000, png=False,
+                    title=f"{title}{note}, {th['mood']}, chemistry education vector infographic",
+                    keywords=(["indonesian", "bahasa indonesia"] if lang == "id" else []) + kw + COMMON_KW
+                    + ["dark background" if tname == "dark" else "white background"]))
+        sets.append((set_id, out))
+    set_lang("en")
+    return sets

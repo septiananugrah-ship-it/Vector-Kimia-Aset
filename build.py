@@ -31,13 +31,15 @@ ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT / "src"))
 
 MODULES = ["icons_lab", "icons_lab_flat", "icons_lab2", "molecules", "atoms", "periodic", "posters",
-           "hex_patterns"]
+           "hex_patterns", "backgrounds"]
 
 
 def category(set_id):
     """Folder kategori untuk sebuah set (pemetaan aset)."""
     if set_id.endswith("patterns"):
         return "4-pola-seamless"
+    if set_id.endswith("backgrounds"):
+        return "5-latar-presentasi"
     if set_id.startswith(("periodic", "chemistry-posters")):
         return "3-poster-edukasi"
     if set_id.startswith(("molecule", "bohr")):
