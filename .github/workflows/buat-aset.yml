@@ -1,0 +1,30 @@
+name: Buat aset
+
+on:
+  workflow_dispatch:
+    inputs:
+      size:
+        description: "Sisi panjang JPG/PNG (px)"
+        default: "4000"
+      color:
+        description: "Warna garis (hex tanpa #)"
+        default: "1E2A3A"
+  push:
+    branches: [main]
+    paths: ["src/**", "build.py", "requirements.txt"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: sudo apt-get update && sudo apt-get install -y libcairo2
+      - run: pip install -r requirements.txt
+      - run: python build.py --size "${{ inputs.size || '4000' }}" --color "${{ inputs.color || '1E2A3A' }}"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: aset-microstock
+          path: dist/*.zip
