@@ -13,6 +13,11 @@ on:
     branches: [main]
     paths: ["src/**", "fonts/**", "build.py", "requirements.txt"]
 
+# push beruntun: batalkan run lama, cukup bangun commit terbaru
+concurrency:
+  group: buat-aset-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
