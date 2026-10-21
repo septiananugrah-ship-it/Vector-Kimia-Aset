@@ -5,7 +5,7 @@ Aset vektor microstock bertema kimia yang dibuat sepenuhnya lewat kode
 
 ## Set yang tersedia
 
-Total 536 aset dalam 31 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 568 aset dalam 33 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -46,6 +46,8 @@ Total 536 aset dalam 31 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file 
 | `concept-flat-icons` | 20 ikon konsep sains & kimia (atom, DNA, radioaktif, ubin unsur, baterai, magnet, kristal, dll.) |
 | `concept-flat-glyph-icons` | versi glyph |
 | `concept-flat-patterns` | 2 pola seamless (kategori 4-pola-seamless) |
+| `element-tile-icons` | 30 ikon ubin unsur populer (H, C, O, Na, Fe, Cu, Ag, Au, U, dll.) + lembar set |
+| `element-tile-patterns` | 1 pola seamless ubin unsur (kategori 4-pola-seamless) |
 
 ### 5-latar-presentasi
 | Set | Isi |

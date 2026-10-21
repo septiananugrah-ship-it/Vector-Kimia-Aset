@@ -30,8 +30,8 @@ from PIL import Image
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT / "src"))
 
-MODULES = ["icons_lab", "icons_lab_flat", "icons_lab2", "molecules", "atoms", "icons_concepts", "kawaii", "periodic",
-           "posters", "hex_patterns", "backgrounds", "social", "coloring"]
+MODULES = ["icons_lab", "icons_lab_flat", "icons_lab2", "molecules", "atoms", "icons_concepts", "element_tiles",
+           "kawaii", "periodic", "posters", "hex_patterns", "backgrounds", "social", "coloring"]
 
 
 def category(set_id):
@@ -48,7 +48,7 @@ def category(set_id):
         return "7-lembar-mewarnai"
     if set_id.startswith(("periodic", "chemistry-posters")):
         return "3-poster-edukasi"
-    if set_id.startswith(("molecule", "bohr", "concept")):
+    if set_id.startswith(("molecule", "bohr", "concept", "element")):
         return "2-molekul-atom"
     return "1-alat-lab"
 
