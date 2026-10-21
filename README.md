@@ -9,7 +9,7 @@ Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana,
 
 ## Set yang tersedia
 
-Total 1.036 aset dalam 56 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 1.048 aset dalam 56 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -38,8 +38,8 @@ Total 1.036 aset dalam 56 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua fil
 | Set | Isi |
 |-----|-----|
 | `periodic-table-posters` | tabel periodik 118 unsur: lengkap, hanya lambang (terang, gelap, papan kapur), dan lembar kerja kosong; bahasa Inggris & Indonesia |
-| `chemistry-posters` | 39 poster × 3 tema (gelap, terang, papan tulis kapur): bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi, gugus fungsi organik, deret alkana, struktur atom, jenis ikatan kimia, tata tertib keselamatan lab, tren periodik, konfigurasi elektron, indikator asam-basa, teknik pemisahan campuran, hukum gas, faktor laju reaksi, diagram energi eksoterm/endoterm, sel Volta, konsep mol, perubahan fisika vs kimia, asam vs basa, penggolongan materi, tata nama IUPAC, jenis koloid, daya tembus radiasi, perkembangan model atom, hukum dasar kimia, kimia sehari-hari, langkah titrasi, lambang titik Lewis, tabel ion umum, elektrolisis air, konsentrasi larutan, alkana-alkena-alkuna, sifat koligatif, asas Le Chatelier, aturan bilangan oksidasi, reaksi redoks |
-| `chemistry-posters-indonesian` | 39 poster yang sama (tabel periodik Indonesia memakai label golongan IA–VIIIA) dalam Bahasa Indonesia |
+| `chemistry-posters` | 41 poster × 3 tema (gelap, terang, papan tulis kapur): bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi, gugus fungsi organik, deret alkana, struktur atom, jenis ikatan kimia, tata tertib keselamatan lab, tren periodik, konfigurasi elektron, indikator asam-basa, teknik pemisahan campuran, hukum gas, faktor laju reaksi, diagram energi eksoterm/endoterm, sel Volta, konsep mol, perubahan fisika vs kimia, asam vs basa, penggolongan materi, tata nama IUPAC, jenis koloid, daya tembus radiasi, perkembangan model atom, hukum dasar kimia, kimia sehari-hari, langkah titrasi, lambang titik Lewis, tabel ion umum, elektrolisis air, konsentrasi larutan, alkana-alkena-alkuna, sifat koligatif, asas Le Chatelier, aturan bilangan oksidasi, reaksi redoks, teori asam-basa, asam/basa kuat & lemah |
+| `chemistry-posters-indonesian` | 41 poster yang sama (tabel periodik Indonesia memakai label golongan IA–VIIIA) dalam Bahasa Indonesia |
 
 ### 4-pola-seamless
 | Set | Isi |
@@ -124,7 +124,7 @@ centang sendiri di portal. Situs lain punya aturan sendiri; cek aturan terbaru t
 - `src/icons_*.py`, `src/molecules.py`, `src/atoms.py`: set ikon. Tiap ikon punya `id`, `title`,
   `keywords`, dan `body` (elemen SVG di grid 64×64). `build.py` menskalakan ikon agar mengisi bingkai,
   menyeragamkan tebal garis, lalu membuat varian glyph (`GLYPH = True`) dan pola seamless (`PATTERNS`).
-- `src/periodic.py`, `src/posters.py`, `src/posters2.py`, `src/posters3.py`, `src/posters4.py`, `src/posters5.py`, `src/posters6.py`, `src/posters7.py`, `src/posters8.py`, `src/posters9.py`, `src/posters10.py`, `src/posters11.py`, `src/posters12.py`, `src/posters13.py`, `src/hex_patterns.py`, `src/backgrounds.py`: aset utuh
+- `src/periodic.py`, `src/posters.py`, `src/posters2.py`, `src/posters3.py`, `src/posters4.py`, `src/posters5.py`, `src/posters6.py`, `src/posters7.py`, `src/posters8.py`, `src/posters9.py`, `src/posters10.py`, `src/posters11.py`, `src/posters12.py`, `src/posters13.py`, `src/posters14.py`, `src/hex_patterns.py`, `src/backgrounds.py`: aset utuh
   lewat fungsi `assets()`. Teks poster diterjemahkan lewat kamus di `src/poster_i18n.py`.
 - `src/render.py`: pembantu render ikon bersama; `category()` di `build.py` memetakan set ke folder kategori.
 - `src/textpath.py`: teks diubah menjadi outline (wajib di microstock) memakai font Inter di `fonts/`
