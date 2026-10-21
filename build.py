@@ -32,7 +32,7 @@ from PIL import Image
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT / "src"))
 
-MODULES = ["icons_lab", "icons_lab_flat", "icons_lab2", "molecules", "molecules2", "atoms", "atoms2", "icons_concepts", "element_tiles",
+MODULES = ["icons_lab", "icons_lab_flat", "icons_lab2", "molecules", "molecules2", "atoms", "atoms2", "icons_concepts", "ghs_icons", "element_tiles",
            "kawaii", "periodic", "posters", "hex_patterns", "backgrounds", "social", "coloring", "printables"]
 
 

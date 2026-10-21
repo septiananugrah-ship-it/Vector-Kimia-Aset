@@ -9,7 +9,7 @@ Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana,
 
 ## Set yang tersedia
 
-Total 1.212 aset dalam 56 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 1.240 aset dalam 59 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -21,6 +21,8 @@ Total 1.212 aset dalam 56 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua fil
 | `lab2-flat-glyph-icons` | versi glyph jilid 2 |
 | `lab-outline-icons`, `lab2-outline-icons` | versi outline (garis hitam, isi putih) jilid 1 & 2 |
 | `lab-doodle-icons`, `lab2-doodle-icons` | versi doodle / coretan tangan jilid 1 & 2 (+ pola doodle) |
+| `ghs-hazard-pictograms` | 9 piktogram bahaya GHS (mudah meledak, mudah terbakar, korosif, beracun, dll.) + lembar set |
+| `ghs-hazard-labels` (+ `-indonesian`) | 9 label stiker GHS siap cetak dengan nama bahaya (Inggris & Indonesia) |
 
 ### 2-molekul-atom
 | Set | Isi |
