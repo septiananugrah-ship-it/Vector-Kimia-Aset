@@ -15,11 +15,13 @@ import argparse
 import csv
 import importlib
 import io
+import os
 import random
 import re
 import shutil
 import sys
 import zipfile
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
 import cairocffi
@@ -247,7 +249,11 @@ def write_set(set_id, assets, dist, scale):
         (out / sub).mkdir(parents=True)
     for a in assets:
         a["size"] = int(a["size"] * scale)
-        export(a, out)
+    if POOL:  # ekspor paralel: EPS + PNG + JPG tiap aset di proses terpisah
+        list(POOL.map(export, assets, [out] * len(assets)))
+    else:
+        for a in assets:
+            export(a, out)
 
     with open(out / "adobe_stock.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
@@ -271,12 +277,19 @@ def write_set(set_id, assets, dist, scale):
     print(f"{len(assets):3d} aset -> {dist.name}/{zpath.name}")
 
 
+POOL = None
+
+
 def main():
+    global POOL
     ap = argparse.ArgumentParser()
     ap.add_argument("--size", type=int, default=4000, help="sisi panjang raster ikon tunggal (px)")
     ap.add_argument("--out", default="dist")
     ap.add_argument("--only", nargs="*", help="hanya bangun set dengan id ini")
+    ap.add_argument("--jobs", type=int, default=os.cpu_count() or 1, help="jumlah proses ekspor paralel")
     args = ap.parse_args()
+    if args.jobs > 1:
+        POOL = ProcessPoolExecutor(max_workers=args.jobs)
     dist = ROOT / args.out
     dist.mkdir(exist_ok=True)
     scale = args.size / 4000
@@ -298,6 +311,8 @@ def main():
         w.writerow(["Kategori", "Set", "File", "Judul"])
         w.writerows(catalog)
     print(f"Total {len(catalog)} aset, katalog: {args.out}/katalog.csv")
+    if POOL:
+        POOL.shutdown()
 
 
 if __name__ == "__main__":
