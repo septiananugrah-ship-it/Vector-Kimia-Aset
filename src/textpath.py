@@ -45,3 +45,21 @@ def text(s, x, y, size, fill, weight="Bold", anchor="middle"):
             parts.append(f'<path transform="translate({x0 + adv * k:.3f} {y:.3f}) scale({k:.5f} {-k:.5f})" d="{d}"/>')
         adv += a
     return f'<g fill="{fill}" stroke="none">{"".join(parts)}</g>'
+
+
+def formula(s, x, y, size, fill, weight="SemiBold", anchor="middle"):
+    """Rumus kimia dengan angka sebagai subskrip, mis. 'H2SO4' -> H₂SO₄.
+
+    Angka di awal (koefisien, mis. '2H2O') tetap berukuran normal.
+    """
+    runs, sub = [], size * 0.68
+    for i, ch in enumerate(s):
+        is_sub = ch.isdigit() and i > 0 and not s[:i].isdigit() and s[i - 1] != " "
+        runs.append((ch, sub if is_sub else size, size * 0.26 if is_sub else 0))
+    total = sum(width(c, sz, weight) for c, sz, _ in runs)
+    cx = x - (total / 2 if anchor == "middle" else total if anchor == "end" else 0)
+    out = []
+    for c, sz, dy in runs:
+        out.append(text(c, cx, y + dy, sz, fill, weight, anchor="start"))
+        cx += width(c, sz, weight)
+    return "".join(out)

@@ -30,13 +30,23 @@ from PIL import Image
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT / "src"))
 
-MODULES = ["icons_lab", "icons_lab_flat", "icons_lab2", "molecules", "atoms", "periodic", "hex_patterns"]
+MODULES = ["icons_lab", "icons_lab_flat", "icons_lab2", "molecules", "atoms", "periodic", "posters",
+           "hex_patterns"]
 
-GRID = 64
+
+def category(set_id):
+    """Folder kategori untuk sebuah set (pemetaan aset)."""
+    if set_id.endswith("patterns"):
+        return "4-pola-seamless"
+    if set_id.startswith(("periodic", "chemistry-posters")):
+        return "3-poster-edukasi"
+    if set_id.startswith(("molecule", "bohr")):
+        return "2-molekul-atom"
+    return "1-alat-lab"
+
+from render import GRID, STROKE, fitted, style_attrs  # noqa: E402
+
 PAD = 3  # ruang kosong di sekeliling ikon, dalam satuan grid
-STROKE = 2.5  # bawaan; set bisa menimpa lewat atribut STROKE
-INK = "1E2A3A"
-SHADOW_COLOR = "#E4E8EE"
 GLYPH_INK = "#1E2A3A"
 from icons_lab_flat import G as _G, M as _M, W as _W, dark as _dark  # noqa: E402
 
@@ -55,11 +65,6 @@ class EPS2Surface(Surface):
         return surface, width, height
 
 
-def style_attrs(stroke, ink=INK):
-    return (f'fill="none" stroke="#{ink}" stroke-width="{stroke}" '
-            'stroke-linecap="round" stroke-linejoin="round"')
-
-
 def svg_doc(w, h, inner, px_w=None, bg=None):
     px_w = px_w or w * 10
     bgrect = f'<rect x="0" y="0" width="{w}" height="{h}" fill="{bg}"/>' if bg else ""
@@ -68,44 +73,6 @@ def svg_doc(w, h, inner, px_w=None, bg=None):
 
 
 # ---------------------------------------------------------------- ikon
-
-def bbox(body, stroke):
-    """Kotak pembatas (x0, y0, x1, y1) ikon dalam satuan grid, termasuk garis tepi."""
-    k, m = 10, 32  # piksel per satuan, margin
-    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{(GRID + 2 * m) * k}" '
-           f'height="{(GRID + 2 * m) * k}" viewBox="{-m} {-m} {GRID + 2 * m} {GRID + 2 * m}">'
-           f'<g {style_attrs(stroke, "000000")}>{body}</g></svg>')
-    img = Image.open(io.BytesIO(cairosvg.svg2png(bytestring=svg.encode())))
-    x0, y0, x1, y1 = img.getchannel("A").getbbox()
-    return x0 / k - m, y0 / k - m, x1 / k - m, y1 / k - m
-
-
-_bbox_cache = {}
-
-
-def fitted(body, stroke, shadow=False):
-    """Skalakan ikon agar mengisi grid 64x64 dengan ukuran visual seragam.
-
-    Tebal garis dikompensasi supaya sama di semua ikon; `shadow` menambah
-    bayangan elips di bawah benda.
-    """
-    key = (body, stroke)
-    if key not in _bbox_cache:
-        _bbox_cache[key] = bbox(body, stroke)
-    x0, y0, x1, y1 = _bbox_cache[key]
-    w, h = x1 - x0, y1 - y0
-    area_h = GRID - (5 if shadow else 0)
-    sc = min(GRID / w, area_h / h)
-    tx = (GRID - w * sc) / 2 - x0 * sc
-    ty = (area_h - h * sc) / 2 - y0 * sc if not shadow else area_h - h * sc - y0 * sc
-    out = ""
-    if shadow:
-        out += (f'<ellipse cx="{GRID / 2}" cy="{area_h + 1.2:.2f}" rx="{min(w * sc * .48, 30):.2f}" '
-                f'ry="2.6" fill="{SHADOW_COLOR}" stroke="none"/>')
-    out += (f'<g transform="translate({tx:.3f} {ty:.3f}) scale({sc:.4f})" '
-            f'stroke-width="{stroke / sc:.3f}">{body}</g>')
-    return out
-
 
 def glyphify(body):
     """Varian glyph: semua warna menjadi tinta gelap, warna terang menjadi putih."""
@@ -279,7 +246,7 @@ def write_set(set_id, assets, dist, scale):
         for p in sorted(out.rglob("*")):
             if p.is_file():
                 z.write(p, p.relative_to(dist))
-    print(f"{len(assets):3d} aset -> {zpath.name}")
+    print(f"{len(assets):3d} aset -> {dist.name}/{zpath.name}")
 
 
 def main():
@@ -292,13 +259,23 @@ def main():
     dist.mkdir(exist_ok=True)
     scale = args.size / 4000
 
+    catalog = []
     for modname in MODULES:
         mod = importlib.import_module(modname)
         sets = mod.assets() if hasattr(mod, "assets") else icon_set_assets(mod)
         for set_id, assets in sets:
             if args.only and set_id not in args.only:
                 continue
-            write_set(set_id, assets, dist, scale)
+            cat = category(set_id)
+            (dist / cat).mkdir(exist_ok=True)
+            write_set(set_id, assets, dist / cat, scale)
+            catalog += [(cat, set_id, f"{a['name']}.eps", a["title"]) for a in assets]
+
+    with open(dist / "katalog.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.writer(f)
+        w.writerow(["Kategori", "Set", "File", "Judul"])
+        w.writerows(catalog)
+    print(f"Total {len(catalog)} aset, katalog: {args.out}/katalog.csv")
 
 
 if __name__ == "__main__":

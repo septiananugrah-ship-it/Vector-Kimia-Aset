@@ -34,7 +34,6 @@ WOOD = "#C98B4E"
 def flame(cx, top, h):
     """Nyala api oranye-kuning, ujung di `top`, tinggi `h`."""
     w = h * 0.45
-    b = top + h
     return (f'<path d="M{cx} {top}c{w * .7:.2f} {h * .3:.2f} {w:.2f} {h * .5:.2f} {w:.2f} {h * .68:.2f}'
             f'a{w:.2f} {w:.2f} 0 0 1-{2 * w:.2f} 0c0-{h * .18:.2f} {w * .3:.2f}-{h * .38:.2f} {w:.2f}-{h * .68:.2f}z" fill="{O}"/>'
             f'<path d="M{cx} {top + h * .42:.2f}c{w * .35:.2f} {h * .15:.2f} {w * .5:.2f} {h * .25:.2f} {w * .5:.2f} {h * .34:.2f}'

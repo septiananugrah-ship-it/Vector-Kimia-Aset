@@ -38,6 +38,33 @@ Lv Livermorium (293) uk|Ts Tennessine (294) uk|Og Oganesson (294) uk
 ELEMENTS = [tuple(e.split()) for e in DATA.replace("\n", "|").split("|") if e.strip()]
 assert len(ELEMENTS) == 118
 
+# Nama unsur dalam Bahasa Indonesia, urut nomor atom.
+NAMES_ID = """
+Hidrogen Helium Litium Berilium Boron Karbon Nitrogen Oksigen Fluorin Neon
+Natrium Magnesium Aluminium Silikon Fosfor Belerang Klorin Argon Kalium Kalsium
+Skandium Titanium Vanadium Kromium Mangan Besi Kobalt Nikel Tembaga Seng
+Galium Germanium Arsen Selenium Bromin Kripton Rubidium Stronsium Itrium Zirkonium
+Niobium Molibdenum Teknesium Rutenium Rodium Paladium Perak Kadmium Indium Timah
+Antimon Telurium Iodin Xenon Sesium Barium Lantanum Serium Praseodimium Neodimium
+Prometium Samarium Europium Gadolinium Terbium Disprosium Holmium Erbium Tulium Iterbium
+Lutesium Hafnium Tantalum Tungsten Renium Osmium Iridium Platina Emas Raksa
+Talium Timbal Bismut Polonium Astatin Radon Fransium Radium Aktinium Torium
+Protaktinium Uranium Neptunium Plutonium Amerisium Kurium Berkelium Kalifornium Einsteinium Fermium
+Mendelevium Nobelium Lawrensium Rutherfordium Dubnium Seaborgium Bohrium Hasium Meitnerium Darmstadtium
+Roentgenium Kopernisium Nihonium Flerovium Moskovium Livermorium Tenesin Oganeson
+""".split()
+assert len(NAMES_ID) == 118
+
+LANG = {
+    "en": dict(title="PERIODIC TABLE OF THE ELEMENTS",
+               subtitle="118 chemical elements with atomic number, symbol, name and atomic mass"),
+    "id": dict(title="TABEL PERIODIK UNSUR",
+               subtitle="118 unsur kimia lengkap dengan nomor atom, lambang, nama, dan massa atom"),
+}
+CAT_ID = {"ak": "Logam alkali", "ae": "Logam alkali tanah", "tm": "Logam transisi", "pt": "Logam pascatransisi",
+          "md": "Metaloid", "nm": "Nonlogam reaktif", "hl": "Halogen", "ng": "Gas mulia", "ln": "Lantanida",
+          "ac": "Aktinida", "uk": "Sifat belum diketahui"}
+
 CATEGORIES = [
     ("ak", "Alkali metals", "#FF9E8A"), ("ae", "Alkaline earth metals", "#FFC98A"),
     ("tm", "Transition metals", "#FFE38A"), ("pt", "Post-transition metals", "#B9E28C"),
@@ -101,17 +128,18 @@ def tile(z, sym, name, mass, cat, x, y):
             + fit_text(mass, cx, y + C - 3.3, 5.6, "#1E2A3A", C - 7, "Regular"))
 
 
-def poster(theme):
+def poster(theme, lang="en"):
     mx, top = 44, 120
     W = 18 * S - GAP + 2 * mx
     fy = top + 7 * S + 26  # baris deret f
     H = fy + 2 * S + 44
     ink, sub = theme["ink"], theme["sub"]
     out = [f'<rect width="{W}" height="{H}" fill="{theme["bg"]}"/>',
-           text("PERIODIC TABLE OF THE ELEMENTS", W / 2, 66, 36, ink),
-           text("118 chemical elements with atomic number, symbol, name and atomic mass", W / 2, 92, 12, sub,
-                "Regular")]
+           text(LANG[lang]["title"], W / 2, 66, 36, ink),
+           text(LANG[lang]["subtitle"], W / 2, 92, 12, sub, "Regular")]
     for z, (sym, name, mass, cat) in enumerate(ELEMENTS, start=1):
+        if lang == "id":
+            name, mass = NAMES_ID[z - 1], mass.replace(".", ",")
         c, r = position(z)
         x = mx + c * S
         y = top + r * S if r < 7 else fy + (r - 8) * S
@@ -131,6 +159,7 @@ def poster(theme):
     # keterangan kategori di ruang kosong atas
     lx, ly = mx + 2.6 * S, top + 0.15 * S
     for i, (k, nm, col) in enumerate(CATEGORIES):
+        nm = CAT_ID[k] if lang == "id" else nm
         cx, cy = lx + (i // 4) * 3.3 * S, ly + (i % 4) * 26
         out.append(f'<rect x="{cx}" y="{cy}" width="18" height="18" rx="4" fill="{col}" '
                    f'stroke="{dark(col, .25)}" stroke-width="1"/>' + text(nm, cx + 26, cy + 13, 11, ink, "SemiBold",
@@ -138,20 +167,27 @@ def poster(theme):
     return W, H, "".join(out)
 
 
+KEYWORDS = ["periodic table", "periodic table of elements", "chemical elements", "element", "elements",
+            "chemistry", "poster", "infographic", "chart", "table", "atomic number", "atomic mass",
+            "symbol", "metal", "nonmetal", "noble gas", "metalloid", "lanthanide", "actinide",
+            "science", "education", "school", "classroom", "teaching", "student", "learning",
+            "mendeleev", "chemical", "physics", "laboratory", "reference", "vector", "illustration",
+            "colorful", "pastel", "background", "wall chart", "scientific", "hydrogen", "oxygen",
+            "carbon", "gold"]
+KEYWORDS_ID = ["indonesian", "indonesia", "bahasa indonesia", "tabel periodik"]
+
+
 def assets():
     out = []
-    for th in THEMES:
-        W, H, inner = poster(th)
-        svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 5}" height="{H * 5}" '
-               f'viewBox="0 0 {W} {H}">\n{inner}\n</svg>\n')
-        out.append(dict(
-            name=f"{SET_ID}-{th['key']}", svg=svg, size=7000, png=False,
-            title=f"Periodic table of the chemical elements poster, {th['mood']}, chemistry vector infographic",
-            keywords=["periodic table", "periodic table of elements", "chemical elements", "element", "elements",
-                      "chemistry", "poster", "infographic", "chart", "table", "atomic number", "atomic mass",
-                      "symbol", "metal", "nonmetal", "noble gas", "metalloid", "lanthanide", "actinide",
-                      "science", "education", "school", "classroom", "teaching", "student", "learning",
-                      "mendeleev", "chemical", "physics", "laboratory", "reference", "vector", "illustration",
-                      "colorful", "pastel", "background", "wall chart", "scientific", "hydrogen", "oxygen",
-                      "carbon", "gold"]))
+    for lang in ("en", "id"):
+        for th in THEMES:
+            W, H, inner = poster(th, lang)
+            svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 5}" height="{H * 5}" '
+                   f'viewBox="0 0 {W} {H}">\n{inner}\n</svg>\n')
+            suffix, note = ("", "") if lang == "en" else ("-indonesian", " in Indonesian language")
+            out.append(dict(
+                name=f"{SET_ID}-{th['key']}{suffix}", svg=svg, size=7000, png=False,
+                title=f"Periodic table of the chemical elements poster{note}, {th['mood']}, "
+                      "chemistry vector infographic",
+                keywords=(KEYWORDS_ID if lang == "id" else []) + KEYWORDS))
     return [(SET_ID, out)]

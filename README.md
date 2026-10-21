@@ -5,25 +5,37 @@ Aset vektor microstock bertema kimia yang dibuat sepenuhnya lewat kode
 
 ## Set yang tersedia
 
-Setiap baris di bawah menjadi satu ZIP siap unggah (226 aset total).
+Total 219 aset dalam 16 ZIP, dipetakan ke 4 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
+### 1-alat-lab
 | Set | Isi |
 |-----|-----|
 | `lab-line-icons` | 20 ikon alat lab gaya garis + lembar set |
-| `lab-flat-icons` | 20 ikon alat lab semi-flat berwarna (dua tone, kilau kaca, bayangan) + lembar set |
-| `lab-flat-glyph-icons` | versi glyph (solid gelap) dari set di atas |
-| `lab-flat-patterns` | 3 pola seamless dari ikon alat lab |
+| `lab-flat-icons` | 20 ikon alat lab semi-flat berwarna + lembar set |
+| `lab-flat-glyph-icons` | versi glyph (solid gelap) |
 | `lab2-flat-icons` | 20 alat & perlengkapan lab jilid 2 (botol reagen, kondensor, sentrifus, jas lab, APD, dll.) |
 | `lab2-flat-glyph-icons` | versi glyph jilid 2 |
-| `lab2-flat-patterns` | 2 pola seamless jilid 2 |
+
+### 2-molekul-atom
+| Set | Isi |
+|-----|-----|
 | `molecule-icons` | 20 model molekul bola-dan-batang (H2O, CO2, CH4, benzena, NaCl, H2SO4, dll.) |
 | `molecule-glyph-icons` | versi glyph model molekul |
-| `molecule-patterns` | 3 pola seamless molekul |
 | `bohr-atom-icons` | model atom Bohr unsur 1–20 |
 | `bohr-atom-glyph-icons` | versi glyph model atom |
-| `bohr-atom-patterns` | 2 pola seamless atom |
-| `periodic-table-posters` | poster tabel periodik 118 unsur, tema terang & gelap |
-| `hexagon-patterns` | 4 pola seamless sarang lebah / cincin benzena |
+
+### 3-poster-edukasi
+| Set | Isi |
+|-----|-----|
+| `periodic-table-posters` | tabel periodik 118 unsur, tema terang & gelap, bahasa Inggris & Indonesia |
+| `chemistry-posters` | 6 poster × 2 tema: bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi kimia |
+
+### 4-pola-seamless
+| Set | Isi |
+|-----|-----|
+| `lab-flat-patterns`, `lab2-flat-patterns` | pola alat lab (5) |
+| `molecule-patterns`, `bohr-atom-patterns` | pola molekul & atom (5) |
+| `hexagon-patterns` | pola sarang lebah / cincin benzena (4) |
 
 ## Keluaran per file
 
@@ -36,7 +48,7 @@ Setiap baris di bawah menjadi satu ZIP siap unggah (226 aset total).
 ## Cara pakai
 
 **Lewat GitHub:** tab *Actions* → **Buat aset** → *Run workflow*. Setelah selesai, unduh
-artefak `aset-microstock` (berisi ZIP siap unggah). Workflow juga jalan otomatis
+artefak per kategori (`1-alat-lab`, `2-molekul-atom`, `3-poster-edukasi`, `4-pola-seamless`) dan `katalog`. Workflow juga jalan otomatis
 setiap ada perubahan di `src/` atau `build.py` pada branch `main`.
 
 **Lokal:**
@@ -62,7 +74,8 @@ centang sendiri di portal. Situs lain punya aturan sendiri; cek aturan terbaru t
 - `src/icons_*.py`, `src/molecules.py`, `src/atoms.py`: set ikon. Tiap ikon punya `id`, `title`,
   `keywords`, dan `body` (elemen SVG di grid 64×64). `build.py` menskalakan ikon agar mengisi bingkai,
   menyeragamkan tebal garis, lalu membuat varian glyph (`GLYPH = True`) dan pola seamless (`PATTERNS`).
-- `src/periodic.py`, `src/hex_patterns.py`: aset utuh lewat fungsi `assets()`.
+- `src/periodic.py`, `src/posters.py`, `src/hex_patterns.py`: aset utuh lewat fungsi `assets()`.
+- `src/render.py`: pembantu render ikon bersama; `category()` di `build.py` memetakan set ke folder kategori.
 - `src/textpath.py`: teks diubah menjadi outline (wajib di microstock) memakai font Inter di `fonts/`
   (lisensi SIL OFL, lihat `fonts/LICENSE-Inter.txt`).
 - Daftar modul yang dibangun ada di `MODULES` pada `build.py`.

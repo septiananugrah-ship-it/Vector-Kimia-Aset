@@ -16,7 +16,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -29,8 +29,32 @@ jobs:
           SIZE: ${{ inputs.size || '4000' }}
           ONLY: ${{ inputs.only }}
         run: python build.py --size "$SIZE" ${ONLY:+--only $ONLY}
+      # satu artefak unduhan per kategori
       - uses: actions/upload-artifact@v4
         with:
-          name: aset-microstock
-          path: dist/*.zip
+          name: 1-alat-lab
+          path: dist/1-alat-lab/*.zip
           compression-level: 0
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 2-molekul-atom
+          path: dist/2-molekul-atom/*.zip
+          compression-level: 0
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 3-poster-edukasi
+          path: dist/3-poster-edukasi/*.zip
+          compression-level: 0
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 4-pola-seamless
+          path: dist/4-pola-seamless/*.zip
+          compression-level: 0
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: katalog
+          path: dist/katalog.csv

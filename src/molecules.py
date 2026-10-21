@@ -6,7 +6,7 @@ menskalakan setiap molekul agar mengisi bingkai.
 """
 import math
 
-from icons_lab_flat import M, P, R, W, Y, L, dark, solid
+from icons_lab_flat import M, P, R, W, Y, L, solid
 
 SET_ID = "molecule-icons"
 STROKE = 1.6
