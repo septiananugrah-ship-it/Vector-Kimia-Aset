@@ -9,7 +9,7 @@ Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana,
 
 ## Set yang tersedia
 
-Total 1.084 aset dalam 56 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 1.096 aset dalam 56 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -38,8 +38,8 @@ Total 1.084 aset dalam 56 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua fil
 | Set | Isi |
 |-----|-----|
 | `periodic-table-posters` | tabel periodik 118 unsur: lengkap, hanya lambang (terang, gelap, papan kapur), dan lembar kerja kosong; bahasa Inggris & Indonesia |
-| `chemistry-posters` | 47 poster × 3 tema (gelap, terang, papan tulis kapur): bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi, gugus fungsi organik, deret alkana, struktur atom, jenis ikatan kimia, tata tertib keselamatan lab, tren periodik, konfigurasi elektron, indikator asam-basa, teknik pemisahan campuran, hukum gas, faktor laju reaksi, diagram energi eksoterm/endoterm, sel Volta, konsep mol, perubahan fisika vs kimia, asam vs basa, penggolongan materi, tata nama IUPAC, jenis koloid, daya tembus radiasi, perkembangan model atom, hukum dasar kimia, kimia sehari-hari, langkah titrasi, lambang titik Lewis, tabel ion umum, elektrolisis air, konsentrasi larutan, alkana-alkena-alkuna, sifat koligatif, asas Le Chatelier, aturan bilangan oksidasi, reaksi redoks, teori asam-basa, asam/basa kuat & lemah, hidrolisis garam, larutan penyangga, bentuk molekul VSEPR, bilangan kuantum & bentuk orbital, aturan kelarutan, gaya antarmolekul |
-| `chemistry-posters-indonesian` | 47 poster yang sama (tabel periodik Indonesia memakai label golongan IA–VIIIA) dalam Bahasa Indonesia |
+| `chemistry-posters` | 49 poster × 3 tema (gelap, terang, papan tulis kapur): bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi, gugus fungsi organik, deret alkana, struktur atom, jenis ikatan kimia, tata tertib keselamatan lab, tren periodik, konfigurasi elektron, indikator asam-basa, teknik pemisahan campuran, hukum gas, faktor laju reaksi, diagram energi eksoterm/endoterm, sel Volta, konsep mol, perubahan fisika vs kimia, asam vs basa, penggolongan materi, tata nama IUPAC, jenis koloid, daya tembus radiasi, perkembangan model atom, hukum dasar kimia, kimia sehari-hari, langkah titrasi, lambang titik Lewis, tabel ion umum, elektrolisis air, konsentrasi larutan, alkana-alkena-alkuna, sifat koligatif, asas Le Chatelier, aturan bilangan oksidasi, reaksi redoks, teori asam-basa, asam/basa kuat & lemah, hidrolisis garam, larutan penyangga, bentuk molekul VSEPR, bilangan kuantum & bentuk orbital, aturan kelarutan, gaya antarmolekul, plastik & kode daur ulang, hukum Hess |
+| `chemistry-posters-indonesian` | 49 poster yang sama (tabel periodik Indonesia memakai label golongan IA–VIIIA) dalam Bahasa Indonesia |
 
 ### 4-pola-seamless
 | Set | Isi |
