@@ -57,9 +57,13 @@ assert len(NAMES_ID) == 118
 
 LANG = {
     "en": dict(title="PERIODIC TABLE OF THE ELEMENTS",
-               subtitle="118 chemical elements with atomic number, symbol, name and atomic mass"),
+               subtitle="118 chemical elements with atomic number, symbol, name and atomic mass",
+               sub_symbols="All 118 chemical elements with atomic number and symbol",
+               sub_blank="Blank worksheet: write the symbol of each element in its box"),
     "id": dict(title="TABEL PERIODIK UNSUR",
-               subtitle="118 unsur kimia lengkap dengan nomor atom, lambang, nama, dan massa atom"),
+               subtitle="118 unsur kimia lengkap dengan nomor atom, lambang, nama, dan massa atom",
+               sub_symbols="Seluruh 118 unsur kimia dengan nomor atom dan lambangnya",
+               sub_blank="Lembar kerja kosong: tuliskan lambang setiap unsur di kotaknya"),
 }
 CAT_ID = {"ak": "Logam alkali", "ae": "Logam alkali tanah", "tm": "Logam transisi", "pt": "Logam pascatransisi",
           "md": "Metaloid", "nm": "Nonlogam reaktif", "hl": "Halogen", "ng": "Gas mulia", "ln": "Lantanida",
@@ -116,9 +120,19 @@ def fit_text(s, x, y, size, fill, max_w, weight="Bold"):
     return text(s, x, y, size, fill, weight)
 
 
-def tile(z, sym, name, mass, cat, x, y):
+def tile(z, sym, name, mass, cat, x, y, mode="full"):
     col = CAT[cat][1]
     cx = x + C / 2
+    if mode == "symbols":
+        return (f'<rect x="{x}" y="{y}" width="{C}" height="{C}" rx="6" fill="{col}" '
+                f'stroke="{dark(col, .25)}" stroke-width="1.2"/>'
+                + text(str(z), x + 6, y + 13, 9.5, "#1E2A3A", "SemiBold", anchor="start")
+                + fit_text(sym, cx, y + 44, 27, "#1E2A3A", C - 10))
+    if mode == "blank":
+        light_col = _mix(col, "#FFFFFF", .55)
+        return (f'<rect x="{x}" y="{y}" width="{C}" height="{C}" rx="6" fill="{light_col}" '
+                f'stroke="{dark(col, .3)}" stroke-width="1.2"/>'
+                + text(str(z), x + 6, y + 13, 9.5, "#1E2A3A", "SemiBold", anchor="start"))
     return (f'<rect x="{x}" y="{y}" width="{C}" height="{C}" rx="6" fill="{col}" '
             f'stroke="{dark(col, .25)}" stroke-width="1.2"/>'
             f'<rect x="{x + 1.5}" y="{y + C - 9}" width="{C - 3}" height="7.5" rx="3" fill="{dark(col, .08)}"/>'
@@ -128,7 +142,13 @@ def tile(z, sym, name, mass, cat, x, y):
             + fit_text(mass, cx, y + C - 3.3, 5.6, "#1E2A3A", C - 7, "Regular"))
 
 
-def poster(theme, lang="en"):
+def _mix(a, b, f):
+    ca = [int(a[i:i + 2], 16) for i in (1, 3, 5)]
+    cb = [int(b[i:i + 2], 16) for i in (1, 3, 5)]
+    return "#" + "".join(f"{round(x + (y - x) * f):02X}" for x, y in zip(ca, cb))
+
+
+def poster(theme, lang="en", mode="full"):
     mx, top = 44, 120
     W = 18 * S - GAP + 2 * mx
     fy = top + 7 * S + 26  # baris deret f
@@ -136,14 +156,15 @@ def poster(theme, lang="en"):
     ink, sub = theme["ink"], theme["sub"]
     out = [f'<rect width="{W}" height="{H}" fill="{theme["bg"]}"/>',
            text(LANG[lang]["title"], W / 2, 66, 36, ink),
-           text(LANG[lang]["subtitle"], W / 2, 92, 12, sub, "Regular")]
+           text(LANG[lang]["sub_" + mode] if mode != "full" else LANG[lang]["subtitle"], W / 2, 92, 12, sub,
+                "Regular")]
     for z, (sym, name, mass, cat) in enumerate(ELEMENTS, start=1):
         if lang == "id":
             name, mass = NAMES_ID[z - 1], mass.replace(".", ",")
         c, r = position(z)
         x = mx + c * S
         y = top + r * S if r < 7 else fy + (r - 8) * S
-        out.append(tile(z, sym, name, mass, cat, x, y))
+        out.append(tile(z, sym, name, mass, cat, x, y, mode))
     # penanda rentang lantanida/aktinida di grup 3
     for r, label, cat in ((5, "57–71", "ln"), (6, "89–103", "ac")):
         x, y = mx + 2 * S, top + r * S
@@ -179,15 +200,21 @@ KEYWORDS_ID = ["indonesian", "indonesia", "bahasa indonesia", "tabel periodik"]
 
 def assets():
     out = []
-    for lang in ("en", "id"):
-        for th in THEMES:
-            W, H, inner = poster(th, lang)
-            svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 5}" height="{H * 5}" '
-                   f'viewBox="0 0 {W} {H}">\n{inner}\n</svg>\n')
-            suffix, note = ("", "") if lang == "en" else ("-indonesian", " in Indonesian language")
-            out.append(dict(
-                name=f"{SET_ID}-{th['key']}{suffix}", svg=svg, size=7000, png=False,
-                title=f"Periodic table of the chemical elements poster{note}, {th['mood']}, "
-                      "chemistry vector infographic",
-                keywords=(KEYWORDS_ID if lang == "id" else []) + KEYWORDS))
+    variants = [("en", th, "full") for th in THEMES] + [("id", th, "full") for th in THEMES]
+    variants += [(lang, th, mode) for lang in ("en", "id") for mode in ("symbols", "blank") for th in THEMES
+                 if not (mode == "blank" and th["key"] == "dark")]
+    for lang, th, mode in variants:
+        W, H, inner = poster(th, lang, mode)
+        svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 5}" height="{H * 5}" '
+               f'viewBox="0 0 {W} {H}">\n{inner}\n</svg>\n')
+        suffix = ("" if mode == "full" else f"-{mode}") + ("" if lang == "en" else "-indonesian")
+        note = " in Indonesian language" if lang == "id" else ""
+        kind = {"full": "poster", "symbols": "with element symbols only",
+                "blank": "blank worksheet template for students"}[mode]
+        extra = {"full": [], "symbols": ["symbols", "simple", "minimal"],
+                 "blank": ["blank", "worksheet", "template", "printable", "exercise", "quiz", "empty"]}[mode]
+        out.append(dict(
+            name=f"{SET_ID}-{th['key']}{suffix}", svg=svg, size=7000, png=False,
+            title=f"Periodic table of the chemical elements {kind}{note}, {th['mood']}, chemistry vector infographic",
+            keywords=(KEYWORDS_ID if lang == "id" else []) + extra + KEYWORDS))
     return [(SET_ID, out)]

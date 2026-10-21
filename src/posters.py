@@ -16,6 +16,7 @@ import icons_lab2
 import icons_lab_flat
 import molecules
 import posters2
+import posters3
 from icons_lab_flat import L, O, P, R, T, Y, dark, light, solid
 from poster_kit import (COMMON_KW, MX, THEMES, arrow, doc, fit_text, header, icon_at, particle, set_lang, text,
                         tr)
@@ -316,7 +317,7 @@ POSTERS = [
 ]
 
 
-POSTERS += posters2.POSTERS
+POSTERS += posters2.POSTERS + posters3.POSTERS
 
 def assets():
     """Setiap poster x 2 tema x 2 bahasa. Set Indonesia dipisah agar mudah dipilih."""
