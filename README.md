@@ -3,6 +3,8 @@
 Aset vektor microstock bertema kimia yang dibuat sepenuhnya lewat kode
 (SVG digambar dari `src/`), lalu diekspor ke format yang diminta situs microstock.
 
+Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana, cara unggah, dan hal yang wajib dicek.
+
 ## Set yang tersedia
 
 Total 865 aset dalam 47 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
