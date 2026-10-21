@@ -218,6 +218,46 @@ def thumb_vs(p, W, H):
     return out
 
 
+def yt_banner(p, W, H):
+    """Banner channel YouTube 2560x1440 (koordinat 1280x720); teks di area aman tengah."""
+    out = [hexes(120, H / 2, 80, 4, p["line"], 7, 4), hexes(W - 120, H / 2, 80, 4, p["line"], 8, 4)]
+    for key, x, y, sz, rot in (("atom", 150, 230, 150, 0), ("erlenmeyer-flask", 175, 470, 140, -10),
+                               ("water", 1060, 220, 150, 0), ("microscope", 1140, 470, 150, 8),
+                               ("test-tube-rack", 70, 600, 110, 0), ("dna", 1230, 330, 110, 0)):
+        out.append(place(key, x, y, sz, rot))
+    out.append(f'<rect x="{W / 2 - 387}" y="{H / 2 - 106}" width="774" height="212" rx="24" fill="{p["card"]}"/>')
+    out.append(text("YOUR CHANNEL NAME", W / 2, H / 2 + 4, 58, p["ink"], "Bold"))
+    out.append(text("Chemistry made easy · new videos every week", W / 2, H / 2 + 52, 22, p["accent2"], "SemiBold"))
+    return out
+
+
+def yt_endscreen(p, W, H):
+    out = [hexes(W - 60, 60, 60, 3, p["line"], 9, 4)]
+    out.append(text("THANKS FOR WATCHING!", W / 2, 110, 56, p["ink"], "Bold"))
+    for k, x in enumerate((90, 690)):
+        out.append(f'<rect x="{x}" y="200" width="500" height="281" rx="18" fill="{p["card"]}" stroke="{p["line"]}" '
+                   'stroke-width="4" stroke-dasharray="14 10"/>')
+        out.append(text("Video " + str(k + 1), x + 250, 352, 30, p["sub"], "SemiBold"))
+    out.append(f'<circle cx="{W / 2}" cy="595" r="70" fill="{p["card"]}" stroke="{p["accent"]}" stroke-width="5"/>')
+    out.append(place("atom", W / 2, 595, 100))
+    out.append(text("SUBSCRIBE", W / 2 - 110, 608, 34, p["accent2"], "Bold", "end"))
+    out.append(text("for more chemistry", W / 2 + 110, 608, 26, p["sub"], "SemiBold", "start"))
+    return out
+
+
+def chapter_card(p, W, H):
+    out = [hexes(W - 100, H / 2, 80, 4, p["line"], 10, 4)]
+    m = 90
+    out.append(pill("CHAPTER 1", m, H * .3, 26, p["accent"], "#FFFFFF"))
+    out.append(text("Your Chapter Title", m, H * .5, 80, p["ink"], "Bold", "start"))
+    out.append(text("A short description of what this part covers", m, H * .5 + 60, 28, p["sub"], "SemiBold",
+                    "start"))
+    out.append(f'<rect x="{m}" y="{H * .5 + 100}" width="160" height="8" rx="4" fill="{p["accent2"]}"/>')
+    out.append(f'<circle cx="{W * .8}" cy="{H / 2}" r="190" fill="{p["card"]}"/>')
+    out.append(place("round-bottom-flask", W * .8, H / 2, 260, 6))
+    return out
+
+
 DESIGNS = [
     ("post-did-you-know", did_you_know, (1080, 1080), "Instagram post template, did you know chemistry fact"),
     ("post-element-of-the-day", element_of_day, (1080, 1080), "Instagram post template, element of the day"),
@@ -228,6 +268,9 @@ DESIGNS = [
     ("story-quiz", story_quiz, (1080, 1920), "Instagram story template, chemistry quiz"),
     ("youtube-thumbnail-title", thumb_big, (1280, 720), "YouTube thumbnail template for chemistry video"),
     ("youtube-thumbnail-versus", thumb_vs, (1280, 720), "YouTube thumbnail template, acid versus base comparison"),
+    ("youtube-channel-banner", yt_banner, (1280, 720), "YouTube channel art banner template for chemistry channel"),
+    ("youtube-end-screen", yt_endscreen, (1280, 720), "YouTube end screen template for chemistry video"),
+    ("video-chapter-title", chapter_card, (1280, 720), "Video chapter title card template for chemistry lesson"),
 ]
 
 KEYWORDS = ["social media", "template", "instagram", "post", "story", "youtube thumbnail", "chemistry", "science",
@@ -275,4 +318,10 @@ TR.update({
     "CHEMISTRY": "KIMIA", "YOUR VIDEO": "JUDUL VIDEO", "TITLE HERE": "KAMU DI SINI",
     "Short subtitle or episode number": "Subjudul singkat atau nomor episode", "ACID": "ASAM", "BASE": "BASA",
     "Oxygen": "Oksigen", "Nitrogen": "Nitrogen", "Carbon dioxide": "Karbon dioksida", "Argon": "Argon",
+    "YOUR CHANNEL NAME": "NAMA CHANNEL KAMU",
+    "Chemistry made easy · new videos every week": "Belajar kimia jadi mudah · video baru setiap minggu",
+    "THANKS FOR WATCHING!": "TERIMA KASIH SUDAH MENONTON!", "SUBSCRIBE": "SUBSCRIBE",
+    "for more chemistry": "untuk video kimia lainnya", "CHAPTER 1": "BAB 1",
+    "Your Chapter Title": "Judul Bab Kamu",
+    "A short description of what this part covers": "Deskripsi singkat isi bagian ini",
 })
