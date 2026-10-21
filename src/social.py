@@ -100,7 +100,7 @@ def did_you_know(p, W, H):
 
 
 def element_of_day(p, W, H, z=8):
-    from periodic import CAT, ELEMENTS, NAMES_ID, position
+    from periodic import CAT, ELEMENTS, GOL_AB, NAMES_ID, position
     sym, name, mass, cat = ELEMENTS[z - 1]
     key = f"{z:02d}-{name.lower()}"
     if poster_kit._lang[0] == "id":
@@ -116,10 +116,11 @@ def element_of_day(p, W, H, z=8):
     out.append(f'<rect x="{tx}" y="{ty}" width="{ts}" height="{ts}" rx="{ts * .08}" fill="{CAT[cat][1]}" '
                f'stroke="#1E2A3A" stroke-width="{W * .006}"/>'
                + text(str(z), tx + ts * .1, ty + ts * .18, ts * .12, "#1E2A3A", "SemiBold", "start")
-               + text(sym, tx + ts / 2, ty + ts * .66, ts * (.46 if len(sym) == 1 else .4), "#1E2A3A", "Bold")
+               + text(sym, tx + ts / 2, ty + ts * (.66 if len(sym) == 1 else .63), ts * (.46 if len(sym) == 1 else .4),
+                      "#1E2A3A", "Bold")
                + text(name, tx + ts / 2, ty + ts * .82, ts * .1, "#1E2A3A", "SemiBold")
                + text(mass, tx + ts / 2, ty + ts * .93, ts * .07, "#1E2A3A", "Regular"))
-    facts = [("Atomic number", str(z)), ("Atomic mass", mass), ("Group", str(col + 1)), ("Period", str(row + 1))]
+    facts = [("Atomic number", str(z)), ("Atomic mass", mass), ("Group", GOL_AB[col] if poster_kit._lang[0] == "id" else str(col + 1)), ("Period", str(row + 1))]
     fy = ty + ts + H * .07
     cw = (W - 2 * m - 3 * 16) / 4
     for i, (k, v) in enumerate(facts):
@@ -303,12 +304,12 @@ def assets():
                                 title=f"{title}{note}, {p['mood']} background, editable vector layout",
                                 keywords=(["indonesian", "bahasa indonesia"] if lang == "id" else []) + KEYWORDS))
         sets.append((set_id, out))
-        # paket post "Element of the day" untuk unsur 1-20 (tema navy)
+        # paket post "Element of the day" untuk unsur 1-54, H sampai Xe (tema navy)
         p = PALETTES["navy"]
         eid = "social-element-posts" + ("" if lang == "en" else "-indonesian")
         posts = []
         from periodic import ELEMENTS
-        for z in range(1, 21):
+        for z in range(1, 55):
             inner = "".join(element_of_day(p, 1080, 1080, z))
             name = ELEMENTS[z - 1][1]
             svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="2160" height="2160" viewBox="0 0 1080 1080">\n'
