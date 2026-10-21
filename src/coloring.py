@@ -5,6 +5,9 @@ Ikon diambil dari set semi-flat lalu diubah ke outline (render.outlinify).
 import icons_concepts
 import icons_lab2
 import icons_lab_flat
+import kawaii
+import kawaii2
+import kawaii3
 import molecules
 import poster_kit
 from poster_i18n import TR
@@ -24,6 +27,18 @@ PAGES = [
      ["atom", "dna", "magnet", "crystal", "idea-bulb", "chemistry-book"]),
     ("molecules", "COLOR THE MOLECULES!", molecules,
      ["water", "carbon-dioxide", "methane", "ammonia", "benzene", "oxygen"]),
+    ("lab-tools-3", "LET'S COLOR THE LAB!", icons_lab_flat,
+     ["round-bottom-flask", "volumetric-flask", "mortar-and-pestle", "funnel", "graduated-cylinder", "wash-bottle"]),
+    ("lab-tools-4", "LET'S COLOR THE LAB!", icons_lab2,
+     ["reagent-bottle", "separatory-funnel", "crucible", "syringe", "centrifuge", "magnetic-stirrer"]),
+    ("science-2", "COLOR THE SCIENCE!", icons_concepts,
+     ["battery", "water-drop", "green-chemistry", "lightning", "capsule", "benzene-ring"]),
+    ("kawaii-lab-1", "COLOR THE CUTE LAB!", kawaii,
+     ["erlenmeyer-flask", "beaker", "microscope", "test-tube", "round-bottom-flask", "bunsen-burner"]),
+    ("kawaii-lab-2", "COLOR THE CUTE LAB!", kawaii2,
+     ["reagent-bottle", "dropper-bottle", "spirit-lamp", "protective-gloves", "magnifying-glass", "fire-extinguisher"]),
+    ("kawaii-science", "COLOR THE CUTE SCIENCE!", kawaii3,
+     ["water-drop", "molecule", "lightning", "crystal", "gas-cloud", "idea-bulb"]),
 ]
 
 MOL_NAMES = {"water": "Water", "carbon-dioxide": "Carbon dioxide", "methane": "Methane", "ammonia": "Ammonia",
@@ -50,7 +65,12 @@ def page(title, mod, ids):
         x = 70 + (i % 2) * cw
         y = 160 + (i // 2) * ch
         size = min(cw, ch) - 60
-        body = outlinify(by_id[icon_id]["body"])
+        ic = by_id[icon_id]
+        if "plain" in ic:  # stiker kawaii: outline ikon polos + wajah bergaris, tanpa bingkai die-cut
+            body = outlinify(ic["plain"]) + ic["face"].replace(
+                'fill="#F7A1B5" stroke="none"', 'fill="#FFFFFF" stroke="#1E2A3A" stroke-width=".7"')
+        else:
+            body = outlinify(ic["body"])
         stroke = 2.2
         out.append(f'<g transform="translate({x + cw / 2 - size / 2:.1f} {y + 6:.1f}) scale({size / GRID:.4f})">'
                    f'<g {style_attrs(stroke)}>{fitted(body, stroke)}</g></g>')
@@ -62,7 +82,9 @@ TR.update({
     "LET'S COLOR THE LAB!": "AYO WARNAI ALAT LAB!", "COLOR THE SCIENCE!": "AYO WARNAI SAINS!",
     "COLOR THE MOLECULES!": "AYO WARNAI MOLEKUL!", "Name: ______________________": "Nama: ______________________",
     "Atom": "Atom", "Magnet": "Magnet", "Crystal": "Kristal", "Idea Bulb": "Lampu Ide",
-    "Chemistry Book": "Buku Kimia",
+    "Chemistry Book": "Buku Kimia", "COLOR THE CUTE LAB!": "AYO WARNAI LAB LUCU!",
+    "COLOR THE CUTE SCIENCE!": "AYO WARNAI SAINS LUCU!", "Battery": "Baterai", "Benzene Ring": "Cincin Benzena",
+    "Capsule": "Kapsul", "Green Chemistry": "Kimia Hijau", "Molecule": "Molekul", "Gas Cloud": "Awan Gas", "Lightning": "Petir", "Water Drop": "Tetes Air",
 })
 
 KEYWORDS = ["coloring page", "coloring book", "coloring", "kids", "children", "worksheet", "printable",

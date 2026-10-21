@@ -50,4 +50,5 @@ for ic in icons_concepts.ICONS:
         "title": f"Cute kawaii {name} sticker with happy face, science cartoon character vector",
         "keywords": [w for w in ic["keywords"] if w not in ("isolated",)][:6] + ["kawaii " + name],
         "body": die_cut(ic["body"]) + ic["body"] + face(cx, cy, s),
+        "plain": ic["body"], "face": face(cx, cy, s),  # dipakai lembar mewarnai
     })
