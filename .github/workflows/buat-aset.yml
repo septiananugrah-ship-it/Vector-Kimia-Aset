@@ -62,5 +62,11 @@ jobs:
           if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         with:
+          name: 6-template-sosmed
+          path: dist/6-template-sosmed/*.zip
+          compression-level: 0
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
           name: katalog
           path: dist/katalog.csv

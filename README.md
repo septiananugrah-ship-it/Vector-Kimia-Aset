@@ -5,7 +5,7 @@ Aset vektor microstock bertema kimia yang dibuat sepenuhnya lewat kode
 
 ## Set yang tersedia
 
-Total 288 aset dalam 18 ZIP, dipetakan ke 5 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 350 aset dalam 22 ZIP, dipetakan ke 6 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -38,10 +38,22 @@ Total 288 aset dalam 18 ZIP, dipetakan ke 5 kategori. Daftar lengkap semua file 
 | `molecule-patterns`, `bohr-atom-patterns` | pola molekul & atom (5) |
 | `hexagon-patterns` | pola sarang lebah / cincin benzena (4) |
 
+### Ikon konsep (kategori 2-molekul-atom)
+| Set | Isi |
+|-----|-----|
+| `concept-flat-icons` | 20 ikon konsep sains & kimia (atom, DNA, radioaktif, ubin unsur, baterai, magnet, kristal, dll.) |
+| `concept-flat-glyph-icons` | versi glyph |
+| `concept-flat-patterns` | 2 pola seamless (kategori 4-pola-seamless) |
+
 ### 5-latar-presentasi
 | Set | Isi |
 |-----|-----|
 | `chemistry-backgrounds` | 11 latar presentasi/banner 16:9 dengan ruang kosong untuk teks (heksagon + molekul, orbit atom, alat lab, rumus kimia, ubin unsur) |
+
+### 6-template-sosmed
+| Set | Isi |
+|-----|-----|
+| `social-media-templates` | 9 desain × 2 warna: post Instagram (did you know, element of the day, kuis, tips lab, rumus hari ini), story 9:16, thumbnail YouTube |
 
 ## Keluaran per file
 
@@ -55,7 +67,7 @@ Total 288 aset dalam 18 ZIP, dipetakan ke 5 kategori. Daftar lengkap semua file 
 
 **Lewat GitHub:** tab *Actions* → **Buat aset** → *Run workflow*. Setelah selesai, unduh
 artefak per kategori (`1-alat-lab`, `2-molekul-atom`, `3-poster-edukasi`, `4-pola-seamless`,
-`5-latar-presentasi`) dan `katalog`. Workflow juga jalan otomatis
+`5-latar-presentasi`, `6-template-sosmed`) dan `katalog`. Workflow juga jalan otomatis
 setiap ada perubahan di `src/` atau `build.py` pada branch `main`.
 
 **Lokal:**
