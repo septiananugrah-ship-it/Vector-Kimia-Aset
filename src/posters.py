@@ -37,6 +37,7 @@ import posters20
 import posters21
 import posters22
 import posters23
+import posters24
 from icons_lab_flat import L, O, P, R, T, Y, dark, light, solid
 from poster_kit import (COMMON_KW, MX, THEMES, arrow, doc, fit_text, header, icon_at, particle, set_lang, text,
                         tr)
@@ -337,7 +338,7 @@ POSTERS = [
 ]
 
 
-POSTERS += posters2.POSTERS + posters3.POSTERS + posters4.POSTERS + posters5.POSTERS + posters6.POSTERS + posters7.POSTERS + posters8.POSTERS + posters9.POSTERS + posters10.POSTERS + posters11.POSTERS + posters12.POSTERS + posters13.POSTERS + posters14.POSTERS + posters15.POSTERS + posters16.POSTERS + posters17.POSTERS + posters18.POSTERS + posters19.POSTERS + posters20.POSTERS + posters21.POSTERS + posters22.POSTERS + posters23.POSTERS
+POSTERS += posters2.POSTERS + posters3.POSTERS + posters4.POSTERS + posters5.POSTERS + posters6.POSTERS + posters7.POSTERS + posters8.POSTERS + posters9.POSTERS + posters10.POSTERS + posters11.POSTERS + posters12.POSTERS + posters13.POSTERS + posters14.POSTERS + posters15.POSTERS + posters16.POSTERS + posters17.POSTERS + posters18.POSTERS + posters19.POSTERS + posters20.POSTERS + posters21.POSTERS + posters22.POSTERS + posters23.POSTERS + posters24.POSTERS
 
 def assets():
     """Setiap poster x 2 tema x 2 bahasa. Set Indonesia dipisah agar mudah dipilih."""
