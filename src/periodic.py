@@ -69,6 +69,10 @@ CAT_ID = {"ak": "Logam alkali", "ae": "Logam alkali tanah", "tm": "Logam transis
           "md": "Metaloid", "nm": "Nonlogam reaktif", "hl": "Halogen", "ng": "Gas mulia", "ln": "Lantanida",
           "ac": "Aktinida", "uk": "Sifat belum diketahui"}
 
+# Label golongan gaya buku pelajaran Indonesia (golongan A/B)
+GOL_AB = ["IA", "IIA", "IIIB", "IVB", "VB", "VIB", "VIIB", "VIIIB", "VIIIB", "VIIIB", "IB", "IIB", "IIIA", "IVA",
+          "VA", "VIA", "VIIA", "VIIIA"]
+
 CATEGORIES = [
     ("ak", "Alkali metals", "#FF9E8A"), ("ae", "Alkaline earth metals", "#FFC98A"),
     ("tm", "Transition metals", "#FFE38A"), ("pt", "Post-transition metals", "#B9E28C"),
@@ -175,7 +179,8 @@ def poster(theme, lang="en", mode="full"):
     # nomor golongan dan periode
     for g in range(18):
         r0 = 0 if g in (0, 17) else 1 if g in (1, 12, 13, 14, 15, 16) else 3
-        out.append(text(str(g + 1), mx + g * S + C / 2, top + r0 * S - 7, 9, sub, "SemiBold"))
+        label = str(g + 1) if lang != "id" else f"{GOL_AB[g]} ({g + 1})"
+        out.append(text(label, mx + g * S + C / 2, top + r0 * S - 7, 9, sub, "SemiBold"))
     for p in range(7):
         out.append(text(str(p + 1), mx - 14, top + p * S + C / 2 + 3.5, 9, sub, "SemiBold"))
     # keterangan kategori di ruang kosong atas
