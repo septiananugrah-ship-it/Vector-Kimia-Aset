@@ -61,6 +61,10 @@ Total 883 aset dalam 54 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file 
 |-----|-----|
 | `chemistry-backgrounds` | 16 latar presentasi/banner 16:9 dengan ruang kosong untuk teks (heksagon + molekul, orbit atom, alat lab, rumus kimia, ubin unsur, bingkai alat lab, papan tulis kapur) |
 
+### 9-promosi
+Gambar kolase untuk listing toko (Etsy, Lynk.id, Shopee): bundle poster (Inggris & Indonesia), bundle ikon, dan
+bundle printable. Dibuat otomatis oleh `promo.py` setelah build. Bukan untuk microstock.
+
 ### 8-stiker-kawaii
 | Set | Isi |
 |-----|-----|

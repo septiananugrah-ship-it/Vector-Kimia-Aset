@@ -11,7 +11,7 @@ on:
         default: ""
   push:
     branches: [main]
-    paths: ["src/**", "fonts/**", "build.py", "requirements.txt"]
+    paths: ["src/**", "fonts/**", "build.py", "promo.py", "requirements.txt"]
 
 # push beruntun: batalkan run lama, cukup bangun commit terbaru
 concurrency:
@@ -34,6 +34,9 @@ jobs:
           SIZE: ${{ inputs.size || '4000' }}
           ONLY: ${{ inputs.only }}
         run: python build.py --size "$SIZE" ${ONLY:+--only $ONLY}
+      - name: Gambar promosi bundle
+        if: ${{ !inputs.only }}
+        run: python promo.py
       # satu artefak unduhan per kategori
       - uses: actions/upload-artifact@v4
         with:
@@ -81,6 +84,12 @@ jobs:
         with:
           name: 8-stiker-kawaii
           path: dist/8-stiker-kawaii/*.zip
+          compression-level: 0
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 9-promosi
+          path: dist/9-promosi.zip
           compression-level: 0
           if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
