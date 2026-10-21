@@ -5,7 +5,7 @@ Aset vektor microstock bertema kimia yang dibuat sepenuhnya lewat kode
 
 ## Set yang tersedia
 
-Total 513 aset dalam 29 ZIP, dipetakan ke 7 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 536 aset dalam 31 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -52,6 +52,12 @@ Total 513 aset dalam 29 ZIP, dipetakan ke 7 kategori. Daftar lengkap semua file 
 |-----|-----|
 | `chemistry-backgrounds` | 11 latar presentasi/banner 16:9 dengan ruang kosong untuk teks (heksagon + molekul, orbit atom, alat lab, rumus kimia, ubin unsur) |
 
+### 8-stiker-kawaii
+| Set | Isi |
+|-----|-----|
+| `kawaii-lab-stickers` | 20 stiker alat lab lucu berwajah dengan bingkai die-cut putih + lembar set |
+| `kawaii-lab-stickers-patterns` | 2 pola seamless pastel (kategori 4-pola-seamless) |
+
 ### 7-lembar-mewarnai
 | Set | Isi |
 |-----|-----|
@@ -75,7 +81,7 @@ Total 513 aset dalam 29 ZIP, dipetakan ke 7 kategori. Daftar lengkap semua file 
 
 **Lewat GitHub:** tab *Actions* → **Buat aset** → *Run workflow*. Setelah selesai, unduh
 artefak per kategori (`1-alat-lab`, `2-molekul-atom`, `3-poster-edukasi`, `4-pola-seamless`,
-`5-latar-presentasi`, `6-template-sosmed`, `7-lembar-mewarnai`) dan `katalog`. Workflow juga jalan otomatis
+`5-latar-presentasi`, `6-template-sosmed`, `7-lembar-mewarnai`, `8-stiker-kawaii`) dan `katalog`. Workflow juga jalan otomatis
 setiap ada perubahan di `src/` atau `build.py` pada branch `main`.
 
 **Lokal:**
