@@ -198,6 +198,44 @@ def safety_sign(rule, desc, icon_id, color):
     return W, H, "".join(out)
 
 
+def bookmarks():
+    """Lembar A4 berisi 4 pembatas buku vertikal."""
+    import molecules
+    from element_tiles import ICONS as TILES
+    W, H = 800, 1131
+    designs = [("#16213A", "#FFC845", "tiles"), ("#0F3B47", "#3FB6C4", "molecules"),
+               ("#251B45", "#F28C28", "lab"), ("#2F4A3A", "#F2F1EA", "quote")]
+    bw, bh = 165, 1010
+    gap = (W - 4 * bw) / 5
+    tiles = {ic["id"]: ic["body"] for ic in TILES}
+    mols = {ic["id"]: ic["body"] for ic in molecules.ICONS}
+    out = [f'<rect x="-1" y="-1" width="{W + 2}" height="{H + 2}" fill="#FFFFFF"/>']
+    for k, (bg, acc, kind) in enumerate(designs):
+        x = gap + k * (bw + gap)
+        y = (H - bh) / 2
+        out.append(f'<rect x="{x}" y="{y}" width="{bw}" height="{bh}" rx="18" fill="{bg}"/>'
+                   f'<circle cx="{x + bw / 2}" cy="{y + 34}" r="10" fill="#FFFFFF" stroke="{acc}" stroke-width="3"/>')
+        out.append(f'<g transform="translate({x + bw / 2 + 14} {y + 150}) rotate(90)">'
+                   + text("CHEMISTRY", 0, 0, 40, acc, "Bold", "start") + "</g>")
+        cx = x + bw / 2
+        if kind == "tiles":
+            for i, key in enumerate(("01-hydrogen", "06-carbon", "08-oxygen", "07-nitrogen")):
+                out.append(f'<g transform="translate({cx - 50} {y + 470 + i * 128}) scale({100 / 64:.4f})">'
+                           f'<g {style_attrs(1.6)}>{fitted(tiles[key], 1.6)}</g></g>')
+        elif kind == "molecules":
+            for i, key in enumerate(("water", "carbon-dioxide", "methane", "benzene")):
+                out.append(f'<g transform="translate({cx - 55} {y + 470 + i * 128}) scale({110 / 64:.4f})">'
+                           f'<g {style_attrs(1.6)}>{fitted(mols[key], 1.6)}</g></g>')
+        elif kind == "lab":
+            for i, key in enumerate(("erlenmeyer-flask", "microscope", "test-tube", "beaker")):
+                out.append(icon(key, cx, y + 520 + i * 128, 110))
+        else:
+            out.append(icon("atom", cx, y + 560, 130))
+            for i, line in enumerate(wrap_words(tr("Think like a proton: always stay positive!"), 12)):
+                out.append(text(line, cx, y + 690 + i * 34, 22, acc, "Bold"))
+    return W, H, "".join(out)
+
+
 QUIZ = [
     ("What is the chemical symbol for gold?", "Au"), ("What is the common name of H₂O?", "Water"),
     ("Which gas do plants absorb for photosynthesis?", "Carbon dioxide"), ("What is the pH of pure water?", "7"),
@@ -294,7 +332,8 @@ TR.update({
     "LABEL THE LAB EQUIPMENT": "TULIS NAMA ALAT LAB",
     "Write the name of each laboratory tool on the line.": "Tuliskan nama setiap alat laboratorium pada garis.",
     "Name: ____________________   Class: ________": "Nama: ____________________   Kelas: ________",
-    "CHEMISTRY ELEMENT BINGO": "BINGO UNSUR KIMIA", "LAB SAFETY": "KESELAMATAN LAB", "QUESTION": "SOAL", "ANSWER": "JAWABAN",
+    "CHEMISTRY ELEMENT BINGO": "BINGO UNSUR KIMIA", "CHEMISTRY": "KIMIA",
+    "Think like a proton: always stay positive!": "Jadilah seperti proton: selalu positif!", "LAB SAFETY": "KESELAMATAN LAB", "QUESTION": "SOAL", "ANSWER": "JAWABAN",
     "What is the chemical symbol for gold?": "Apa lambang kimia emas?",
     "What is the common name of H₂O?": "Apa nama umum dari H₂O?",
     "Which gas do plants absorb for photosynthesis?": "Gas apa yang diserap tumbuhan untuk fotosintesis?",
@@ -397,6 +436,14 @@ def assets():
                 keywords=kw_lang + ["lab safety", "safety sign", "laboratory sign", "warning", "rules", "school lab",
                                     "chemistry", "science", "poster", "printable", "a4", "classroom", "safety",
                                     "ppe", "notice", "signage", "vector", "precaution", "education", "teacher"]))
+        W, H, inner = bookmarks()
+        out.append(dict(
+            name=f"{SET_ID}-bookmarks{sfx}", size=3508, png=False,
+            svg=f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 3}" height="{H * 3}" viewBox="0 0 {W} {H}">{inner}</svg>',
+            title=f"Chemistry bookmarks printable sheet{note}, 4 science bookmarks with molecules, elements and lab icons",
+            keywords=kw_lang + ["bookmark", "bookmarks", "printable", "chemistry", "science", "reading", "school",
+                                "student", "gift", "teacher", "molecule", "periodic table", "lab", "atom", "a4",
+                                "cut out", "stationery", "vector", "design", "colorful"]))
     poster_kit.set_lang("en")
     for k in range(4):
         W, H, inner = bingo(k + 1)
