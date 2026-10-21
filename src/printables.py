@@ -90,6 +90,65 @@ def worksheet(ids):
     return W, H, "".join(out)
 
 
+def flashcards(ids, start):
+    """Lembar A4 berisi 8 kartu (2x4) ikon berwarna + nama, dengan garis potong putus-putus."""
+    from posters import LAB_NAMES
+    W, H = 800, 1131
+    ink = "#1E2A3A"
+    m = 30
+    cw, ch = (W - 2 * m) / 2, (H - 2 * m) / 4
+    out = [f'<rect x="-1" y="-1" width="{W + 2}" height="{H + 2}" fill="#FFFFFF"/>']
+    for i, key in enumerate(ids):
+        x = m + (i % 2) * cw
+        y = m + (i // 2) * ch
+        out.append(f'<rect x="{x + 10}" y="{y + 10}" width="{cw - 20}" height="{ch - 20}" rx="18" fill="#F2F8FB" '
+                   'stroke="#3FB6C4" stroke-width="3"/>')
+        out.append(f'<circle cx="{x + 36}" cy="{y + 36}" r="14" fill="#3FB6C4"/>'
+                   + text(str(start + i), x + 36, y + 41, 13, "#FFFFFF"))
+        out.append(icon(key, x + cw / 2, y + ch / 2 - 18, ch - 110))
+        name = LAB_NAMES.get(key) or key.replace("-", " ").title()
+        out.append(text(name, x + cw / 2, y + ch - 34, 22, ink))
+    dash = 'stroke="#9AA5B1" stroke-width="1.2" stroke-dasharray="6 6"'
+    out.append(f'<path d="M{W / 2} {m}V{H - m}" {dash}/>')
+    for k in range(1, 4):
+        out.append(f'<path d="M{m} {m + k * ch}H{W - m}" {dash}/>')
+    return W, H, "".join(out)
+
+
+BINGO = ["H", "He", "Li", "C", "N", "O", "F", "Ne", "Na", "Mg", "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Fe",
+         "Cu", "Zn", "Ag", "Au", "Hg", "Pb", "Sn", "I", "Ni", "Ti", "U"]
+
+
+def bingo(seed):
+    import random
+    rnd = random.Random(seed)
+    W, H = 800, 1000
+    ink = "#1E2A3A"
+    cols = ["#FF9E8A", "#FFC98A", "#FFE38A", "#B9E28C", "#8FD9C4", "#8ACBEF", "#A9B8F5", "#C3A6F2"]
+    out = [f'<rect x="-1" y="-1" width="{W + 2}" height="{H + 2}" fill="#FFFFFF"/>',
+           f'<rect x="20" y="20" width="{W - 40}" height="{H - 40}" rx="26" fill="none" stroke="{ink}" stroke-width="4"/>']
+    for k, ch in enumerate("BINGO"):
+        x = 80 + k * 128
+        out.append(f'<rect x="{x}" y="70" width="112" height="90" rx="16" fill="{cols[k * 2 % 8]}" stroke="{ink}" '
+                   'stroke-width="3"/>' + text(ch, x + 56, 140, 60, ink))
+    syms = rnd.sample(BINGO, 24)
+    k = 0
+    for r in range(5):
+        for c in range(5):
+            x, y = 80 + c * 128, 190 + r * 128
+            if r == 2 and c == 2:
+                out.append(f'<rect x="{x}" y="{y}" width="112" height="112" rx="16" fill="#FFC845" stroke="{ink}" '
+                           'stroke-width="3"/>')
+                out.append(icon("atom", x + 56, y + 50, 64))
+                out.append(text("FREE", x + 56, y + 100, 16, ink))
+                continue
+            out.append(f'<rect x="{x}" y="{y}" width="112" height="112" rx="16" fill="#FFFFFF" stroke="{ink}" '
+                       'stroke-width="3"/>' + text(syms[k], x + 56, y + 74, 46, ink))
+            k += 1
+    out.append(text("CHEMISTRY ELEMENT BINGO", W / 2, H - 50, 26, ink))
+    return W, H, "".join(out)
+
+
 TR.update({
     "CERTIFICATE": "SERTIFIKAT", "OF ACHIEVEMENT": "PENGHARGAAN",
     "This certificate is proudly presented to": "Dengan bangga diberikan kepada",
@@ -98,6 +157,7 @@ TR.update({
     "LABEL THE LAB EQUIPMENT": "TULIS NAMA ALAT LAB",
     "Write the name of each laboratory tool on the line.": "Tuliskan nama setiap alat laboratorium pada garis.",
     "Name: ____________________   Class: ________": "Nama: ____________________   Kelas: ________",
+    "CHEMISTRY ELEMENT BINGO": "BINGO UNSUR KIMIA",
 })
 
 
@@ -127,5 +187,25 @@ def assets():
                                     "printable", "chemistry", "science", "school", "student", "exercise",
                                     "homework", "quiz", "classroom", "teacher", "a4", "black and white", "outline",
                                     "education", "learning", "test", "assessment", "vector", "illustration"]))
+        lab_ids = [ic["id"] for ic in icons_lab_flat.ICONS] + [ic["id"] for ic in icons_lab2.ICONS]
+        for k in range(5):
+            W, H, inner = flashcards(lab_ids[k * 8:(k + 1) * 8], k * 8 + 1)
+            out.append(dict(
+                name=f"{SET_ID}-flashcards-lab-{k + 1}{sfx}", size=3508, png=False,
+                svg=f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 3}" height="{H * 3}" viewBox="0 0 {W} {H}">{inner}</svg>',
+                title=f"Laboratory equipment flashcards sheet {k + 1}{note}, printable A4 chemistry cards for students",
+                keywords=kw_lang + ["flashcards", "flash cards", "cards", "laboratory equipment", "lab tools",
+                                    "printable", "chemistry", "science", "school", "classroom", "teacher",
+                                    "vocabulary", "learning", "education", "a4", "cut out", "game", "kids",
+                                    "student", "glassware", "colorful", "vector", "illustration"]))
     poster_kit.set_lang("en")
+    for k in range(4):
+        W, H, inner = bingo(k + 1)
+        out.append(dict(
+            name=f"{SET_ID}-element-bingo-{k + 1}", size=3500, png=False,
+            svg=f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 3}" height="{H * 3}" viewBox="0 0 {W} {H}">{inner}</svg>',
+            title=f"Chemistry element bingo card {k + 1}, printable periodic table classroom game vector",
+            keywords=["bingo", "bingo card", "game", "classroom game", "periodic table", "chemical elements",
+                      "element symbols", "chemistry", "science", "printable", "school", "teacher", "activity",
+                      "fun", "learning", "education", "kids", "student", "vector", "template"]))
     return [(SET_ID, out)]

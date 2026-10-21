@@ -5,7 +5,7 @@ Aset vektor microstock bertema kimia yang dibuat sepenuhnya lewat kode
 
 ## Set yang tersedia
 
-Total 839 aset dalam 47 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 853 aset dalam 47 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -68,7 +68,7 @@ Total 839 aset dalam 47 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file 
 | Set | Isi |
 |-----|-----|
 | `chemistry-coloring-pages` | 4 lembar mewarnai A4 (alat lab ×2, sains, molekul), bahasa Inggris & Indonesia |
-| `chemistry-printables` | sertifikat prestasi kimia (2 warna) dan lembar kerja "tulis nama alat lab" (2 halaman), bahasa Inggris & Indonesia |
+| `chemistry-printables` | sertifikat prestasi kimia (2 warna), lembar kerja "tulis nama alat lab" (2 halaman), flashcard 40 alat lab (5 lembar), bahasa Inggris & Indonesia; plus 4 kartu bingo unsur |
 
 ### 6-template-sosmed
 | Set | Isi |
