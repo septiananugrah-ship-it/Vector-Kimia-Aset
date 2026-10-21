@@ -335,7 +335,8 @@ def assets():
                     name=f"{set_id}-{key}-{tname}", svg=doc(W, H, th, inner), size=7000, png=False,
                     title=f"{title}{note}, {th['mood']}, chemistry education vector infographic",
                     keywords=(["indonesian", "bahasa indonesia"] if lang == "id" else []) + kw + COMMON_KW
-                    + ["dark background" if tname == "dark" else "white background"]))
+                    + {"dark": ["dark background"], "light": ["white background"],
+                       "chalkboard": ["chalkboard", "blackboard", "chalk", "green board"]}[tname]))
         sets.append((set_id, out))
     set_lang("en")
     return sets

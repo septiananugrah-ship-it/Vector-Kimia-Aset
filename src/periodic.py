@@ -82,6 +82,7 @@ CAT = {k: (name, col) for k, name, col in CATEGORIES}
 THEMES = [
     dict(key="light", bg="#FFFFFF", ink="#1E2A3A", sub="#5B6878", mood="pastel colors on white"),
     dict(key="dark", bg="#16213A", ink="#FFFFFF", sub="#AEB9C9", mood="pastel colors on dark navy"),
+    dict(key="chalkboard", bg="#2F4A3A", ink="#F4F3EC", sub="#C7D3C8", mood="pastel colors on green chalkboard"),
 ]
 
 C, GAP = 60, 4  # ukuran ubin dan jarak
@@ -202,7 +203,7 @@ def assets():
     out = []
     variants = [("en", th, "full") for th in THEMES] + [("id", th, "full") for th in THEMES]
     variants += [(lang, th, mode) for lang in ("en", "id") for mode in ("symbols", "blank") for th in THEMES
-                 if not (mode == "blank" and th["key"] == "dark")]
+                 if not (mode == "blank" and th["key"] != "light")]
     for lang, th, mode in variants:
         W, H, inner = poster(th, lang, mode)
         svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W * 5}" height="{H * 5}" '

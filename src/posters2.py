@@ -85,10 +85,10 @@ FG = [
     ("Amide", "R–CONH2", "Acetamide",
      [("R", 0, 0), ("C", 1, 0), ("O", 1, -1), ("N", 2, 0), ("H", 2.6, -.8), ("H", 2.6, .8)],
      [(0, 1, 1), (1, 2, 2), (1, 3, 1), (3, 4, 1), (3, 5, 1)]),
-    ("Alkene", "CnH2n", "Ethene",
+    ("Alkene", "C_{n}H_{2n}", "Ethene",
      [("R", -.6, -.8), ("R", -.6, .8), ("C", 0, 0), ("C", 1, 0), ("R", 1.6, -.8), ("R", 1.6, .8)],
      [(0, 2, 1), (1, 2, 1), (2, 3, 2), (3, 4, 1), (3, 5, 1)]),
-    ("Alkyne", "CnH2n–2", "Ethyne", [("R", -1, 0), ("C", 0, 0), ("C", 1, 0), ("R'", 2, 0)],
+    ("Alkyne", "C_{n}H_{2n−2}", "Ethyne", [("R", -1, 0), ("C", 0, 0), ("C", 1, 0), ("R'", 2, 0)],
      [(0, 1, 1), (1, 2, 3), (2, 3, 1)]),
     ("Haloalkane", "R–X", "Chloromethane", [("R", 0, 0), ("X", 1, 0)], [(0, 1, 1)]),
     ("Arene (aromatic)", "C6H5–R", "Toluene", [("", .62, 0), ("R", 1.5, 0)], [(0, 1, 1)]),
@@ -108,7 +108,11 @@ def functional_groups(th):
         y = top + (i // cols) * (ch + gap)
         out.append(_card(x, y, cw, ch, th))
         out.append(fit_text(name, x + 18, y + 34, 18, th["ink"], cw - 36, anchor="start"))
-        out.append(formula(gen, x + 18, y + 56, 14, th["accent"], anchor="start"))
+        if "_{" in gen:
+            from posters4 import chem  # impor lambat: posters4 mengimpor modul ini
+            out.append(chem(gen, x + 18, y + 56, 14, th["accent"], "start", "SemiBold"))
+        else:
+            out.append(formula(gen, x + 18, y + 56, 14, th["accent"], anchor="start"))
         ring = (0, 0, .62) if name.startswith("Arene") else None
         unit = 44
         out.append(structure(nodes, bonds, x + cw / 2, y + 116, unit, th, ring=ring))

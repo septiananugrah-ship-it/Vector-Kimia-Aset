@@ -31,6 +31,8 @@ THEMES = {
                  sub="#AEB9C9", accent="#3FB6C4", mood="on dark navy"),
     "light": dict(bg="#FFFFFF", card="#F2F6FA", card_stroke="#DCE4EE", plate="#FFFFFF", ink="#1E2A3A",
                   sub="#5B6878", accent="#1F9AA8", mood="on white"),
+    "chalkboard": dict(bg="#2F4A3A", card="#375646", card_stroke="#4F7261", plate="#EEF2E8", ink="#F4F3EC",
+                       sub="#C7D3C8", accent="#FFD27A", mood="chalkboard style on green board"),
 }
 MX = 44  # margin kiri-kanan
 COMMON_KW = ["chemistry", "science", "education", "school", "poster", "infographic", "chart", "classroom",
