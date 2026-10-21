@@ -4,18 +4,19 @@ on:
   workflow_dispatch:
     inputs:
       size:
-        description: "Sisi panjang JPG/PNG (px)"
+        description: "Sisi panjang JPG/PNG ikon tunggal (px)"
         default: "4000"
-      color:
-        description: "Warna garis (hex tanpa #)"
-        default: "1E2A3A"
+      only:
+        description: "Hanya set tertentu (pisahkan spasi, kosong = semua)"
+        default: ""
   push:
     branches: [main]
-    paths: ["src/**", "build.py", "requirements.txt"]
+    paths: ["src/**", "fonts/**", "build.py", "requirements.txt"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -23,8 +24,13 @@ jobs:
           python-version: "3.12"
       - run: sudo apt-get update && sudo apt-get install -y libcairo2
       - run: pip install -r requirements.txt
-      - run: python build.py --size "${{ inputs.size || '4000' }}" --color "${{ inputs.color || '1E2A3A' }}"
+      - name: Bangun semua set
+        env:
+          SIZE: ${{ inputs.size || '4000' }}
+          ONLY: ${{ inputs.only }}
+        run: python build.py --size "$SIZE" ${ONLY:+--only $ONLY}
       - uses: actions/upload-artifact@v4
         with:
           name: aset-microstock
           path: dist/*.zip
+          compression-level: 0

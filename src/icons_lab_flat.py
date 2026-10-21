@@ -10,6 +10,12 @@ dan permukaan cairan, tanpa gradien/transparansi agar aman untuk EPS 10.
 SET_ID = "lab-flat-icons"
 STROKE = 1.6
 SHADOW = True
+GLYPH = True
+THEME = "chemistry laboratory equipment"
+# (latar, warna aksen, suasana) untuk pola seamless
+PATTERNS = [("#FFFFFF", "#3FB6C4", "colorful science on white"),
+            ("#1E2A3A", "#FFC845", "colorful science on dark navy"),
+            ("#E6F6F8", "#F28C28", "colorful science on light blue")]
 SET_TITLE = "Colorful chemistry laboratory equipment icons set, 20 cartoon vector clipart"
 SET_KEYWORDS = [
     "icon set", "collection", "clipart", "flat", "colorful", "cartoon",

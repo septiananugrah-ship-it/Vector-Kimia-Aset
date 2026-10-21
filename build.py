@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
-"""Bangun aset microstock dari definisi ikon di src/.
+"""Bangun aset microstock dari definisi di src/.
 
-Keluaran (folder dist/):
-  svg/  - vektor sumber
-  eps/  - EPS (PostScript level 2, kompatibel EPS 10)
-  jpg/  - pratinjau JPG berlatar putih
-  png/  - PNG transparan
-  adobe_stock.csv, shutterstock.csv - judul & keyword per file
-  <set>.zip - semua di atas, siap unggah
+Jenis set:
+  - set ikon (modul dengan ICONS): ikon tunggal + lembar set, opsional varian
+    glyph (solid gelap) dan pola seamless dari ikon-ikonnya
+  - set poster (modul dengan fungsi assets()): ilustrasi utuh, mis. tabel periodik
 
-Pemakaian: python build.py [--size 4000] [--color 1E2A3A]
+Keluaran per set di dist/<set>/: svg/ eps/ jpg/ png/ + adobe_stock.csv +
+shutterstock.csv, lalu dist/<set>.zip siap unggah.
+
+Pemakaian: python build.py [--size 4000] [--only lab-flat-icons ...]
 """
 import argparse
 import csv
+import importlib
 import io
+import random
+import re
 import shutil
 import sys
 import zipfile
@@ -26,15 +29,20 @@ from PIL import Image
 
 ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT / "src"))
-import icons_lab  # noqa: E402
-import icons_lab_flat  # noqa: E402
 
-SETS = [icons_lab, icons_lab_flat]
+MODULES = ["icons_lab", "icons_lab_flat", "icons_lab2", "molecules", "atoms", "periodic", "hex_patterns"]
 
 GRID = 64
 PAD = 3  # ruang kosong di sekeliling ikon, dalam satuan grid
 STROKE = 2.5  # bawaan; set bisa menimpa lewat atribut STROKE
+INK = "1E2A3A"
 SHADOW_COLOR = "#E4E8EE"
+GLYPH_INK = "#1E2A3A"
+from icons_lab_flat import G as _G, M as _M, W as _W, dark as _dark  # noqa: E402
+
+# Warna yang menjadi putih di varian glyph (kaca, logam, putih); sisanya tinta gelap.
+GLYPH_LIGHT = {c.upper() for c in (_W, _G, _M, _dark(_G, .07), _dark(_M, .14), _dark(_W, .14),
+                                   "#FFE7A3", "#FFD978")}
 
 
 class EPS2Surface(Surface):
@@ -47,31 +55,44 @@ class EPS2Surface(Surface):
         return surface, width, height
 
 
-def style_attrs(color, stroke):
-    return (f'fill="none" stroke="#{color}" stroke-width="{stroke}" '
+def style_attrs(stroke, ink=INK):
+    return (f'fill="none" stroke="#{ink}" stroke-width="{stroke}" '
             'stroke-linecap="round" stroke-linejoin="round"')
 
+
+def svg_doc(w, h, inner, px_w=None, bg=None):
+    px_w = px_w or w * 10
+    bgrect = f'<rect x="0" y="0" width="{w}" height="{h}" fill="{bg}"/>' if bg else ""
+    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{px_w}" height="{px_w * h / w:.0f}" '
+            f'viewBox="0 0 {w} {h}">\n{bgrect}{inner}\n</svg>\n')
+
+
+# ---------------------------------------------------------------- ikon
 
 def bbox(body, stroke):
     """Kotak pembatas (x0, y0, x1, y1) ikon dalam satuan grid, termasuk garis tepi."""
     k, m = 10, 32  # piksel per satuan, margin
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{(GRID + 2 * m) * k}" '
            f'height="{(GRID + 2 * m) * k}" viewBox="{-m} {-m} {GRID + 2 * m} {GRID + 2 * m}">'
-           f'<g {style_attrs("000000", stroke)}>{body}</g></svg>')
+           f'<g {style_attrs(stroke, "000000")}>{body}</g></svg>')
     img = Image.open(io.BytesIO(cairosvg.svg2png(bytestring=svg.encode())))
     x0, y0, x1, y1 = img.getchannel("A").getbbox()
     return x0 / k - m, y0 / k - m, x1 / k - m, y1 / k - m
 
 
-def fitted(ic, mod):
+_bbox_cache = {}
+
+
+def fitted(body, stroke, shadow=False):
     """Skalakan ikon agar mengisi grid 64x64 dengan ukuran visual seragam.
 
-    Tebal garis dikompensasi supaya sama di semua ikon. Set dengan SHADOW
-    mendapat bayangan elips di bawah benda.
+    Tebal garis dikompensasi supaya sama di semua ikon; `shadow` menambah
+    bayangan elips di bawah benda.
     """
-    stroke = getattr(mod, "STROKE", STROKE)
-    shadow = getattr(mod, "SHADOW", False)
-    x0, y0, x1, y1 = bbox(ic["body"], stroke)
+    key = (body, stroke)
+    if key not in _bbox_cache:
+        _bbox_cache[key] = bbox(body, stroke)
+    x0, y0, x1, y1 = _bbox_cache[key]
     w, h = x1 - x0, y1 - y0
     area_h = GRID - (5 if shadow else 0)
     sc = min(GRID / w, area_h / h)
@@ -82,48 +103,142 @@ def fitted(ic, mod):
         out += (f'<ellipse cx="{GRID / 2}" cy="{area_h + 1.2:.2f}" rx="{min(w * sc * .48, 30):.2f}" '
                 f'ry="2.6" fill="{SHADOW_COLOR}" stroke="none"/>')
     out += (f'<g transform="translate({tx:.3f} {ty:.3f}) scale({sc:.4f})" '
-            f'stroke-width="{stroke / sc:.3f}">{ic["body"]}</g>')
+            f'stroke-width="{stroke / sc:.3f}">{body}</g>')
     return out
 
 
-def icon_svg(ic, mod, color, px=1000):
+def glyphify(body):
+    """Varian glyph: semua warna menjadi tinta gelap, warna terang menjadi putih."""
+    def sub(m):
+        attr, col = m.group(1), m.group(2).upper()
+        if attr == "stroke" and col == "#FFFFFF":
+            return m.group(0)
+        return f'{attr}="{"#FFFFFF" if col in GLYPH_LIGHT else GLYPH_INK}"'
+    return re.sub(r'(fill|stroke)="(#[0-9A-Fa-f]{6})"', sub, body)
+
+
+def icon_doc(body, stroke, shadow):
     v = GRID + 2 * PAD
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{px}" height="{px}" '
-            f'viewBox="{-PAD} {-PAD} {v} {v}">\n'
-            f'<g {style_attrs(color, getattr(mod, "STROKE", STROKE))}>{fitted(ic, mod)}</g>\n</svg>\n')
+    inner = (f'<g transform="translate({PAD} {PAD})"><g {style_attrs(stroke)}>'
+             f'{fitted(body, stroke, shadow)}</g></g>')
+    return svg_doc(v, v, inner, px_w=1000)
 
 
-def sheet_svg(mod, color, cols=5, cell=80):
-    icons = mod.ICONS
-    rows = -(-len(icons) // cols)
+def sheet_doc(bodies, stroke, shadow, cols=5, cell=80):
+    rows = -(-len(bodies) // cols)
     w, h = cols * cell, rows * cell
     off = (cell - GRID) / 2
     parts = []
-    for i, ic in enumerate(icons):
+    for i, b in enumerate(bodies):
         x, y = (i % cols) * cell + off, (i // cols) * cell + off
-        parts.append(f'<g transform="translate({x} {y})">{fitted(ic, mod)}</g>')
-    return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w * 10}" height="{h * 10}" '
-            f'viewBox="0 0 {w} {h}">\n<g {style_attrs(color, getattr(mod, "STROKE", STROKE))}>\n'
-            + "\n".join(parts) + "\n</g>\n</svg>\n")
+        parts.append(f'<g transform="translate({x} {y})">{fitted(b, stroke, shadow)}</g>')
+    return svg_doc(w, h, f'<g {style_attrs(stroke)}>' + "".join(parts) + "</g>")
 
 
-def export(name, svg, out, long_side):
+def pattern_doc(bodies, stroke, bg, seed, accent, n=4, cell=90, size=0.62):
+    """Pola seamless: ikon disebar dengan baris berselang (half-drop), diputar
+    acak, plus titik/plus dekoratif. Elemen yang melewati tepi diulang di sisi
+    seberang sehingga ubin menyambung tanpa sambungan."""
+    rnd = random.Random(seed)
+    W = H = n * cell
+    items = []
+    order = bodies[:]
+    rnd.shuffle(order)
+    k = 0
+    for cx in range(n):
+        for cy in range(n):
+            x = cx * cell + cell / 2
+            y = cy * cell + cell / 2 + (cell / 2 if cx % 2 else 0)
+            s = size * cell / GRID * rnd.uniform(.9, 1.05)
+            a = rnd.uniform(-22, 22)
+            b = order[k % len(order)]
+            k += 1
+            items.append(f'<g transform="translate({x:.2f} {y:.2f}) rotate({a:.1f}) scale({s:.4f}) '
+                         f'translate({-GRID / 2} {-GRID / 2})">{fitted(b, stroke / s * .9)}</g>')
+            # dekorasi kecil di sela ikon
+            dx, dy = x + cell / 2, y + rnd.uniform(-.15, .15) * cell
+            if rnd.random() < .5:
+                items.append(f'<circle cx="{dx:.2f}" cy="{dy:.2f}" r="{rnd.uniform(1.6, 2.6):.2f}" '
+                             f'fill="{accent}" stroke="none"/>')
+            else:
+                r = rnd.uniform(2.5, 3.5)
+                items.append(f'<path d="M{dx - r:.2f} {dy:.2f}h{2 * r:.2f}M{dx:.2f} {dy - r:.2f}v{2 * r:.2f}" '
+                             f'stroke="{accent}" stroke-width="1.6"/>')
+    tiled = []
+    for it in items:
+        for ox in (-W, 0, W):
+            for oy in (-H, 0, H):
+                tiled.append(f'<g transform="translate({ox} {oy})">{it}</g>' if (ox or oy) else it)
+    inner = (f'<clipPath id="tile"><rect width="{W}" height="{H}"/></clipPath>'
+             f'<g clip-path="url(#tile)"><g {style_attrs(stroke)}>' + "".join(tiled) + "</g></g>")
+    return svg_doc(W, H, inner, bg=bg)
+
+
+def icon_set_assets(mod):
+    """Hasilkan [(set_id, [aset...])] untuk satu modul ikon."""
+    stroke = getattr(mod, "STROKE", STROKE)
+    shadow = getattr(mod, "SHADOW", False)
+    out = []
+
+    def variant(set_id, bodies, title_fn, set_title, set_kw, common_kw, shadow, extra_kw=()):
+        assets = [dict(name=f"{set_id}-set", svg=sheet_doc(bodies, stroke, shadow), size=5000,
+                       title=set_title, keywords=list(extra_kw) + set_kw)]
+        for ic, b in zip(mod.ICONS, bodies):
+            assets.append(dict(name=f"{set_id}-{ic['id']}", svg=icon_doc(b, stroke, shadow), size=4000,
+                               title=title_fn(ic), keywords=list(extra_kw) + ic["keywords"] + common_kw))
+        return assets
+
+    bodies = [ic["body"] for ic in mod.ICONS]
+    out.append((mod.SET_ID, variant(mod.SET_ID, bodies, lambda ic: ic["title"], mod.SET_TITLE,
+                                    mod.SET_KEYWORDS, mod.COMMON_KEYWORDS, shadow)))
+
+    if getattr(mod, "GLYPH", False):
+        gid = mod.SET_ID.replace("-icons", "") + "-glyph-icons"
+        gb = [glyphify(b) for b in bodies]
+        theme = mod.THEME
+        out.append((gid, variant(
+            gid, gb,
+            lambda ic: f"{ic.get('name') or ic['id'].replace('-', ' ').capitalize()} solid glyph icon, {theme} vector",
+            f"{theme.capitalize()} solid glyph icons set, 20 black vector pictograms",
+            mod.SET_KEYWORDS, mod.COMMON_KEYWORDS, False,
+            extra_kw=("glyph", "solid", "black", "silhouette", "pictogram", "monochrome"))))
+
+    if getattr(mod, "PATTERNS", None):
+        pid = mod.SET_ID.replace("-icons", "") + "-patterns"
+        assets = []
+        for i, (bg, accent, mood) in enumerate(mod.PATTERNS):
+            assets.append(dict(
+                name=f"{pid}-{i + 1:02d}", svg=pattern_doc(bodies, stroke, bg, seed=i * 7 + 1, accent=accent),
+                size=4000, png=False,
+                title=f"{mod.THEME.capitalize()} seamless pattern, {mood} vector background",
+                keywords=["seamless pattern", "pattern", "background", "seamless", "repeat", "wallpaper",
+                          "texture", "wrapping paper", "fabric", "textile", "print", "backdrop", "tile"]
+                         + mod.SET_KEYWORDS))
+        out.append((pid, assets))
+    return out
+
+
+# ---------------------------------------------------------------- ekspor
+
+def _width(svg):
+    return float(svg.split('width="', 1)[1].split('"', 1)[0])
+
+
+def export(a, out):
+    name, svg = a["name"], a["svg"]
     data = svg.encode()
     (out / "svg" / f"{name}.svg").write_bytes(data)
     eps = io.BytesIO()
     EPS2Surface.convert(bytestring=data, write_to=eps)
     (out / "eps" / f"{name}.eps").write_bytes(eps.getvalue())
 
-    png = cairosvg.svg2png(bytestring=data, scale=long_side / _width(svg))
+    png = cairosvg.svg2png(bytestring=data, scale=a["size"] / _width(svg))
     img = Image.open(io.BytesIO(png)).convert("RGBA")
-    img.save(out / "png" / f"{name}.png", optimize=True)
+    if a.get("png", True):
+        img.save(out / "png" / f"{name}.png", optimize=True)
     bg = Image.new("RGB", img.size, "white")
     bg.paste(img, mask=img.split()[3])
     bg.save(out / "jpg" / f"{name}.jpg", quality=95, dpi=(300, 300))
-
-
-def _width(svg):
-    return float(svg.split('width="', 1)[1].split('"', 1)[0])
 
 
 def clean_keywords(words, limit=49):
@@ -136,53 +251,54 @@ def clean_keywords(words, limit=49):
     return out[:limit]
 
 
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--size", type=int, default=4000, help="sisi panjang raster (px)")
-    ap.add_argument("--color", default="1E2A3A", help="warna garis (hex tanpa #)")
-    ap.add_argument("--out", default="dist")
-    args = ap.parse_args()
-
-    for mod in SETS:
-        build_set(mod, args)
-
-
-def build_set(mod, args):
-    out = ROOT / args.out / mod.SET_ID
+def write_set(set_id, assets, dist, scale):
+    out = dist / set_id
     shutil.rmtree(out, ignore_errors=True)
     for sub in ("svg", "eps", "jpg", "png"):
         (out / sub).mkdir(parents=True)
-
-    rows = []  # (nama file, judul, keywords)
-    sheet_name = f"{mod.SET_ID}-set"
-    export(sheet_name, sheet_svg(mod, args.color), out, int(args.size * 1.25))
-    rows.append((sheet_name, mod.SET_TITLE, clean_keywords(mod.SET_KEYWORDS)))
-
-    for ic in mod.ICONS:
-        name = f"{mod.SET_ID}-{ic['id']}"
-        export(name, icon_svg(ic, mod, args.color), out, args.size)
-        rows.append((name, ic["title"], clean_keywords(ic["keywords"] + mod.COMMON_KEYWORDS)))
+    for a in assets:
+        a["size"] = int(a["size"] * scale)
+        export(a, out)
 
     with open(out / "adobe_stock.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["Filename", "Title", "Keywords", "Category", "Releases"])
-        for name, title, kw in rows:
-            w.writerow([f"{name}.eps", title, ", ".join(kw), 16, ""])  # 16 = Science
+        for a in assets:
+            w.writerow([f"{a['name']}.eps", a["title"], ", ".join(clean_keywords(a["keywords"])), 16, ""])
 
     with open(out / "shutterstock.csv", "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f)
         w.writerow(["Filename", "Description", "Keywords", "Categories",
                     "Illustration", "Mature Content", "Editorial"])
-        for name, title, kw in rows:
-            w.writerow([f"{name}.eps", title, ",".join(kw[:50]), "Science,Objects",
-                        "yes", "no", "no"])
+        for a in assets:
+            w.writerow([f"{a['name']}.eps", a["title"], ",".join(clean_keywords(a["keywords"], 50)),
+                        "Science,Education", "yes", "no", "no"])
 
-    zpath = ROOT / args.out / f"{mod.SET_ID}.zip"
+    zpath = dist / f"{set_id}.zip"
     with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:
         for p in sorted(out.rglob("*")):
             if p.is_file():
-                z.write(p, p.relative_to(out.parent))
-    print(f"{len(rows)} aset -> {zpath}")
+                z.write(p, p.relative_to(dist))
+    print(f"{len(assets):3d} aset -> {zpath.name}")
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--size", type=int, default=4000, help="sisi panjang raster ikon tunggal (px)")
+    ap.add_argument("--out", default="dist")
+    ap.add_argument("--only", nargs="*", help="hanya bangun set dengan id ini")
+    args = ap.parse_args()
+    dist = ROOT / args.out
+    dist.mkdir(exist_ok=True)
+    scale = args.size / 4000
+
+    for modname in MODULES:
+        mod = importlib.import_module(modname)
+        sets = mod.assets() if hasattr(mod, "assets") else icon_set_assets(mod)
+        for set_id, assets in sets:
+            if args.only and set_id not in args.only:
+                continue
+            write_set(set_id, assets, dist, scale)
 
 
 if __name__ == "__main__":
