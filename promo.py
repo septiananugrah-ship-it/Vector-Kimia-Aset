@@ -69,9 +69,9 @@ def main():
                                  ("ph-scale", "lab-equipment", "states-of-matter", "molecules", "atomic-models",
                                   "reaction-types")]
          + [dist / "3-poster-edukasi/periodic-table-posters/jpg/periodic-table-posters-dark.jpg"],
-         "CHEMISTRY POSTERS BUNDLE", "79 posters · dark, light & chalkboard · English & Indonesian", 4),
+         "CHEMISTRY POSTERS BUNDLE", "81 posters · dark, light & chalkboard · English & Indonesian", 4),
         ("bundle-posters-indonesia", pick(dist, "3-poster-edukasi/chemistry-posters-indonesian/jpg/*-dark.jpg", 8),
-         "PAKET POSTER KIMIA", "79 poster edukasi · versi Bahasa Indonesia · siap cetak", 4),
+         "PAKET POSTER KIMIA", "81 poster edukasi · versi Bahasa Indonesia · siap cetak", 4),
         ("bundle-icons", [dist / p for p in (
             "1-alat-lab/lab-flat-icons/jpg/lab-flat-icons-set.jpg",
             "1-alat-lab/lab2-flat-icons/jpg/lab2-flat-icons-set.jpg",
@@ -92,6 +92,21 @@ def main():
             "chemistry-printables/jpg/chemistry-printables-element-bingo-1.jpg",
             "chemistry-printables/jpg/chemistry-printables-chemical-bottle-labels.jpg")],
          "CHEMISTRY PRINTABLES", "Coloring pages, worksheets, flashcards, certificates & more", 4),
+        ("bundle-kawaii", [dist / "8-stiker-kawaii" / f"{k}/jpg/{k}-set.jpg" for k in
+                           ("kawaii-lab-stickers", "kawaii-lab-stickers-2", "kawaii-science-stickers",
+                            "kawaii-molecule-stickers")],
+         "KAWAII CHEMISTRY STICKERS", "77 cute die-cut stickers · lab, science & molecules", 2),
+        ("bundle-posters-midnight", pick(dist, "3-poster-edukasi/chemistry-posters-midnight/jpg/*.jpg", 8),
+         "MIDNIGHT POSTER COLLECTION", "Every chemistry poster in a deep purple dark theme", 4),
+        ("bundle-element-tiles", [dist / "2-molekul-atom" / f"{k}/jpg/{k}-set.jpg" for k in
+                                  ("element-tile-icons-2", "element-tile-icons-3", "element-tile-icons-4",
+                                   "element-tile-dark-icons-1", "element-tile-dark-icons-2",
+                                   "element-tile-dark-icons-3")],
+         "ALL 118 ELEMENT TILES", "Colorful and dark versions · every element of the periodic table", 3),
+        ("bundle-environment", [dist / f"{cp}chemistry-posters-{k}-dark.jpg" for k in
+                                ("acid-rain", "greenhouse-effect", "ozone-layer-depletion", "water-treatment-process",
+                                 "rusting-of-iron", "plastics-recycling-codes")],
+         "ENVIRONMENTAL CHEMISTRY", "Acid rain, greenhouse effect, ozone, water treatment & more", 3),
     ]
     made = []
     for name, files, title, sub, cols in jobs:
