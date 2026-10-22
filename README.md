@@ -9,7 +9,7 @@ Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana,
 
 ## Set yang tersedia
 
-Total 2.285 aset dalam 86 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 2.367 aset dalam 88 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -23,6 +23,7 @@ Total 2.285 aset dalam 86 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua fil
 | `lab-doodle-icons`, `lab2-doodle-icons` | versi doodle / coretan tangan jilid 1 & 2 (+ pola doodle) |
 | `ghs-hazard-pictograms` | 9 piktogram bahaya GHS (mudah meledak, mudah terbakar, korosif, beracun, dll.) + lembar set |
 | `ghs-hazard-labels` (+ `-indonesian`) | 9 label stiker GHS siap cetak dengan nama bahaya (Inggris & Indonesia) |
+| `lab-badge-icons-dark` | 40 ikon alat lab gaya lencana/aplikasi: kotak bulat navy gelap + lembar set (cocok untuk ikon aplikasi & sorotan Instagram) |
 
 ### 2-molekul-atom
 | Set | Isi |
@@ -63,6 +64,7 @@ Total 2.285 aset dalam 86 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua fil
 | `element-tile-icons` | 30 ikon ubin unsur populer (H, C, O, Na, Fe, Cu, Ag, Au, U, dll.) + lembar set |
 | `element-tile-icons-2`, `-3`, `-4` | 88 ubin unsur sisanya (Z 1–56, 57–88, 89–118) sehingga lengkap 118 unsur, tiap set + lembar set |
 | `element-tile-dark-icons-1`, `-2`, `-3` | 118 ubin unsur tema gelap (navy dengan bingkai warna kategori), Z 1–40, 41–80, 81–118 + lembar set |
+| `concept-badge-icons-dark` | 40 ikon sains & molekul gaya lencana navy gelap + lembar set |
 | `element-tile-patterns` | 1 pola seamless ubin unsur (kategori 4-pola-seamless) |
 
 ### 5-latar-presentasi
