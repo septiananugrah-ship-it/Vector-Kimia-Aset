@@ -9,7 +9,7 @@ Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana,
 
 ## Set yang tersedia
 
-Total 2.025 aset dalam 86 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 2.029 aset dalam 86 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -90,7 +90,7 @@ bundle printable. Dibuat otomatis oleh `promo.py` setelah build. Bukan untuk mic
 ### 7-lembar-kerja-mewarnai
 | Set | Isi |
 |-----|-----|
-| `chemistry-coloring-pages` | 10 lembar mewarnai A4 (alat lab ×4, sains ×2, molekul, karakter kawaii ×3), bahasa Inggris & Indonesia |
+| `chemistry-coloring-pages` | 12 lembar mewarnai A4 (alat lab ×4, sains ×2, molekul ×2, karakter kawaii ×4), bahasa Inggris & Indonesia |
 | `chemistry-printables` | sertifikat prestasi kimia (2 warna), lembar kerja "tulis nama alat lab" (2 halaman), flashcard 40 alat lab (5 lembar), template laporan praktikum, label botol bahan kimia, kartu kuis 16 soal + jawaban, 10 rambu keselamatan lab A4, lembar 4 pembatas buku, kartu 118 unsur siap potong (6 lembar), bahasa Inggris & Indonesia; plus 4 kartu bingo unsur |
 
 ### 6-template-sosmed

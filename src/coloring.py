@@ -8,7 +8,9 @@ import icons_lab_flat
 import kawaii
 import kawaii2
 import kawaii3
+import kawaii4
 import molecules
+import molecules3
 import poster_kit
 from poster_i18n import TR
 from poster_kit import text, tr
@@ -39,9 +41,16 @@ PAGES = [
      ["reagent-bottle", "dropper-bottle", "spirit-lamp", "protective-gloves", "magnifying-glass", "fire-extinguisher"]),
     ("kawaii-science", "COLOR THE CUTE SCIENCE!", kawaii3,
      ["water-drop", "molecule", "lightning", "crystal", "gas-cloud", "idea-bulb"]),
+    ("kawaii-molecules", "COLOR THE CUTE MOLECULES!", kawaii4,
+     ["water", "ammonia", "carbon-dioxide", "ozone", "sulfur-dioxide", "hydrogen-chloride"]),
+    ("molecules-2", "COLOR THE MOLECULES!", molecules3,
+     ["ethane", "carbonic-acid", "boron-trifluoride", "phosphoric-acid", "glycine", "carbon-disulfide"]),
 ]
 
-MOL_NAMES = {"water": "Water", "carbon-dioxide": "Carbon dioxide", "methane": "Methane", "ammonia": "Ammonia",
+MOL_NAMES = {"ethane": "Ethane", "carbonic-acid": "Carbonic acid", "boron-trifluoride": "Boron trifluoride",
+             "phosphoric-acid": "Phosphoric acid", "glycine": "Glycine", "carbon-disulfide": "Carbon disulfide",
+             "ozone": "Ozone", "sulfur-dioxide": "Sulfur dioxide", "hydrogen-chloride": "Hydrogen chloride",
+             "water": "Water", "carbon-dioxide": "Carbon dioxide", "methane": "Methane", "ammonia": "Ammonia",
              "benzene": "Benzene", "oxygen": "Oxygen"}
 
 
@@ -84,6 +93,10 @@ TR.update({
     "Atom": "Atom", "Magnet": "Magnet", "Crystal": "Kristal", "Idea Bulb": "Lampu Ide",
     "Chemistry Book": "Buku Kimia", "COLOR THE CUTE LAB!": "AYO WARNAI LAB LUCU!",
     "COLOR THE CUTE SCIENCE!": "AYO WARNAI SAINS LUCU!", "Battery": "Baterai", "Benzene Ring": "Cincin Benzena",
+    "COLOR THE CUTE MOLECULES!": "AYO WARNAI MOLEKUL LUCU!", "Ethane": "Etana", "Carbonic acid": "Asam karbonat",
+    "Boron trifluoride": "Boron trifluorida", "Phosphoric acid": "Asam fosfat", "Glycine": "Glisin",
+    "Carbon disulfide": "Karbon disulfida", "Ozone": "Ozon", "Sulfur dioxide": "Belerang dioksida",
+    "Hydrogen chloride": "Hidrogen klorida",
     "Capsule": "Kapsul", "Green Chemistry": "Kimia Hijau", "Molecule": "Molekul", "Gas Cloud": "Awan Gas", "Lightning": "Petir", "Water Drop": "Tetes Air",
 })
 

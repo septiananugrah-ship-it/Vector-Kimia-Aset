@@ -29,10 +29,10 @@ SET_KEYWORDS = [
 DARK = {"C", "I", "Br"}
 
 
-def _face(el, x, y):
+def _face(el, x, y, coloring=False):
     r = RADIUS[el]
     f = face(x, y + r * .24, r * .12)
-    if el in DARK:
+    if el in DARK and not coloring:
         f = f.replace('fill="#1E2A3A"', 'fill="#FFFFFF"').replace('stroke="#1E2A3A"', 'stroke="#FFFFFF"')
     return f
 
@@ -55,5 +55,5 @@ for mid in PICK:
         "title": f"Cute kawaii {short.lower()} molecule sticker with happy face, chemistry cartoon character vector",
         "keywords": kw[:6] + ["kawaii molecule", "cute " + short.lower()],
         "body": die_cut(body) + body + _face(el, x, y),
-        "plain": body, "face": _face(el, x, y),
+        "plain": body, "face": _face(el, x, y, coloring=True),  # lembar mewarnai: wajah selalu bertinta gelap
     })
