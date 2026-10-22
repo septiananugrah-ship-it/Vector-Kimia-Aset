@@ -1,10 +1,14 @@
 """Ikon gaya lencana/aplikasi tema gelap: ikon semi-flat di dalam kotak bulat navy.
 Cocok untuk ikon aplikasi, sorotan Instagram (highlight cover), dan tombol situs bertema gelap.
 """
+import atoms
+import atoms2
 import icons_concepts
 import icons_lab2
 import icons_lab_flat
 import molecules
+import molecules2
+import molecules3
 from render import GRID, fitted, style_attrs
 
 NAVY, RING = "#1B2742", "#2E4066"
@@ -15,6 +19,8 @@ KEYWORDS = ["app icon", "badge", "button", "dark", "navy", "dark mode", "rounded
 SETS = [
     ("lab-badge-icons-dark", (icons_lab_flat, icons_lab2), "laboratory equipment"),
     ("concept-badge-icons-dark", (icons_concepts, molecules), "science and molecule"),
+    ("molecule-badge-icons-dark", (molecules2, molecules3), "molecule"),
+    ("bohr-badge-icons-dark", (atoms, atoms2), "Bohr atom model"),
 ]
 
 
