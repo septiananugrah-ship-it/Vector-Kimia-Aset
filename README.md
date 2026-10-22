@@ -9,7 +9,7 @@ Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana,
 
 ## Set yang tersedia
 
-Total 2.141 aset dalam 86 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 2.157 aset dalam 86 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -42,9 +42,9 @@ Total 2.141 aset dalam 86 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua fil
 | Set | Isi |
 |-----|-----|
 | `periodic-table-posters` | tabel periodik 118 unsur: lengkap, hanya lambang (terang, gelap, papan kapur), dan lembar kerja kosong; bahasa Inggris & Indonesia |
-| `chemistry-posters` | 75 poster × 3 tema (gelap, terang, papan tulis kapur): bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi, gugus fungsi organik, deret alkana, struktur atom, jenis ikatan kimia, tata tertib keselamatan lab, tren periodik, konfigurasi elektron, indikator asam-basa, teknik pemisahan campuran, hukum gas, faktor laju reaksi, diagram energi eksoterm/endoterm, sel Volta, konsep mol, perubahan fisika vs kimia, asam vs basa, penggolongan materi, tata nama IUPAC, jenis koloid, daya tembus radiasi, perkembangan model atom, hukum dasar kimia, kimia sehari-hari, langkah titrasi, lambang titik Lewis, tabel ion umum, elektrolisis air, konsentrasi larutan, alkana-alkena-alkuna, sifat koligatif, asas Le Chatelier, aturan bilangan oksidasi, reaksi redoks, teori asam-basa, asam/basa kuat & lemah, hidrolisis garam, larutan penyangga, bentuk molekul VSEPR, bilangan kuantum & bentuk orbital, aturan kelarutan, gaya antarmolekul, plastik & kode daur ulang, hukum Hess, deret Volta, waktu paruh, distilasi bertingkat minyak bumi, jenis padatan kristal, biomolekul & uji makanan, hibridisasi orbital, simbol bahaya GHS, tabel potensial reduksi standar, orde reaksi & hukum laju, tetapan kesetimbangan, jenis isomer, polimerisasi, perkaratan besi, hujan asam, efek rumah kaca, jenis peluruhan radioaktif, pengolahan air bersih, penipisan lapisan ozon, proses Haber, proses kontak, alotrop karbon, penyepuhan listrik, logam alkali (IA), halogen (VIIA), gas mulia (VIIIA), logam vs nonlogam |
-| `chemistry-posters-indonesian` | 75 poster yang sama (tabel periodik Indonesia memakai label golongan IA–VIIIA) dalam Bahasa Indonesia |
-| `chemistry-posters-midnight` (+ `-indonesian`) | 75 poster yang sama dalam tema gelap ungu tengah malam (midnight), Inggris & Indonesia |
+| `chemistry-posters` | 77 poster × 3 tema (gelap, terang, papan tulis kapur): bagan 40 alat lab berlabel, molekul + rumus, atom Bohr, skala pH, wujud zat, jenis reaksi, gugus fungsi organik, deret alkana, struktur atom, jenis ikatan kimia, tata tertib keselamatan lab, tren periodik, konfigurasi elektron, indikator asam-basa, teknik pemisahan campuran, hukum gas, faktor laju reaksi, diagram energi eksoterm/endoterm, sel Volta, konsep mol, perubahan fisika vs kimia, asam vs basa, penggolongan materi, tata nama IUPAC, jenis koloid, daya tembus radiasi, perkembangan model atom, hukum dasar kimia, kimia sehari-hari, langkah titrasi, lambang titik Lewis, tabel ion umum, elektrolisis air, konsentrasi larutan, alkana-alkena-alkuna, sifat koligatif, asas Le Chatelier, aturan bilangan oksidasi, reaksi redoks, teori asam-basa, asam/basa kuat & lemah, hidrolisis garam, larutan penyangga, bentuk molekul VSEPR, bilangan kuantum & bentuk orbital, aturan kelarutan, gaya antarmolekul, plastik & kode daur ulang, hukum Hess, deret Volta, waktu paruh, distilasi bertingkat minyak bumi, jenis padatan kristal, biomolekul & uji makanan, hibridisasi orbital, simbol bahaya GHS, tabel potensial reduksi standar, orde reaksi & hukum laju, tetapan kesetimbangan, jenis isomer, polimerisasi, perkaratan besi, hujan asam, efek rumah kaca, jenis peluruhan radioaktif, pengolahan air bersih, penipisan lapisan ozon, proses Haber, proses kontak, alotrop karbon, penyepuhan listrik, logam alkali (IA), halogen (VIIA), gas mulia (VIIIA), logam vs nonlogam, uji nyala, logam transisi |
+| `chemistry-posters-indonesian` | 77 poster yang sama (tabel periodik Indonesia memakai label golongan IA–VIIIA) dalam Bahasa Indonesia |
+| `chemistry-posters-midnight` (+ `-indonesian`) | 77 poster yang sama dalam tema gelap ungu tengah malam (midnight), Inggris & Indonesia |
 
 ### 4-pola-seamless
 | Set | Isi |
