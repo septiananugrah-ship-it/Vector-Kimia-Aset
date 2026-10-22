@@ -34,6 +34,11 @@ THEMES = {
     "chalkboard": dict(bg="#2F4A3A", card="#375646", card_stroke="#4F7261", plate="#EEF2E8", ink="#F4F3EC",
                        sub="#C7D3C8", accent="#FFD27A", mood="chalkboard style on green board"),
 }
+# tema tambahan, diekspor sebagai set terpisah (chemistry-posters-midnight) agar ZIP utama tidak membengkak
+EXTRA_THEMES = {
+    "midnight": dict(bg="#1A1530", card="#251E42", card_stroke="#3A305F", plate="#EEEAF8", ink="#FFFFFF",
+                     sub="#BEB5DC", accent="#FFB347", mood="on deep midnight purple"),
+}
 MX = 44  # margin kiri-kanan
 COMMON_KW = ["chemistry", "science", "education", "school", "poster", "infographic", "chart", "classroom",
               "teaching", "learning", "student", "scientific", "vector", "illustration", "diagram",

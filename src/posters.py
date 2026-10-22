@@ -39,7 +39,7 @@ import posters22
 import posters23
 import posters24
 from icons_lab_flat import L, O, P, R, T, Y, dark, light, solid
-from poster_kit import (COMMON_KW, MX, THEMES, arrow, doc, fit_text, header, icon_at, particle, set_lang, text,
+from poster_kit import (COMMON_KW, EXTRA_THEMES, MX, THEMES, arrow, doc, fit_text, header, icon_at, particle, set_lang, text,
                         tr)
 from render import style_attrs
 from textpath import formula
@@ -357,5 +357,16 @@ def assets():
                     + {"dark": ["dark background"], "light": ["white background"],
                        "chalkboard": ["chalkboard", "blackboard", "chalk", "green board"]}[tname]))
         sets.append((set_id, out))
+        for tname, th in EXTRA_THEMES.items():
+            out = []
+            for key, fn, title, kw in POSTERS:
+                W, H, inner = fn(th)
+                note = "" if lang == "en" else " in Indonesian language"
+                out.append(dict(
+                    name=f"{set_id}-{tname}-{key}", svg=doc(W, H, th, inner), size=7000, png=False,
+                    title=f"{title}{note}, {th['mood']}, chemistry education vector infographic",
+                    keywords=(["indonesian", "bahasa indonesia"] if lang == "id" else []) + kw + COMMON_KW
+                    + ["dark background", "purple", "dark mode"]))
+            sets.append((set_id.replace("chemistry-posters", f"chemistry-posters-{tname}"), out))
     set_lang("en")
     return sets
