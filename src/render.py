@@ -17,7 +17,7 @@ def style_attrs(stroke, ink=INK):
 
 def bbox(body, stroke):
     """Kotak pembatas (x0, y0, x1, y1) ikon dalam satuan grid, termasuk garis tepi."""
-    k, m = 10, 64  # piksel per satuan, margin (cukup lebar untuk ikon yang berpusat di 0, mis. atom 4-5 kulit)
+    k, m = 6, 64  # piksel per satuan, margin (cukup lebar untuk ikon yang berpusat di 0, mis. atom 4-5 kulit)
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{(GRID + 2 * m) * k}" '
            f'height="{(GRID + 2 * m) * k}" viewBox="{-m} {-m} {GRID + 2 * m} {GRID + 2 * m}">'
            f'<g {style_attrs(stroke, "000000")}>{body}</g></svg>')
