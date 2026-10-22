@@ -69,9 +69,9 @@ def main():
                                  ("ph-scale", "lab-equipment", "states-of-matter", "molecules", "atomic-models",
                                   "reaction-types")]
          + [dist / "3-poster-edukasi/periodic-table-posters/jpg/periodic-table-posters-dark.jpg"],
-         "CHEMISTRY POSTERS BUNDLE", "71 posters · dark, light & chalkboard · English & Indonesian", 4),
+         "CHEMISTRY POSTERS BUNDLE", "73 posters · dark, light & chalkboard · English & Indonesian", 4),
         ("bundle-posters-indonesia", pick(dist, "3-poster-edukasi/chemistry-posters-indonesian/jpg/*-dark.jpg", 8),
-         "PAKET POSTER KIMIA", "71 poster edukasi · versi Bahasa Indonesia · siap cetak", 4),
+         "PAKET POSTER KIMIA", "73 poster edukasi · versi Bahasa Indonesia · siap cetak", 4),
         ("bundle-icons", [dist / p for p in (
             "1-alat-lab/lab-flat-icons/jpg/lab-flat-icons-set.jpg",
             "1-alat-lab/lab2-flat-icons/jpg/lab2-flat-icons-set.jpg",
