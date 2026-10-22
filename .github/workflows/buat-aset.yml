@@ -11,7 +11,7 @@ on:
         default: ""
   push:
     branches: [main]
-    paths: ["src/**", "fonts/**", "build.py", "promo.py", "gallery.py", "requirements.txt", ".github/workflows/**"]
+    paths: ["src/**", "fonts/**", "build.py", "promo.py", "paket.py", "gallery.py", "requirements.txt", ".github/workflows/**"]
 
 # push beruntun: batalkan run lama, cukup bangun commit terbaru
 concurrency:
@@ -37,6 +37,9 @@ jobs:
       - name: Gambar promosi bundle
         if: ${{ !inputs.only }}
         run: python promo.py
+      - name: Paket jualan Lynk.id (PDF Bahasa Indonesia)
+        if: ${{ !inputs.only }}
+        run: python paket.py
       - name: Galeri pratinjau (GitHub Pages)
         if: ${{ !inputs.only }}
         run: python gallery.py
@@ -98,6 +101,11 @@ jobs:
           name: 9-promosi
           path: dist/9-promosi.zip
           compression-level: 0
+          if-no-files-found: ignore
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 10-paket-jualan
+          path: dist/10-paket-jualan
           if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         with:

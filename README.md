@@ -150,3 +150,7 @@ centang sendiri di portal. Situs lain punya aturan sendiri; cek aturan terbaru t
 - `src/textpath.py`: teks diubah menjadi outline (wajib di microstock) memakai font Inter di `fonts/`
   (lisensi SIL OFL, lihat `fonts/LICENSE-Inter.txt`).
 - Daftar modul yang dibangun ada di `MODULES` pada `build.py`.
+
+## Jualan lewat Instagram + Lynk.id
+
+`paket.py` membuat paket PDF siap jual (Bahasa Indonesia) di artefak **10-paket-jualan**. Langkah lengkapnya ada di [PANDUAN-LYNK-IG.md](PANDUAN-LYNK-IG.md).
