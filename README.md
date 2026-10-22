@@ -9,7 +9,7 @@ Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana,
 
 ## Set yang tersedia
 
-Total 1.799 aset dalam 76 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 1.865 aset dalam 81 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -30,6 +30,7 @@ Total 1.799 aset dalam 76 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua fil
 | `molecule-icons` | 20 model molekul bola-dan-batang (H2O, CO2, CH4, benzena, NaCl, H2SO4, dll.) |
 | `molecule-glyph-icons` | versi glyph model molekul |
 | `molecule2-icons` (+ glyph & outline) | 20 model molekul jilid 2 (H2S, HCN, NO2, SO3, CCl4, asam asetat, aseton, urea, propana, butana, dll.) |
+| `molecule3-icons` (+ glyph & outline, 3 pola) | 20 model molekul jilid 3 (etana, HF, Cl2, I2, N2O, H2CO3, H3PO4, SF6, PCl5, glisin, isopropanol, CS2, dll.) |
 | `bohr-atom-icons` | model atom Bohr unsur 1–20 |
 | `bohr-atom-glyph-icons` | versi glyph model atom |
 | `bohr-atom2-icons` (+ glyph & outline) | model atom Bohr unsur 21–36 (Sc–Kr), susunan kulit logam transisi |
