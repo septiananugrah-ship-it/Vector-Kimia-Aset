@@ -9,7 +9,7 @@ Lihat juga **[PANDUAN-JUAL.md](PANDUAN-JUAL.md)**: kategori mana dijual di mana,
 
 ## Set yang tersedia
 
-Total 1.527 aset dalam 65 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
+Total 1.618 aset dalam 68 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua file ada di `dist/katalog.csv`.
 
 ### 1-alat-lab
 | Set | Isi |
@@ -58,6 +58,7 @@ Total 1.527 aset dalam 65 ZIP, dipetakan ke 8 kategori. Daftar lengkap semua fil
 | `concept-flat-glyph-icons` | versi glyph |
 | `concept-flat-patterns` | 2 pola seamless (kategori 4-pola-seamless) |
 | `element-tile-icons` | 30 ikon ubin unsur populer (H, C, O, Na, Fe, Cu, Ag, Au, U, dll.) + lembar set |
+| `element-tile-icons-2`, `-3`, `-4` | 88 ubin unsur sisanya (Z 1–56, 57–88, 89–118) sehingga lengkap 118 unsur, tiap set + lembar set |
 | `element-tile-patterns` | 1 pola seamless ubin unsur (kategori 4-pola-seamless) |
 
 ### 5-latar-presentasi
