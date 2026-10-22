@@ -33,7 +33,7 @@ ROOT = Path(__file__).parent
 sys.path.insert(0, str(ROOT / "src"))
 
 MODULES = ["icons_lab", "icons_lab_flat", "icons_lab2", "molecules", "molecules2", "molecules3", "atoms", "atoms2", "atoms3", "icons_concepts", "ghs_icons", "element_tiles", "element_tiles2", "element_tiles3", "element_tiles4", "element_tiles_dark1", "element_tiles_dark2", "element_tiles_dark3",
-           "kawaii", "kawaii2", "kawaii3", "periodic", "posters", "hex_patterns", "backgrounds", "social", "social_compounds", "coloring", "printables"]
+           "kawaii", "kawaii2", "kawaii3", "kawaii4", "periodic", "posters", "hex_patterns", "backgrounds", "social", "social_compounds", "coloring", "printables"]
 
 
 def category(set_id):
